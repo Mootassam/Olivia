@@ -312,9 +312,11 @@ function GrapModal(props) {
               src={
                 items?.image ||
                 items?.photo?.[0]?.downloadUrl ||
-                'https://via.placeholder.com/600x400'
+                'https://www.kayak.fr/rimg/himg/44/a8/8a/ice-178163-01c8df-614698.jpg?width=836&height=607&crop=true'
               }
               alt={items?.title}
+
+              loading='lazy'
               className="hero-image"
             />
           </div>
@@ -407,7 +409,7 @@ function GrapModal(props) {
           background: #ffffff;
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
           position: relative;
-          max-height: 100vh;
+          height:100dvh;
           overflow-y: auto;
           padding: 0 0 20px 0;
         }
@@ -439,7 +441,7 @@ function GrapModal(props) {
 
         .modal-contents {
           padding: 0 20px;
-        }
+        }.product-modal {
 
         /* Hero image */
         .modal-hero {
