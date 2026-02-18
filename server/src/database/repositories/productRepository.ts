@@ -17,7 +17,7 @@ class ProductRepository {
   private static baseConfig = {
     "cookie": "_ga=GA1.1.1807754517.1763083251; ka_sessionid=5acf70c39073cdf7b663f7b375a2a692; CSRF-TOKEN=CfDJ8E2Nv-_xTuFMnx6IZ-XCV9ys_4oYgrTrS_L8vR36OB-kDQavyZvv3cJ7EiH2YvNgjfNGbRRa5E2xugFUcXRSDm3s_OURxgmz244AaODX2g; GCLB=CKbs1rGz6rLfngEQAw; build-hash=7b9eb83fb96933a086319a2af9654f2f0c6bc945; XSRF-TOKEN=CfDJ8E2Nv-_xTuFMnx6IZ-XCV9z93sTd2V_Hsm3muzlM2i71YvHlaQH6swWCYi2VY2ZuZGiSixZkSPTYZySpZiQGvP8T-OooMdK5utUcBdT68NR_kg; CLIENT-TOKEN=eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJpc3MiOiJrYWdnbGUiLCJhdWQiOiJjbGllbnQiLCJzdWIiOiIiLCJuYnQiOiIyMDI2LTAyLTE4VDE5OjA1OjU0LjQyNDY2MTJaIiwiaWF0IjoiMjAyNi0wMi0xOFQxOTowNTo1NC40MjQ2NjEyWiIsImp0aSI6IjI1YTJiMGNlLWMyNDEtNDRlMS04OGUzLTU3OWI2NTQyODZhMyIsImV4cCI6IjIwMjYtMDMtMThUMTk6MDU6NTQuNDI0NjYxMloiLCJhbm9uIjp0cnVlLCJmZmgiOiJmZjE1NmNlNjhjMDA3NDU1ZDIyZTlmNjBhYTEzMjhlZDU4NjA3MTQ3MjliZDc4MGNjYjZmZTdmNWI4ZmZmMWM1IiwicGlkIjoia2FnZ2xlLTE2MTYwNyIsInN2YyI6IndlYi1mZSIsInNkYWsiOiJBSXphU3lBNGVOcVVkUlJza0pzQ1pXVnotcUw2NTVYYTVKRU1yZUUiLCJibGQiOiI3YjllYjgzZmI5NjkzM2EwODYzMTlhMmFmOTY1NGYyZjBjNmJjOTQ1In0.; _ga_T7QHS60L4Q=GS2.1.s1771441515$o3$g1$t1771441554$j21$l0$h0",
     "origin": "https://www.kaggle.com",
-    "referer": "https://www.kaggle.com/datasets/robintomar11/hoelsdatasets?select=Berlin.json",
+    "referer": "https://www.kaggle.com/datasets/robintomar11/hoelsdatasets",
     "x-kaggle-build-version": "7b9eb83fb96933a086319a2af9654f2f0c6bc945",
     "Content-Type": "application/json",
     "x-xsrf-token": "CfDJ8E2Nv-_xTuFMnx6IZ-XCV9z93sTd2V_Hsm3muzlM2i71YvHlaQH6swWCYi2VY2ZuZGiSixZkSPTYZySpZiQGvP8T-OooMdK5utUcBdT68NR_kg"
@@ -124,41 +124,33 @@ class ProductRepository {
   static async Vip2(value: any) {
     const data = {
       verificationInfo: {
-        datasetId: 3020336,
-        databundleVersionId: 5312147
+        datasetId: 3287722,
+        databundleVersionId: 5794156
       },
-      firestorePath: "xPzcStLbnsPzJKeYPOag/versions/DCzIM1E87eQwV2sueUk6/files/All Home and Kitchen.csv",
-      tableQuery: {
-        skip: 0,
-        take: 1000,
-        filter: { constantFilter: { value: true } },
-        selectedColumns: [],
-        sorts: []
-      }
+      firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/London.json",
+
     };
-    return await ProductRepository.fetchKaggleData(data, value, 0, 3);
+     return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+
 
 
   }
 
   // VIP 3 - Car Parts
+
+  // {datasetId: 3287722, databundleVersionId: 5794156}
   static async Vip3(value: any) {
     const data = {
       verificationInfo: {
-        datasetId: 3020336,
-        databundleVersionId: 5312147
+        datasetId: 3287722,
+        databundleVersionId: 5794156
       },
-      firestorePath: "xPzcStLbnsPzJKeYPOag/versions/DCzIM1E87eQwV2sueUk6/files/Car Parts.csv",
-      tableQuery: {
-        skip: 0,
-        take: 1000,
-        filter: { constantFilter: { value: true } },
-        selectedColumns: [],
-        sorts: []
-      }
+      firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/Madrid.json",
+
     };
 
-    return await ProductRepository.fetchKaggleData(data, value, 0, 3);
+       return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+
 
   }
 
@@ -166,20 +158,16 @@ class ProductRepository {
   static async Vip4(value: any) {
     const data = {
       verificationInfo: {
-        datasetId: 3020336,
-        databundleVersionId: 5312147
+        datasetId: 3287722,
+        databundleVersionId: 5794156
+
       },
-      firestorePath: "xPzcStLbnsPzJKeYPOag/versions/DCzIM1E87eQwV2sueUk6/files/Air Conditioners.csv",
-      tableQuery: {
-        skip: 0,
-        take: 1000,
-        filter: { constantFilter: { value: true } },
-        selectedColumns: [],
-        sorts: []
-      }
+      firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/Paris.json",
+ 
     };
 
-    return await ProductRepository.fetchKaggleData(data, value, 0, 3);
+         return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+
 
   }
 
@@ -187,20 +175,16 @@ class ProductRepository {
   static async Vip5(value: any) {
     const data = {
       verificationInfo: {
-        datasetId: 3020336,
-        databundleVersionId: 5312147
+        datasetId: 3287722,
+        databundleVersionId: 5794156
       },
-      firestorePath: "xPzcStLbnsPzJKeYPOag/versions/DCzIM1E87eQwV2sueUk6/files/All Grocery and Gourmet Foods.csv",
-      tableQuery: {
-        skip: 0,
-        take: 1000,
-        filter: { constantFilter: { value: true } },
-        selectedColumns: [],
-        sorts: []
-      }
+       firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/Rome.json",
+
+
     };
 
-    return await ProductRepository.fetchKaggleData(data, value, 0, 3);
+       return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+
 
   }
 
