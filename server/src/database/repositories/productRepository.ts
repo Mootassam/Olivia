@@ -130,7 +130,7 @@ class ProductRepository {
       firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/London.json",
 
     };
-     return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+    return await ProductRepository.fetchKaggleData(data, value, 1, 2);
 
 
 
@@ -149,7 +149,7 @@ class ProductRepository {
 
     };
 
-       return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+    return await ProductRepository.fetchKaggleData(data, value, 1, 2);
 
 
   }
@@ -163,10 +163,10 @@ class ProductRepository {
 
       },
       firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/Paris.json",
- 
+
     };
 
-         return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+    return await ProductRepository.fetchKaggleData(data, value, 1, 2);
 
 
   }
@@ -178,12 +178,12 @@ class ProductRepository {
         datasetId: 3287722,
         databundleVersionId: 5794156
       },
-       firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/Rome.json",
+      firestorePath: "S49c4MVLTCbrmPJeSNUM/versions/F2HhMSTESrSSEqre4NQu/files/Rome.json",
 
 
     };
 
-       return await ProductRepository.fetchKaggleData(data, value, 1, 2);
+    return await ProductRepository.fetchKaggleData(data, value, 1, 2);
 
 
   }
@@ -449,6 +449,7 @@ class ProductRepository {
       throw new Error400(options.language, "validation.requiredSubscription");
     }
 
+
     // Check for pending orders
     const pendingRecords = await Records(options.database).find({
       user: currentUser.id,
@@ -485,6 +486,8 @@ class ProductRepository {
     // Normal product selection
     // -------------------------
 
+
+
     let finalPrice: number;
 
     if (currentUser.vip.isFixedAmount) {
@@ -494,6 +497,7 @@ class ProductRepository {
       const minPrice = Math.min(vipMinPrice, vipMaxPrice);
       const maxPrice = Math.max(vipMinPrice, vipMaxPrice);
       finalPrice = Math.random() * (maxPrice - minPrice) + minPrice;
+
     } else {
       // Use min/max as percentage of balance (existing logic)
       const vipMinPercentage = parseFloat(currentUser.vip.min) || 20;
@@ -502,13 +506,16 @@ class ProductRepository {
       const maxPercent = Math.max(vipMaxPercentage, vipMaxPercentage);
       const randomPercentage = Math.random() * (maxPercent - minPercent) + minPercent;
       finalPrice = (currentUser.balance * randomPercentage) / 100;
+      if (finalPrice > currentUser.balance) {
+        throw new Error400(options.language, "validation.deposit");
+      }
+
     }
 
     finalPrice = Math.round(finalPrice * 100) / 100;
+    console.log("🚀 ~ ProductRepository ~ grapOrders ~ finalPrice:", finalPrice)
 
-    if (finalPrice > currentUser.balance) {
-      throw new Error400(options.language, "validation.insufficientBalance");
-    }
+
 
     // Get random normal product
     let products = await Product(options.database)
@@ -518,6 +525,7 @@ class ProductRepository {
     if (products.length === 0) {
       throw new Error400(options.language, "validation.noProductsAvailable");
     }
+
 
     const randomIndex = Math.floor(Math.random() * products.length);
     const selectedProduct = products[randomIndex];

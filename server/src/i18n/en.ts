@@ -19,7 +19,8 @@ const en = {
     requiredSubscription: 'Please select a subscription plan',
     moretasks: 'This is your limit. Please contact customer support for more tasks',
     deposit:"Insufficient balance please contact the customer support",
-    submitPendingProducts:"Please, submit the pending products "
+    submitPendingProducts:"Please, submit the pending products ",
+    noProductsAvailable:"noProductsAvailable"
   },
 
 

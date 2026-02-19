@@ -219,7 +219,7 @@ class RecordRepository {
     ]);
 
     if (!currentProduct) {
-      throw new Error('Product not found');
+      throw new Error405('Product not found');
     }
 
     const currentUserBalance = currentUser?.balance || 0;

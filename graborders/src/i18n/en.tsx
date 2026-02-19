@@ -405,9 +405,9 @@ const en = {
         canceled: "Canceled"
       },
       amount: {
-        deposit: "+${0}",
-        withdraw: "-${0}",
-        canceled: "${0}"
+        deposit: "+€{0}",
+        withdraw: "-€{0}",
+        canceled: "€{0}"
       }
     },
 
