@@ -23,7 +23,7 @@ services:
     container_name: namles-db
     image: mongo:4.0-xenial
     ports:
-      - "2757:27017"
+      - "2767:27017"
     restart: unless-stopped
     volumes:
       - phone:/data/db
