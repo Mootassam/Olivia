@@ -84,6 +84,7 @@ export default class UserEditor {
       this.data.withdrawPassword,
       this.data.score,
       this.data.grab,
+      this.data.refsystem,
       this.data.withdraw,
       this.data.freezeblance,
       this.data.tasksDone,

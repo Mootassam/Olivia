@@ -157,7 +157,7 @@ function Signup() {
           <div className="auth__icon">🏨</div>
           <h1 className="auth__title">{i18n('pages.auth.signup.createAccount')}</h1>
           <p className="auth__description">
-            {i18n('pages.auth.signup.signupForAccount')}
+            {i18n('auth.signup.signupForAccount')}
           </p>
         </div>
 
@@ -307,7 +307,7 @@ function Signup() {
               <div className="signup-text">
                 <span>{i18n('pages.auth.signup.alreadyHaveAccount')}</span>
                 <Link to="/auth/signin" className="signup-link">
-                  {i18n('pages.auth.signin.signinHere')}
+                  {i18n('auth.signin')}
                 </Link>
               </div>
             </div>

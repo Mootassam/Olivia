@@ -21,6 +21,10 @@ const userFormActions = {
   UPDATE_SUCCESS: `${prefix}_UPDATE_SUCCESS`,
   UPDATE_ERROR: `${prefix}_UPDATE_ERROR`,
 
+    FETCH_STARTED: `${prefix}_FETCH_STARTED`,
+  FETCH_SUCCESS: `${prefix}_FETCH_SUCCESS`,
+  FETCH_ERROR: `${prefix}_FETCH_ERROR`,
+
   doInit: (id?) => async (dispatch) => {
     try {
       dispatch({
@@ -47,6 +51,28 @@ const userFormActions = {
 
       getHistory().push('/');
     }
+  },
+
+
+  getAllUserReference: () => {
+    return async (dispatch) => {
+    try {
+      dispatch({
+        type: userFormActions.FETCH_STARTED,
+      });
+      const response = await UserService.fetchAllcurrentUser();
+  
+      dispatch({
+        type: userFormActions.FETCH_SUCCESS,
+        payload: response
+      });
+    } catch (error) {
+      Errors.handle(error);
+      dispatch({
+        type: userFormActions.FETCH_ERROR,
+      });
+    }
+  };
   },
 
 

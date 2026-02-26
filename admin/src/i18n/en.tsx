@@ -2658,6 +2658,8 @@ const en = {
     },
 
     fields: {
+      mnemberId: "Member Id",
+                  refsystem: "Allow the referral system.",
       currentrecord: 'Tasks Done',
       freezeblance: 'Freeze Balance',
       couponcode: 'couponcode',

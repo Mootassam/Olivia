@@ -108,6 +108,16 @@ function UserTable() {
                   )}
                 </th>
                 
+
+
+                 <th className="sortable-header" onClick={() => doChangeSort('mnemberId')}>
+                  {i18n('user.fields.mnemberId')}
+                  {sorter.field === 'mnemberId' && (
+                    <span className="sort-icon">
+                      {sorter.order === 'ascend' ? '↑' : '↓'}
+                    </span>
+                  )}
+                </th>
                 <th className="sortable-header" onClick={() => doChangeSort('invitationcode')}>
                   {i18n('user.fields.invitationcode')}
                   {sorter.field === 'invitationcode' && (
@@ -165,6 +175,7 @@ function UserTable() {
                   <tr key={row.id} className="table-row">
                 
                     <td className="table-cell">{row.email}</td>
+                                   <td className="table-cell">{row.mnemberId}</td>
                     <td className="table-cell">{row.invitationcode}</td>
                     <td className="table-cell">{row.refcode}</td>
 
@@ -185,13 +196,13 @@ function UserTable() {
   <div className="user-table-actions-content">
 
     {/* Login */}
-    <button
+    {/* <button
       className="user-table-action-btn primary"
       onClick={() => oneClick(row.id)}
     >
       <i className="fas fa-sign-in-alt user-table-action-icon" />
       Login
-    </button>
+    </button> */}
 
     {/* Tasks */}
     <button

@@ -15,6 +15,16 @@ export default class UserService {
     return response.data;
   }
 
+    static async fetchAllcurrentUser() {
+  
+    const tenantId = AuthCurrentTenant.get();
+    const response = await authAxios.get(
+      `/tenant/${tenantId}/getAllUserRef`,
+    );
+
+    return response.data;
+  }
+
 
   static async destroy(ids) {
     const params = {

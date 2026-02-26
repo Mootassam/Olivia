@@ -16,6 +16,23 @@ import Vip from "../models/vip";
 import Error400 from "../../errors/Error400";
 import axios from 'axios'
 import company from "../models/company";
+
+
+interface ReferralUserData {
+  memberId: number;
+  recharge: number;
+  withdraw: number;
+  totalProfit: number; // Their total profit from records
+}
+
+interface ReferralSummary {
+  totalDailyInvitations: number;
+  totalMonthlyInvitations: number;
+  totalMonthlyIncome: number; // This will be calculated based on defaultCommission
+  referrals: ReferralUserData[];
+}
+
+
 export default class UserRepository {
   static async create(data, options: IRepositoryOptions) {
     const currentUser = MongooseRepository.getCurrentUser(options);
@@ -71,6 +88,379 @@ export default class UserRepository {
   }
 
 
+
+  static async getReferralData( options: IRepositoryOptions): Promise<ReferralSummary> {
+  try {
+    const UserModel = User(options.database);
+    const TransactionModel = options.database.model("transaction");
+    const RecordModel = options.database.model("records");
+    const CompanyModel = options.database.model("company");
+    const currentUser = MongooseRepository.getCurrentUser(options);
+
+    // Get current user's refcode
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
+
+    const userRefCode = currentUser.refcode;
+    
+    if (!userRefCode) {
+      return {
+        totalDailyInvitations: 0,
+        totalMonthlyInvitations: 0,
+        totalMonthlyIncome: 0,
+        referrals: []
+      };
+    }
+
+    // Get company settings for defaultCommission
+    const companySettings = await CompanyModel.findOne({});
+    const defaultCommission = parseFloat(companySettings?.defaulCommission || "15"); // Default to 15 if not set
+
+    // Get current date boundaries
+    const now = new Date();
+    const startOfDay = new Date(now.setHours(0, 0, 0, 0));
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+    // Find all users who used this refcode
+    const referredUsers = await UserModel.find({
+      invitationcode: userRefCode,
+      createdAt: { $exists: true }
+    }).select('mnemberId createdAt fullName email');
+
+    // Calculate daily and monthly invitations
+    const dailyInvitations = referredUsers.filter(user => 
+      user.createdAt >= startOfDay
+    ).length;
+
+    const monthlyInvitations = referredUsers.filter(user => 
+      user.createdAt >= startOfMonth && user.createdAt <= endOfMonth
+    ).length;
+
+    // If no referred users, return empty data
+    if (referredUsers.length === 0) {
+      return {
+        totalDailyInvitations: dailyInvitations,
+        totalMonthlyInvitations: monthlyInvitations,
+        totalMonthlyIncome: 0,
+        referrals: []
+      };
+    }
+
+    // Get all user IDs for transaction and record lookup
+    const referredUserIds = referredUsers.map(user => user._id);
+
+    // Get transaction data (recharge and withdraw)
+    const transactionData = await TransactionModel.aggregate([
+      {
+        $match: {
+          user: { $in: referredUserIds },
+          status: "success",
+          type: { $in: ["deposit", "withdraw"] }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            userId: "$user",
+            type: "$type"
+          },
+          totalAmount: {
+            $sum: { $toDouble: "$amount" }
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$_id.userId",
+          transactions: {
+            $push: {
+              type: "$_id.type",
+              amount: "$totalAmount"
+            }
+          }
+        }
+      }
+    ]);
+
+    // Get records data to calculate profit for each referred user
+    // Profit formula: commission = (parseFloat(commission) / 100) * parseFloat(price)
+    const recordsData = await RecordModel.aggregate([
+      {
+        $match: {
+          user: { $in: referredUserIds },
+          status: "completed" // Only count completed records
+        }
+      },
+      {
+        $addFields: {
+          // Convert price and commission to numbers
+          priceNum: { $toDouble: "$price" },
+          commissionNum: { $toDouble: "$commission" }
+        }
+      },
+      {
+        $addFields: {
+          // Calculate profit for each record: (commission / 100) * price
+          recordProfit: {
+            $multiply: [
+              { $divide: ["$commissionNum", 100] },
+              "$priceNum"
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$user",
+          totalProfit: { $sum: "$recordProfit" }
+        }
+      }
+    ]);
+
+    // Create maps for quick lookup
+    const transactionMap = new Map();
+    transactionData.forEach(item => {
+      const userId = item._id.toString();
+      const deposits = item.transactions.find(t => t.type === "deposit")?.amount || 0;
+      const withdraws = item.transactions.find(t => t.type === "withdraw")?.amount || 0;
+      
+      transactionMap.set(userId, {
+        recharge: deposits,
+        withdraw: withdraws
+      });
+    });
+
+    const profitMap = new Map();
+    recordsData.forEach(item => {
+      profitMap.set(item._id.toString(), item.totalProfit);
+    });
+
+    // Calculate total profit from all referred users
+    let totalReferralProfit = 0;
+
+    // Build the referral list with transaction and profit data
+    const referrals: ReferralUserData[] = referredUsers.map(user => {
+      const userId = user._id.toString();
+      const userTransactions = transactionMap.get(userId) || {
+        recharge: 0,
+        withdraw: 0
+      };
+      
+      const userProfit = profitMap.get(userId) || 0;
+      
+      // Add to total referral profit
+      totalReferralProfit += userProfit;
+
+      return {
+        memberId: user.mnemberId || 0,
+        recharge: userTransactions.recharge,
+        withdraw: userTransactions.withdraw,
+        totalProfit: userProfit
+      };
+    });
+
+    // Calculate total monthly income based on defaultCommission percentage
+    // From total profit earned by all invited users, take only the percentage defined by defaultCommission
+    const totalMonthlyIncome = (defaultCommission / 100) * totalReferralProfit;
+
+    return {
+      totalDailyInvitations: dailyInvitations,
+      totalMonthlyInvitations: monthlyInvitations,
+      totalMonthlyIncome: parseFloat(totalMonthlyIncome.toFixed(2)), // Round to 2 decimal places
+      referrals: referrals.sort((a, b) => b.recharge - a.recharge)
+    };
+
+  } catch (error) {
+    console.error("Error in getReferralData:", error);
+    throw error;
+  }
+}
+
+/**
+ * Detailed version with more information
+ */
+static async getReferralDataDetailed(currentUserId: string, options: IRepositoryOptions): Promise<any> {
+  try {
+    const UserModel = User(options.database);
+    const TransactionModel = options.database.model("transaction");
+    const RecordModel = options.database.model("records");
+    const CompanyModel = options.database.model("company");
+
+    // Get current user's refcode
+    const currentUser = await UserModel.findById(currentUserId);
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
+
+    const userRefCode = currentUser.refcode;
+    
+    if (!userRefCode) {
+      return {
+        totalDailyInvitations: 0,
+        totalMonthlyInvitations: 0,
+        totalMonthlyIncome: 0,
+        totalReferralProfit: 0,
+        defaultCommission: 0,
+        referrals: []
+      };
+    }
+
+    // Get company settings for defaultCommission
+    const companySettings = await CompanyModel.findOne({});
+    const defaultCommission = parseFloat(companySettings?.defaulCommission || "15");
+
+    // Get current date boundaries
+    const now = new Date();
+    const startOfDay = new Date(now.setHours(0, 0, 0, 0));
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+    // Use aggregation for better performance
+    const referralData = await UserModel.aggregate([
+      {
+        $match: {
+          invitationcode: userRefCode
+        }
+      },
+      {
+        $lookup: {
+          from: "transactions",
+          let: { userId: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$user", "$$userId"] },
+                status: "success"
+              }
+            },
+            {
+              $group: {
+                _id: "$type",
+                total: { $sum: { $toDouble: "$amount" } }
+              }
+            }
+          ],
+          as: "transactions"
+        }
+      },
+      {
+        $lookup: {
+          from: "records",
+          let: { userId: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$user", "$$userId"] },
+                status: "completed"
+              }
+            },
+            {
+              $addFields: {
+                priceNum: { $toDouble: "$price" },
+                commissionNum: { $toDouble: "$commission" }
+              }
+            },
+            {
+              $addFields: {
+                profit: {
+                  $multiply: [
+                    { $divide: ["$commissionNum", 100] },
+                    "$priceNum"
+                  ]
+                }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                totalProfit: { $sum: "$profit" }
+              }
+            }
+          ],
+          as: "records"
+        }
+      },
+      {
+        $project: {
+          memberId: "$mnemberId",
+          fullName: 1,
+          email: 1,
+          createdAt: 1,
+          transactions: {
+            $arrayToObject: {
+              $map: {
+                input: "$transactions",
+                as: "t",
+                in: { k: "$$t._id", v: "$$t.total" }
+              }
+            }
+          },
+          totalProfit: {
+            $ifNull: [
+              { $arrayElemAt: ["$records.totalProfit", 0] },
+              0
+            ]
+          }
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      }
+    ]);
+
+    // Calculate daily and monthly counts
+    const dailyInvitations = referralData.filter(user => 
+      user.createdAt >= startOfDay
+    ).length;
+
+    const monthlyInvitations = referralData.filter(user => 
+      user.createdAt >= startOfMonth && user.createdAt <= endOfMonth
+    ).length;
+
+    // Calculate total profit from all referred users
+    const totalReferralProfit = referralData.reduce((sum, user) => sum + (user.totalProfit || 0), 0);
+
+    // Calculate total monthly income based on defaultCommission percentage
+    const totalMonthlyIncome = (defaultCommission / 100) * totalReferralProfit;
+
+    // Format the referrals data
+    const referrals = referralData.map(user => ({
+      memberId: user.memberId || 0,
+      recharge: user.transactions?.deposit || 0,
+      withdraw: user.transactions?.withdraw || 0,
+      totalProfit: parseFloat((user.totalProfit || 0).toFixed(2)),
+      // Optional: include additional fields
+      fullName: user.fullName,
+      email: user.email,
+      joinedDate: user.createdAt
+    }));
+
+    return {
+      totalDailyInvitations: dailyInvitations,
+      totalMonthlyInvitations: monthlyInvitations,
+      totalMonthlyIncome: parseFloat(totalMonthlyIncome.toFixed(2)),
+      totalReferralProfit: parseFloat(totalReferralProfit.toFixed(2)),
+      defaultCommission: defaultCommission,
+      referrals: referrals.sort((a, b) => b.recharge - a.recharge),
+      summary: {
+        totalReferred: referrals.length,
+        totalRechargeAmount: referrals.reduce((sum, r) => sum + r.recharge, 0),
+        totalWithdrawAmount: referrals.reduce((sum, r) => sum + r.withdraw, 0),
+        averageProfit: referrals.length > 0 
+          ? parseFloat((referrals.reduce((sum, r) => sum + r.totalProfit, 0) / referrals.length).toFixed(2))
+          : 0
+      }
+    };
+
+  } catch (error) {
+    console.error("Error in getReferralDataDetailed:", error);
+    throw error;
+  }
+}
+  
+
   static async generateRefCode() {
     const prefix = "NO";
     const randomPart = Math.floor(1000 + Math.random() * 9000); // 6 digits
@@ -98,6 +488,7 @@ export default class UserRepository {
     score,
     grab,
     withdraw,
+    refsystem,
     freezeblance,
     tasksDone,
     preferredcoin
@@ -129,6 +520,7 @@ export default class UserRepository {
           withdrawPassword: withdrawPassword,
           score: score,
           grab: grab,
+          refsystem: refsystem,
           withdraw: withdraw,
           freezeblance: freezeblance,
           preferredcoin: preferredcoin,
@@ -221,7 +613,7 @@ export default class UserRepository {
 
     return { rows, count };
   }
-  static async createFromAuthMobile(data, options: IRepositoryOptions) {
+ static async createFromAuthMobile(data, options: IRepositoryOptions) {
     const vip = await this.VipLevel(options);
 
     const id = vip?.rows[0]?.id;
@@ -247,6 +639,8 @@ export default class UserRepository {
       settingsBalance = defaultBalance[0].defaultBalance;
     }
 
+    // Generate unique memberId with format 138XXX
+    const memberId = await this.generateUniqueMemberId(options);
 
     let [user] = await User(options.database).create(
       [
@@ -264,6 +658,7 @@ export default class UserRepository {
           refcode: await this.createUniqueRefCode(options),
           balance: settingsBalance,
           vip: id ? id : "",
+          mnemberId: memberId, // Add the generated memberId
         },
       ],
       options
@@ -284,6 +679,184 @@ export default class UserRepository {
       ...options,
       bypassPermissionValidation: true,
     });
+  }
+
+  /**
+   * Generate a unique 6-digit memberId starting with 138
+   * Uses counter collection approach for optimal performance and uniqueness
+   */
+  static async generateUniqueMemberId(options: IRepositoryOptions): Promise<number> {
+    try {
+      // Get or create the counter model
+      const CounterModel = this.getCounterModel(options.database);
+      
+      // Find and update the counter atomically
+      const counter = await CounterModel.findOneAndUpdate(
+        { name: 'memberId' },
+        { $inc: { value: 1 } },
+        { 
+          new: true, 
+          upsert: true,
+          setDefaultsOnInsert: true,
+          returnOriginal: false
+        }
+      );
+
+      // Ensure the value starts from 138001
+      if (counter.value < 138001) {
+        counter.value = 138001;
+        await counter.save();
+      }
+
+      return counter.value;
+    } catch (error) {
+      console.error('Error generating memberId with counter:', error);
+      
+      // Fallback to random generation if counter fails
+      return await this.generateUniqueMemberIdFallback(options);
+    }
+  }
+
+  /**
+   * Counter model definition
+   */
+  static getCounterModel(database) {
+    try {
+      return database.model('counter');
+    } catch (error) {
+      // Model doesn't exist, create it
+      const CounterSchema = new database.Schema({
+        name: { 
+          type: String, 
+          required: true, 
+          unique: true 
+        },
+        value: { 
+          type: Number, 
+          default: 138000 
+        },
+        createdAt: { 
+          type: Date, 
+          default: Date.now 
+        },
+        updatedAt: { 
+          type: Date, 
+          default: Date.now 
+        }
+      });
+
+      CounterSchema.pre('save', function(this: any, next) {
+        this.updatedAt = new Date();
+        next();
+      });
+
+      return database.model('counter', CounterSchema);
+    }
+  }
+
+  /**
+   * Fallback method to generate unique memberId
+   * Uses random generation with uniqueness check
+   */
+  static async generateUniqueMemberIdFallback(options: IRepositoryOptions): Promise<number> {
+    const UserModel = User(options.database);
+    let isUnique = false;
+    let memberId: number = 138001;
+    let attempts = 0;
+    const maxAttempts = 50;
+
+    while (!isUnique && attempts < maxAttempts) {
+      // Generate random 3-digit number (100-999)
+      const randomSuffix = Math.floor(Math.random() * 900) + 100; // 100 to 999
+      
+      // Combine with prefix 138 to create 6-digit number
+      memberId = parseInt(`138${randomSuffix}`);
+
+      // Check if this memberId already exists
+      const existingUser = await UserModel.findOne({ mnemberId: memberId });
+      
+      if (!existingUser) {
+        isUnique = true;
+      }
+      
+      attempts++;
+    }
+
+    if (!isUnique) {
+      // If we couldn't generate a unique ID after max attempts,
+      // use timestamp-based approach as final fallback
+      const timestamp = Date.now().toString().slice(-3);
+      memberId = parseInt(`138${timestamp}`);
+      
+      // One final check with timestamp
+      let existingUser = await UserModel.findOne({ mnemberId: memberId });
+      if (existingUser) {
+        // If still not unique, add a small random offset until unique
+        let offset = 1;
+        while (existingUser && offset < 100) {
+          const newSuffix = (parseInt(timestamp) + offset).toString().padStart(3, '0');
+          memberId = parseInt(`138${newSuffix}`);
+          existingUser = await UserModel.findOne({ mnemberId: memberId });
+          offset++;
+        }
+      }
+    }
+
+    return memberId;
+  }
+
+  /**
+   * Alternative method using sequence approach (if you prefer sequential IDs)
+   */
+  static async generateSequentialMemberId(options: IRepositoryOptions): Promise<number> {
+    const UserModel = User(options.database);
+    
+    // Find the highest existing memberId with prefix 138
+    const lastUser = await UserModel.findOne({ 
+      mnemberId: { $exists: true, $regex: /^138/ } 
+    }).sort({ mnemberId: -1 });
+    
+    if (lastUser && lastUser.mnemerId) {
+      // Extract the last 3 digits and increment
+      const lastId = lastUser.mnemerId.toString();
+      const lastSuffix = parseInt(lastId.slice(-3));
+      
+      // Generate next suffix (wrap around if needed)
+      let nextSuffix = (lastSuffix + 1) % 1000;
+      
+      // Ensure it's always 3 digits (pad with zeros)
+      // Start from 001, not 000
+      if (nextSuffix === 0) {
+        nextSuffix = 1;
+      }
+      
+      const paddedSuffix = nextSuffix.toString().padStart(3, '0');
+      return parseInt(`138${paddedSuffix}`);
+    } else {
+      // First user - start with 138001
+      return 138001;
+    }
+  }
+
+  /**
+   * Utility method to check if a memberId exists
+   */
+  static async checkMemberIdExists(memberId: number, options: IRepositoryOptions): Promise<boolean> {
+    const UserModel = User(options.database);
+    const existingUser = await UserModel.findOne({ mnemberId: memberId });
+    return !!existingUser;
+  }
+
+  /**
+   * Utility method to get all memberIds (for debugging)
+   */
+  static async getAllMemberIds(options: IRepositoryOptions): Promise<number[]> {
+    const UserModel = User(options.database);
+    const users = await UserModel.find({ mnemberId: { $exists: true } })
+      .select('mnemberId')
+      .sort({ mnemberId: 1 });
+    
+    return users.map(user => user.mnemerId);
   }
 
   static async updatePassword(

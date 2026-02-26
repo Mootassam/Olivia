@@ -133,7 +133,7 @@ function Portfolio() {
 
   return (
     <>
-      <SubHeader title={i18n('pages.order.title')} path="/grap" />
+      <SubHeader title={i18n('entities.order.label')} path="/grap" />
     <div className="portfolio-page">
       <div className="portfolio-card">
         <div className="order__list">

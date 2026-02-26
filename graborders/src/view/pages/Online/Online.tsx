@@ -21,7 +21,7 @@ function Online() {
 
   const handleLiveChatClick = () => {
     // navigate("/LiveChat");
-  }; 
+  };
 
   return (
     <div className="customer-service-container">
@@ -130,9 +130,10 @@ function Online() {
 
         /* Agents list - now row with wrapping */
         .support-agents-list {
-          display: flex;
-          gap: 1rem;
-          justify-content: center;
+         display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    justify-content: center;
         }
 
         .support-agent-card {

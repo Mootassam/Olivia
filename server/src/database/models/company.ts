@@ -23,6 +23,10 @@ export default (database) => {
         type: String,
         default: 50
       },
+      defaulCommission: {
+        type: String,
+        default: 15
+      },
       tc: {
         type: String,
       },

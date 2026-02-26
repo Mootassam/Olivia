@@ -98,6 +98,7 @@ function UserEditForm(props) {
       prizesNumber: record.prizesNumber,
       grab: record.grab,
       withdraw: record.withdraw,
+      refsystem: record.refsystem,
       freezeblance: record.freezeblance,
       tasksDone: record.tasksDone,
     };
@@ -271,6 +272,13 @@ function UserEditForm(props) {
                 <SwitchFormItem
                   name="withdraw"
                   label={i18n('user.fields.withdraw')}
+                />
+              </Col>
+
+                  <Col xs={12} sm={6} md={4}>
+                <SwitchFormItem
+                  name="refsystem"
+                  label={i18n('user.fields.refsystem')}
                 />
               </Col>
             </Row>

@@ -3,6 +3,8 @@ import actions from 'src/modules/user/form/userFormActions';
 const initialData = {
   initLoading: false,
   saveLoading: false,
+  fetching: false,
+  list: [],
   user: null,
 };
 
@@ -30,6 +32,35 @@ export default (state = initialData, { type, payload }) => {
       initLoading: false,
     };
   }
+
+
+
+
+
+  if (type === actions.FETCH_STARTED) {
+    return {
+      ...state,
+      fetching: true,
+    };
+  }
+
+  if (type === actions.FETCH_SUCCESS) {
+    return {
+      ...state,
+      fetching: false,
+      list: payload,
+    };
+  }
+
+  if (type === actions.FETCH_ERROR) {
+    return {
+      ...state,
+      fetching: false,
+    };
+  }
+
+
+
 
   if (type === actions.ADD_STARTED) {
     return {

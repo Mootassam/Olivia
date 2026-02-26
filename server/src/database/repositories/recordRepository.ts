@@ -208,7 +208,7 @@ class RecordRepository {
 
 
 
-  static async calculeGrap(data, options) {
+static async calculeGrap(data, options) {
     const { database } = options;
     const currentUser = MongooseRepository.getCurrentUser(options);
 
@@ -237,11 +237,7 @@ class RecordRepository {
 
     const isPrizesMatch = currentUser.tasksDone === (prizesPosition - 1);
 
-
-
     if (hasProduct && isPositionMatch) {
-
-
       let comboprice = 0;
 
       if (currentUser.product && Array.isArray(currentUser.product)) {
@@ -253,43 +249,49 @@ class RecordRepository {
       frozen = Number(currentUserBalance);
       status = "pending"
 
-
     } else if (hasPrizes && isPrizesMatch) {
-
       total = Number(currentUserBalance) + Number(productBalance);
       status = "completed"
-
     } else {
-      // Find invited user only if needed
-      const invitedUser = await User(database).findOne({
-        refcode: currentUser.invitationcode
-      }).lean();
+      // Check if referral system is enabled for this user
+      if (currentUser.refsystem === true) {
+        // Get company settings to fetch defaultCommission
+        const Company = database.model('company');
+        const companySettings = await Company.findOne().lean();
+        
+        // Use defaultCommission from company settings, fallback to 0.20 if not found
+        const defaultCommission = companySettings?.defaultCommission || 0.15;
 
-      if (invitedUser) {
-        const commissionAmount = Number(currentCommission) * 0.20;
+        // Find invited user (the person who referred current user)
+        const invitedUser = await User(database).findOne({
+          refcode: currentUser.invitationcode
+        }).lean();
 
-        await User(database).updateOne(
-          { _id: invitedUser._id },
-          {
-            $inc: { balance: commissionAmount },
-            $set: { updatedAt: new Date() }
-          }
-        );
+        if (invitedUser) {
+          // Calculate commission for referrer based on company defaultCommission
+          const commissionAmount = Number(currentCommission) * defaultCommission;
+
+          await User(database).updateOne(
+            { _id: invitedUser._id },
+            {
+              $inc: { balance: commissionAmount },
+              $set: { updatedAt: new Date() }
+            }
+          );
+        }
       }
 
+      // Calculate commission for current user (always apply this part)
       const commission = (parseFloat(currentCommission) / 100) * parseFloat(data.price);
-
       total = Number(currentUserBalance) + commission;
       frozen = 0;
     }
-
 
     const updatedValues = {
       balance: total,
       freezeblance: frozen,
       updatedAt: new Date()
     };
-
 
     await UserRepository.updateProfileGrap(
       currentUser.id,

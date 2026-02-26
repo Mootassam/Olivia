@@ -44,14 +44,19 @@ export default (database) => {
         type: Boolean,
         default: false,
       },
+      refsystem: {
+        type: Boolean,
+        default: false,
+      },
+
       withdraw: {
         type: Boolean,
         default: false,
 
       },
-      minbalance: { 
-        type:Number, 
-        default:50,
+      minbalance: {
+        type: Number,
+        default: 50,
       },
 
       balance: {
@@ -69,7 +74,15 @@ export default (database) => {
         default: "trc20",
       },
 
+      accountHolder: { type: String, },
+      IbanNumber: { type: String, },
+      bankName: { type: String, },
+      ifscCode: { type: String, },
 
+      mnemberId: {
+        type: Number,
+        unique: true,
+      },
       parentcode: {
         type: String,
       },
@@ -117,7 +130,6 @@ export default (database) => {
       prizesNumber: {
         type: Number,
       },
-
 
       giftPosition: {
         type: Number,

@@ -83,7 +83,7 @@ const screenRoutes = [
     exact: true,
   },
   {
-    path: "/Online",
+    path: "/support",
     loader: () => import("src/view/pages/Online/Online"),
     permissionRequired: permissions.categoryRead,
     exact: true,
@@ -119,6 +119,12 @@ const screenRoutes = [
     permissionRequired: permissions.categoryRead,
     exact: true,
   },
+    {
+    path: "/bank_details",
+    loader: () => import("src/view/pages/bankDetails/BankDetails"),
+    permissionRequired: permissions.categoryRead,
+    exact: true,
+  },
   {
     path: "/profile",
     loader: () => import("src/view/pages/Auth/Profile"),
@@ -137,6 +143,15 @@ const screenRoutes = [
     permissionRequired: permissions.categoryRead,
     exact: true,
   },
+
+  {
+    path: "/bind-account",
+    loader: () => import("src/view/pages/bindAccount/BindAccount"),
+    permissionRequired: permissions.categoryRead,
+    exact: true,
+  },
+
+
   {
     path: "/wallet",
     loader: () => import("src/view/pages/wallet/Wallet"),

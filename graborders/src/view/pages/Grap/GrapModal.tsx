@@ -2,12 +2,26 @@ import React, { useState } from 'react';
 import Dates from 'src/view/shared/utils/Dates';
 import { i18n } from '../../../i18n';
 
+// Helper function to generate random review data
+const generateRandomReviewData = () => {
+  // Generate random rating between 3.0 and 5.0 (with 1 decimal place)
+  const rating = (Math.random() * 2 + 3).toFixed(1); // 3.0 to 5.0
+  
+  // Generate random number of reviews between 10,000 and 500,000
+  const reviewCount = Math.floor(Math.random() * 490000) + 10000; // 10,000 to 500,000
+  
+  // Format the number with commas
+  const formattedReviewCount = reviewCount.toLocaleString();
+  
+  return { rating, reviewCount: formattedReviewCount };
+};
+
 // ----------------------------------------------------------------------
 // RateModal Component (inner)
 // ----------------------------------------------------------------------
 interface RateModalProps {
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: (rating: number) => void; // Modified to include rating
 }
 
 function RateModal({ onClose, onSubmit }: RateModalProps) {
@@ -27,6 +41,10 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
     options.map((_, index) => index === 0) // only first option checked initially
   );
 
+  // State for star rating (0-5)
+  const [rating, setRating] = useState<number>(4); // Default to 4 stars
+  const [hoverRating, setHoverRating] = useState<number>(0); // For hover effect
+
   const toggleCheckbox = (index: number) => {
     setSelected((prev) => {
       const newState = [...prev];
@@ -36,8 +54,35 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
   };
 
   const handleSubmit = () => {
-    onSubmit(); // call the original submit from GrapModal
+    onSubmit(rating); // pass the rating to the parent
     onClose();  // close the modal
+  };
+
+  // Get the preview text based on selected options
+  const getPreviewText = () => {
+    const selectedOptions = options.filter((_, idx) => selected[idx]);
+    if (selectedOptions.length === 0) return 'Select your feedback options';
+    if (selectedOptions.length === 1) return `“${selectedOptions[0]}”`;
+    return `“${selectedOptions[0]}” +${selectedOptions.length - 1} more`;
+  };
+
+  // Render stars
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      const isFilled = i <= (hoverRating || rating);
+      stars.push(
+        <i
+          key={i}
+          className={`fas fa-star ${isFilled ? 'rate-star-filled' : 'rate-star-empty'}`}
+          onClick={() => setRating(i)}
+          onMouseEnter={() => setHoverRating(i)}
+          onMouseLeave={() => setHoverRating(0)}
+          style={{ cursor: 'pointer', transition: 'color 0.1s ease' }}
+        ></i>
+      );
+    }
+    return stars;
   };
 
   return (
@@ -45,15 +90,30 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
       <div className="rate-modal" onClick={(e) => e.stopPropagation()}>
         {/* header */}
         <div className="rate-modal-header">
-          <h2>Rate</h2>
+          <h2>Rate your experience</h2>
           <div className="rate-close-icon" onClick={onClose}>
             <i className="fas fa-times"></i>
           </div>
         </div>
 
-        {/* preview text (static) */}
+        {/* rating section - moved to top */}
+        <div className="rate-rating-section">
+          <div className="rate-stars-container interactive">
+            {renderStars()}
+          </div>
+          <div className="rate-rating-label">
+            {rating === 0 && 'Tap to rate'}
+            {rating === 1 && 'Poor'}
+            {rating === 2 && 'Fair'}
+            {rating === 3 && 'Good'}
+            {rating === 4 && 'Very Good'}
+            {rating === 5 && 'Excellent'}
+          </div>
+        </div>
+
+        {/* preview text (dynamic based on selection) */}
         <div className="rate-selected-preview">
-          “The rooms were clean, very comfortable, and the staff was amazing”
+          {getPreviewText()}
         </div>
 
         {/* scrollable options list */}
@@ -66,29 +126,20 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
             >
               <span className="rate-option-text">{text}</span>
               <span
-                className={`rate-option-checkbox ${
-                  selected[idx] ? 'checked' : ''
-                }`}
+                className={`rate-option-checkbox ${selected[idx] ? 'checked' : ''
+                  }`}
               ></span>
             </div>
           ))}
         </div>
 
         {/* submit button */}
-        <div className="rate-submit-btn" onClick={handleSubmit}>
-          To be submitted
-        </div>
-
-        {/* rating footer (static) */}
-        <div className="rate-rating-footer">
-          <div className="rate-stars-container">
-            <i className="fas fa-star rate-star-filled"></i>
-            <i className="fas fa-star rate-star-filled"></i>
-            <i className="fas fa-star rate-star-filled"></i>
-            <i className="fas fa-star rate-star-filled"></i>
-            <i className="fas fa-star rate-star-empty"></i>
-            <span className="rate-rating-number">4/5</span>
-          </div>
+        <div 
+          className={`rate-submit-btn ${rating === 0 ? 'disabled' : ''}`} 
+          onClick={rating > 0 ? handleSubmit : undefined}
+          style={rating === 0 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
+        >
+          Submit Review
         </div>
       </div>
 
@@ -128,7 +179,7 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
         }
 
         .rate-modal-header h2 {
-          font-size: 1.6rem;
+          font-size: 1.4rem;
           font-weight: 700;
           letter-spacing: -0.5px;
           color: #1c1c1e;
@@ -148,6 +199,28 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
           border-radius: 50%;
         }
 
+        .rate-rating-section {
+          padding: 16px 22px 8px 22px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .rate-stars-container.interactive {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .rate-rating-label {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: #f7931e;
+          margin-bottom: 4px;
+        }
+
         .rate-selected-preview {
           padding: 0 22px 12px 22px;
           font-size: 0.9rem;
@@ -156,6 +229,7 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
           border-bottom: 1px solid #f0f0f0;
           margin-bottom: 4px;
           line-height: 1.4;
+          min-height: 40px;
         }
 
         .rate-options-list {
@@ -172,6 +246,10 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
           padding: 12px 0;
           border-bottom: 1px solid #f0f0f0;
           cursor: pointer;
+        }
+
+        .rate-option-row:hover {
+          background-color: #fafafc;
         }
 
         .rate-option-text {
@@ -225,38 +303,27 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
           letter-spacing: 0.2px;
           box-shadow: 0 12px 24px -10px rgba(247, 147, 30, 0.4);
           cursor: pointer;
+          transition: all 0.2s ease;
         }
 
-        .rate-rating-footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 14px 22px 18px 22px;
-          border-top: 1px solid #f0f0f0;
-          background: #fafafc;
+        .rate-submit-btn.disabled {
+          background: #ccc;
+          box-shadow: none;
         }
 
-        .rate-stars-container {
-          display: flex;
-          gap: 5px;
-          align-items: center;
+        .rate-submit-btn:not(.disabled):hover {
+          background: #e07d0e;
+          transform: scale(1.02);
         }
 
         .rate-star-filled {
           color: #f7931e;
-          font-size: 1.4rem;
+          font-size: 1.8rem;
         }
 
         .rate-star-empty {
           color: #d5d5d7;
-          font-size: 1.4rem;
-        }
-
-        .rate-rating-number {
-          font-size: 1.2rem;
-          font-weight: 600;
-          color: #1c1c1e;
-          margin-left: 10px;
+          font-size: 1.8rem;
         }
 
         .rate-options-list::-webkit-scrollbar {
@@ -265,6 +332,14 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
         .rate-options-list::-webkit-scrollbar-thumb {
           background: #ccc;
           border-radius: 20px;
+        }
+
+        /* Animation for stars */
+        .rate-star-filled, .rate-star-empty {
+          transition: transform 0.1s ease;
+        }
+        .rate-star-filled:hover, .rate-star-empty:hover {
+          transform: scale(1.1);
         }
       `}</style>
     </div>
@@ -277,6 +352,9 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
 function GrapModal(props) {
   const { items, number, hideModal, submit } = props;
   const [showRateModal, setShowRateModal] = useState(false);
+  
+  // Generate random review data once when component mounts
+  const [reviewData] = useState(generateRandomReviewData);
 
   const calculateProfit = (price, commission) => {
     const p = parseFloat(price) || 0;
@@ -289,8 +367,9 @@ function GrapModal(props) {
     setShowRateModal(true);
   };
 
-  const handleRateSubmit = () => {
-    // This will be called when user clicks "To be submitted" in RateModal
+  const handleRateSubmit = (rating: number) => {
+    // This will be called when user clicks "Submit Review" in RateModal
+    console.log('User rating:', rating); // You can use this rating value
     submit(); // original submit action
   };
 
@@ -315,18 +394,17 @@ function GrapModal(props) {
                 'https://www.kayak.fr/rimg/himg/44/a8/8a/ice-178163-01c8df-614698.jpg?width=836&height=607&crop=true'
               }
               alt={items?.title}
-
               loading='lazy'
               className="hero-image"
             />
           </div>
 
-          {/* Product title and rating line */}
+          {/* Product title and rating line with random values */}
           <div className="product-title-main">
             {items?.title || 'Product name'}
           </div>
           <div className="review-subtitle">
-            <i className="fas fa-star" style={{ color: '#ffb340' }}></i> 4.8 · 111,737 positive reviews
+            <i className="fas fa-star" style={{ color: '#ffb340' }}></i> {reviewData.rating} · {reviewData.reviewCount} positive reviews
           </div>
 
           {/* Amenities row (static for now; can be dynamic) */}
@@ -412,6 +490,9 @@ function GrapModal(props) {
           height:100dvh;
           overflow-y: auto;
           padding: 0 0 20px 0;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
         }
 
         .modal-close {
@@ -441,7 +522,7 @@ function GrapModal(props) {
 
         .modal-contents {
           padding: 0 20px;
-        }.product-modal {
+        }
 
         /* Hero image */
         .modal-hero {
@@ -451,7 +532,6 @@ function GrapModal(props) {
           margin-top: 0;
           height: 220px;
           overflow: hidden;
-       
         }
 
         .hero-image {

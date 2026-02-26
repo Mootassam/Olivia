@@ -137,7 +137,7 @@ function Profile() {
       {
         icon: "fa-solid fa-headset",
         name: "Contact Us",
-        action: () => goto("/online"),
+        action: () => goto("/support"),
       },
       {
         icon: "fa-solid fa-key",
@@ -191,12 +191,12 @@ function Profile() {
           </FormProvider>
         </div>
         <div className="user-details">
-          <div className="user-phone">{getMaskedPhone()}</div>
-          <div className="user-uid">UID:{currentUser?.uid || "131784"}</div>
+          <div className="user-phone">{currentUser?.email || "131784"}</div>
+          <div className="user-uid">UID:{currentUser?.mnemberId || "131784"}</div>
           <div className="invitation-row">
             <span className="invitation-label">Invitation code:</span>
             <span ref={referenceCodeRef} className="invitation-code">
-              {currentUser?.refcode || "64WS65"}
+              { currentUser.refsystem ?  currentUser?.refcode || "64WS65" : "******" }
             </span>
             <i
               className="fa-regular fa-copy copy-icon"
@@ -264,7 +264,7 @@ function Profile() {
             </p>
             <div
               className="modal-confirm"
-              onClick={() => goto("/Online")}
+              onClick={() => goto("/support")}
             >
               {i18n('pages.profile.confirm')}
             </div>
@@ -288,7 +288,7 @@ function Profile() {
             </p>
             <div
               className="modal-confirm"
-              onClick={() => goto("/Online")}
+              onClick={() => goto("/support")}
             >
               {i18n('pages.profile.confirm')}
             </div>

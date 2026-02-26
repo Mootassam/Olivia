@@ -846,6 +846,7 @@ const en = {
       gender: "Gender",
       username: "Username",
       walletName: "wallet Name",
+
       id: "Id",
       confirmPassword: "confirm Password",
       avatars: "Avatar",
@@ -880,6 +881,7 @@ const en = {
       newPassword: "New Password",
       newPasswordConfirmation: "New Password Confirmation",
       rememberMe: "Remember me",
+
     },
     sector: {
       AGRO_ALIMENTAIRE: "Food industry",

@@ -77,7 +77,7 @@ function VipPage() {
   }, []);
 
   const handleContactSupport = useCallback(() => {
-    history.push("/Online");
+    history.push("/support");
   }, [history]);
 
   const handleSearchChange = useCallback(
