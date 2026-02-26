@@ -2,7 +2,7 @@ import Withdraw from "src/view/pages/withdraw/Withdraw";
 
 const ru = {
   app: {
-    title: "gotomarketers"
+    title: "GoToMarketersers"
   },
 
 
@@ -13,7 +13,7 @@ const ru = {
       levels: "VIP Уровни",
       chooseLevel: "Выберите свой уровень, чтобы максимизировать доход",
       welcome: "Добро пожаловать",
-      announcement: "Уважаемые пользователи, платформа gotomarketers вернулась к лучшему и нормальному состоянию, продолжайте зарабатывать как можно больше с платформы",
+      announcement: "Уважаемые пользователи, платформа GoToMarketersers вернулась к лучшему и нормальному состоянию, продолжайте зарабатывать как можно больше с платформы",
 
       // Action Buttons
       services: "Сервисы",

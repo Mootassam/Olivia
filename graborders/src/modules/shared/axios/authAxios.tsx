@@ -9,13 +9,13 @@ import AuthToken from 'src/modules/auth/authToken';
 
 const authAxios = Axios.create({
   //Local
-  // baseURL: "http://localhost:8080/api/",
+  baseURL: "http://localhost:8080/api/",
 
   //demo
-  baseURL: "http://159.198.43.161:8082/api/",
+  // baseURL: "http://159.198.43.161:8082/api/",
 
   //Randthis
-  // baseURL: "https://gotomarketerss.com/api",
+  // baseURL: "https://GoToMarketerserss.com/api",
 
   paramsSerializer: function (params) {
     return Qs.stringify(params, {

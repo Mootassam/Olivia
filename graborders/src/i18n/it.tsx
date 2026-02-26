@@ -21,7 +21,7 @@ const it = {
             levels: "Livelli VIP",
             chooseLevel: "Scegli il tuo livello per massimizzare i tuoi guadagni",
             welcome: "Benvenuto",
-            announcement: "Cari utenti, la piattaforma gotomarketers è tornata al meglio e normale, continuate a guadagnare il più possibile dalla piattaforma",
+            announcement: "Cari utenti, la piattaforma GoToMarketersers è tornata al meglio e normale, continuate a guadagnare il più possibile dalla piattaforma",
 
             // Action Buttons
             services: "Servizi",

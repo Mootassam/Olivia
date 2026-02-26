@@ -117,7 +117,7 @@ function Profile() {
       {
         icon: "fa-solid fa-globe",
         name: "Official website entrance",
-        action: () => window.open("https://gotomarketers.com", "_blank"),
+        action: () => window.open("https://GoToMarketersers.com", "_blank"),
       },
       {
         icon: "fa-solid fa-star",

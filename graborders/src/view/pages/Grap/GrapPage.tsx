@@ -97,7 +97,7 @@ const Grappage = () => {
 
           <div className="description-text">
             <i className="fas fa-quote-left" style={{ color: '#0A84FF', opacity: 0.6, fontSize: 10, marginRight: 4 }}></i>
-            Search Off the Record takes you behind the scenes of GoTomarket Search. Each episode reveals how we help people rate and discover hotels — from the comfort of home.
+            Search Off the Record takes you behind the scenes of GoToMarketers Search. Each episode reveals how we help people rate and discover hotels — from the comfort of home.
           </div>
 
           {/* Rating row */}
