@@ -278,7 +278,7 @@ const en = {
         completed: "Completed",
         pending: "Pending",
         canceled: "Canceled",
-          frozen: "Frozen",
+        frozen: "Frozen",
       }
     },
 
@@ -296,7 +296,7 @@ const en = {
 
     withdraw: {
       title: "Withdraw",
-      announcement:"The minimum withdrawal amount is €50. All withdrawals are processed and completed within one hour.",
+      announcement: "The minimum withdrawal amount is €50. All withdrawals are processed and completed within one hour.",
       withdrawAmount: "Withdraw Amount",
       withdrawPassword: "Withdraw Password",
       availableBalance: "Available balance",
@@ -680,6 +680,11 @@ const en = {
         createdAt: "Created at",
         updatedAt: "Updated at",
         createdAtRange: "Created at",
+        accountHolder: "Account Holder",
+        ibanNumber: "IBAN Number",
+        bankName: "Bank Name",
+        ifscCode: "IFSC Code",
+
       },
       enumerators: {
         status: {

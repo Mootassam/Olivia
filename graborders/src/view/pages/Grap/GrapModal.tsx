@@ -68,7 +68,7 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
 
   // Render stars
   const renderStars = () => {
-    const stars = [];
+    const stars: JSX.Element[] = [];
     for (let i = 1; i <= 5; i++) {
       const isFilled = i <= (hoverRating || rating);
       stars.push(

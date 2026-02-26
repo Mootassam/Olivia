@@ -31,7 +31,8 @@ function LogoForm(props) {
       photo: record?.photo || [],
       trc20: record?.trc20,
       eth: record?.eth,
-      defaultBalance: record?.defaultBalance
+      defaultBalance: record?.defaultBalance,
+      defaulCommission: record?.defaulCommission
     };
   });
 
@@ -106,6 +107,17 @@ function LogoForm(props) {
                 name="defaultBalance"
                 label={i18n(
                   'entities.category.fields.defaultBalance',
+                )}
+                required={false}
+                autoFocus
+              />
+            </div>
+
+                        <div className="col-lg-7 col-md-8 col-12">
+              <InputFormItem
+                name="defaulCommission"
+                label={i18n(
+                  'entities.category.fields.defaulCommission',
                 )}
                 required={false}
                 autoFocus

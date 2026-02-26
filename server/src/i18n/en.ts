@@ -9,9 +9,11 @@ const en = {
 
   validation: {
     inValidWithdrawPassword: 'Your withdraw Password is not correct please check again',
-    exceedsBalance: 'It looks like your withdrawal amount exceeds your balance',
+    missingBankDetails: 'Please add your bank details before making a withdrawal',
+    missingWithdrawalMethod: 'Please add either a crypto wallet or bank details before making a withdrawal',
+    requiredAmount: 'Please enter an amount',
+    exceedsBalance: 'Your balance is insufficient for this withdrawal',
     missingWalletAddress: 'Please go to the "Wallet" section to bind your USDT (TRC20) or ERC20 address before submitting a withdrawal request.',
-    requiredAmount: 'Please write amount',
     notFoundTransaction: 'Transaction not found',
     permissoin: "Please try to contact the customer Support for help",
     duplicateSubsctription: 'You have already subscribed to this plan',

@@ -67,8 +67,8 @@ function UserView(props) {
         </Col>
         <Col sm={4}>
           <TextViewItem
-            label={i18n('country')}
-            value={user.country}
+            label={i18n('VIP Status')}
+            value={user.vip.title}
           />
         </Col>
       </Row>
@@ -94,36 +94,10 @@ function UserView(props) {
             value={user.adresse}
           />
         </Col>
-        <Col sm={4}>
-          <TextViewItem
-            label={i18n('C.I.N')}
-            value={user.cin}
-          />
-        </Col>
+      
       </Row>
 
-      <Row>
-        <Col sm={4}>
-          <TextViewItem
-            label={i18n('Etat Civil')}
-            value={
-              user.etat_civil && i18n(`${user.etat_civil}`)
-            }
-          />
-        </Col>
-        <Col sm={4}>
-          <TextViewItem
-            label={i18n('Lien Facebook')}
-            value={user.lien_facebook}
-          />
-        </Col>
-        <Col sm={4}>
-          <ImagesViewItem
-            label={i18n('user.fields.avatars')}
-            value={user.avatars}
-          />
-        </Col>
-      </Row>
+
 
       <Row
         style={{

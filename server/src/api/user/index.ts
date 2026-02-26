@@ -21,6 +21,12 @@ export default (app) => {
     require("./OneClickLogin").default
   );
 
+    app.put(
+    `/tenant/:tenantId/user/updateMyBankInfo`,
+    require("./userBankDetails").default
+  );
+
+
   app.get(
     `/tenant/:tenantId/user`,
     require('./userList').default,

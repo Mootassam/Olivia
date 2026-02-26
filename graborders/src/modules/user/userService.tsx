@@ -15,6 +15,23 @@ export default class UserService {
     return response.data;
   }
 
+
+
+    static async editBankDetails(data) {
+    const body = {
+      data,
+    };
+    const tenantId = AuthCurrentTenant.get();
+    const response = await authAxios.put(
+      `/tenant/${tenantId}/user/updateMyBankInfo`,
+      body,
+    );
+
+    return response.data;
+  }
+
+
+
     static async fetchAllcurrentUser() {
   
     const tenantId = AuthCurrentTenant.get();

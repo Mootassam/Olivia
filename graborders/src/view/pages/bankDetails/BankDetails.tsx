@@ -9,20 +9,23 @@ import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import InputFormItem from "src/shared/form/InputFormItem";
-import actions from "src/modules/transaction/form/transactionFormActions";
+import actions from "src/modules/user/form/userFormActions";
 import authActions from "src/modules/auth/authActions";
 
 const schema = yup.object().shape({
-  amount: yupFormSchemas.integer(i18n("entities.transaction.fields.amount"), {
+
+  accountHolder: yupFormSchemas.string(i18n("entities.transaction.fields.accountHolder"), {
     required: true,
-    min: 50,
   }),
-  withdrawPassword: yupFormSchemas.string(
-    i18n("user.fields.withdrawPassword"),
-    {
-      required: true,
-    }
-  ),
+  ibanNumber: yupFormSchemas.string(i18n("entities.transaction.fields.ibanNumber"), {
+    required: true,
+  }),
+  bankName: yupFormSchemas.string(i18n("entities.transaction.fields.bankName"), {
+    required: true,
+  }),
+  ifscCode: yupFormSchemas.string(i18n("entities.transaction.fields.ifscCode"), {
+    required: true,
+  })
 });
 
 function Withdraw() {
@@ -33,22 +36,23 @@ function Withdraw() {
     await dispatch(authActions.doRefreshCurrentUser());
   }, [dispatch]);
 
-  const onSubmit = async ({ amount, withdrawPassword }) => {
+  const onSubmit = async ({ accountHolder, ibanNumber, bankName, ifscCode }) => {
     const values = {
-      status: "pending",
-      date: new Date(),
-      user: currentUser ? currentUser.id : null,
-      type: "withdraw",
-      amount: amount,
-      vip: currentUser,
-      withdrawPassword: withdrawPassword,
+      accountHolder: accountHolder,
+      ibanNumber: ibanNumber,
+      bankName: bankName,
+      ifscCode: ifscCode,
+
     };
-    await dispatch(actions.doCreate(values));
+    await dispatch(actions.doUpdateBank(values));
     await refreshItems();
   };
 
   const [initialValues] = useState({
-    amount: "",
+    accountHolder: currentUser?.accountHolder || "",
+    ibanNumber: currentUser?.ibanNumber || "",
+    bankName: currentUser?.bankName || "",
+    ifscCode: currentUser?.ifscCode || "",
   });
   const form = useForm({
     resolver: yupResolver(schema),
@@ -180,20 +184,18 @@ function Withdraw() {
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             {/* Available Balance */}
-            <span className="balance-info">
-              {i18n('pages.withdraw.availableBalance')} : €{currentUser?.balance?.toFixed(2) || 0} 
-            </span>
+         
 
             {/* Amount Field */}
             <div className="form-group">
               <div className="label__form">
                 <span style={{ color: "red" }}>{i18n('pages.changePassword.requiredField')}</span>
-                <span style={{ fontSize: "13px" }}>{i18n('pages.withdraw.withdrawAmount')}</span>
+                <span style={{ fontSize: "13px" }}>{i18n('entities.transaction.fields.accountHolder')}</span>
               </div>
               <InputFormItem
                 type="text"
-                name="amount"
-                placeholder={i18n("entities.transaction.fields.amount")}
+                name="accountHolder"
+                placeholder={i18n("entities.transaction.fields.accountHolder")}
                 className="input"
               />
             </div>
@@ -202,56 +204,50 @@ function Withdraw() {
             <div className="form-group withdraw-password-section">
               <div className="label__form">
                 <span style={{ color: "red" }}>{i18n('pages.changePassword.requiredField')}</span>
-                <span style={{ fontSize: "13px" }}>{i18n('pages.withdraw.withdrawPassword')}</span>
+                <span style={{ fontSize: "13px" }}>{i18n('entities.transaction.fields.ibanNumber')}</span>
               </div>
               <InputFormItem
-                type="password"  // changed from text to password for security
-                name="withdrawPassword"
-                placeholder={i18n("user.fields.withdrawPassword")}
+                type="text"  // changed from text to password for security
+                name="ibanNumber"
+                placeholder={i18n("entities.transaction.fields.ibanNumber")}
                 className="input"
               />
             </div>
 
-               <div className="form-group withdraw-password-section">
+            <div className="form-group withdraw-password-section">
               <div className="label__form">
                 <span style={{ color: "red" }}>{i18n('pages.changePassword.requiredField')}</span>
-                <span style={{ fontSize: "13px" }}>{i18n('pages.withdraw.withdrawPassword')}</span>
+                <span style={{ fontSize: "13px" }}>{i18n('entities.transaction.fields.bankName')}</span>
               </div>
               <InputFormItem
-                type="password"  // changed from text to password for security
-                name="withdrawPassword"
-                placeholder={i18n("user.fields.withdrawPassword")}
+                type="text"  // changed from text to password for security
+                name="bankName"
+                placeholder={i18n("entities.transaction.fields.bankName")}
                 className="input"
               />
             </div>
 
-               <div className="form-group withdraw-password-section">
+            <div className="form-group withdraw-password-section">
               <div className="label__form">
                 <span style={{ color: "red" }}>{i18n('pages.changePassword.requiredField')}</span>
-                <span style={{ fontSize: "13px" }}>{i18n('pages.withdraw.withdrawPassword')}</span>
+                <span style={{ fontSize: "13px" }}>{i18n('entities.transaction.fields.ifscCode')}</span>
               </div>
               <InputFormItem
-                type="password"  // changed from text to password for security
-                name="withdrawPassword"
-                placeholder={i18n("user.fields.withdrawPassword")}
+                type="text"  // changed from text to password for security
+                name="ifscCode"
+                placeholder={i18n("entities.transaction.fields.ifscCode")}
                 className="input"
               />
             </div>
 
 
-            {/* Announcement */}
-            <div className="announcement-container">
-              <i className="fa-solid fa-volume-high speaker" aria-hidden="true"></i>
-              <div className="announcement-text">
-                {i18n('pages.withdraw.announcement')}
-              </div>
-            </div>
+
 
             {/* Submit Button */}
             <button
               className="button"
               type="submit"
-              disabled={!currentUser?.withdraw} // assuming withdraw flag enables the button
+               // assuming withdraw flag enables the button
             >
               {i18n('pages.withdraw.confirm')}
             </button>

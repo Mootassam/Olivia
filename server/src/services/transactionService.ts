@@ -93,7 +93,7 @@ export default class TransactionService {
     }], options);
   }
 
-  async checkSolde(data, options) {
+async checkSolde(data, options) {
     const currentUser = MongooseRepository.getCurrentUser(options);
 
     if (!data) {
@@ -104,14 +104,15 @@ export default class TransactionService {
 
     if (type === "withdraw") {
 
+      // Check if bank details are provided instead of TRC20
+      if (!currentUser.accountHolder || 
+          !currentUser.IbanNumber || 
+          !currentUser.bankName || 
+          !currentUser.ifscCode) {
 
-
-      if (!currentUser.trc20) {
-
-        throw new Error400(options.language, "validation.missingWalletAddress");
+        throw new Error400(options.language, "validation.missingBankDetails");
 
       }
-
 
       if (currentUser.withdrawPassword == data.withdrawPassword) {
         if (currentUser.balance < amount) {

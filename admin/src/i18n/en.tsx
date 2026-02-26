@@ -236,6 +236,7 @@ const en = {
         updatedAt: 'Updated at',
         createdAtRange: 'Created at',
         passportphoto: 'Passport Copy',
+        defaulCommission: 'Default Commission',
         type: 'type',
       },
       enumerators: {

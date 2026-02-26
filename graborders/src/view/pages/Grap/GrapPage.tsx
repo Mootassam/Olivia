@@ -14,6 +14,7 @@ import productListActions from "src/modules/product/list/productListActions";
 import PrizeModal from "./PrizeModal";
 import { i18n } from "../../../i18n";
 import Message from "src/view/shared/message";
+import authActions from "src/modules/auth/authActions";
 
 const Grappage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -55,6 +56,7 @@ const Grappage = () => {
 
   const hideModal = () => {
     dispatch(productListActions.doCloseModal());
+    dispatch(authActions.doRefreshCurrentUser());
   };
 
   const submit = async () => {

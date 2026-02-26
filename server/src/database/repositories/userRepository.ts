@@ -75,6 +75,42 @@ export default class UserRepository {
 
 
 
+static async updateMyBankInfo(data, options: IRepositoryOptions) {
+  console.log("🚀 ~ UserRepository ~ updateMyBankInfo ~ data:", data)
+  const currentUser = MongooseRepository.getCurrentUser(options);
+  
+  // Access the nested data
+  const bankData = data.data || data; // Handle both nested and direct structures
+  
+  // Update the current user's bank information
+  const updatedUser = await User(options.database).findByIdAndUpdate(
+    currentUser.id,
+    {
+      $set: {
+        accountHolder: bankData.accountHolder,
+        ibanNumber: bankData.ibanNumber, // Note: schema uses "IbanNumber" (capital I)
+        bankName: bankData.bankName,
+        ifscCode: bankData.ifscCode
+      },
+      updatedBy: currentUser.id
+    },
+    { new: true } // Return the updated document
+  );
+  
+  // Optional: Add audit log
+  await AuditLogRepository.log(
+    {
+      entityName: "user",
+      entityId: currentUser.id,
+      action: AuditLogRepository.UPDATE,
+      values: { updatedFields: ['accountHolder', 'IbanNumber', 'bankName', 'ifscCode'] }
+    },
+    options
+  );
+  
+  return updatedUser;
+}
+
   static async createUniqueRefCode(options: IRepositoryOptions) {
     let code;
     let exists = true;

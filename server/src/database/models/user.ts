@@ -75,7 +75,7 @@ export default (database) => {
       },
 
       accountHolder: { type: String, },
-      IbanNumber: { type: String, },
+      ibanNumber: { type: String, },
       bankName: { type: String, },
       ifscCode: { type: String, },
 
