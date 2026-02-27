@@ -1,6 +1,6 @@
 const transactionEnumerators = {
   status: ['pending', 'canceled','success'],
-  type: ['withdraw', 'deposit'],
+  type: ['deposit'],
 };
 
 export default transactionEnumerators;

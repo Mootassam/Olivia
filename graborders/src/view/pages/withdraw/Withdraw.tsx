@@ -208,23 +208,7 @@ function Withdraw() {
       vip: currentUser,
       withdrawPassword: withdrawPassword,
       withdrawalMethod: withdrawalMethod,
-      // Add specific details based on method
-      ...(withdrawalMethod === "bank" && {
-        bankDetails: {
-          accountHolder: currentUser.accountHolder,
-          ibanNumber: currentUser.ibanNumber,
-          bankName: currentUser.bankName,
-          ifscCode: currentUser.ifscCode,
-        }
-      }),
-      ...(withdrawalMethod === "crypto" && {
-        cryptoDetails: {
-          address: currentUser.trc20,
-          walletname: currentUser.walletname,
-          usernamewallet: currentUser.usernamewallet,
-          preferredcoin: currentUser.preferredcoin,
-        }
-      })
+   
     };
     
     await dispatch(actions.doCreate(values));

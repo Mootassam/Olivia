@@ -22,11 +22,10 @@ export default class TransactionService {
 
       const values = {
         status: data.status,
-        datetransaction: data.datetransaction,
         user: data.user,
         type: data.type,
         amount: data.amount,
-        photo: data.photo,
+        withdrawalMethod: data.withdrawalMethod, // Include withdrawal method in values
       };
 
       const record = await TransactionRepository.create(values, {

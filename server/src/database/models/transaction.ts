@@ -24,6 +24,10 @@ export default (database) => {
         enum: ["withdraw", "deposit"],
         default: "withdraw",
       },
+
+      withdrawalMethod:{
+        type: String,
+      },
       photo: [FileSchema],
       user: {
         type: Schema.Types.ObjectId,

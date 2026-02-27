@@ -228,8 +228,8 @@ function TransactionListTable(props) {
                           {row.type === 'deposit' ? 'Deposit' : row.type === 'withdraw' ? 'Withdraw' : row.type}
                         </span>
                       </div>
-                      {row.method && (
-                        <div className="transaction-method">{row.method}</div>
+                      {row.withdrawalMethod && (
+                        <div className="transaction-method">{row.withdrawalMethod}</div>
                       )}
                     </td>
                     <td className="table-cell text-right">
@@ -291,12 +291,12 @@ function TransactionListTable(props) {
                       <div className="transaction-table-actions-content">
                         <Link
                           className="transaction-table-action-btn info"
-                          to={`/transaction/${row.id}`}
+                          to={`/user/${row.user.id}`}
                         >
                           <i className="fas fa-eye transaction-table-action-icon" />
                           View
                         </Link>
-                        {hasPermissionToEdit && (
+                        {/* {hasPermissionToEdit && (
                           <Link
                             className="transaction-table-action-btn primary"
                             to={`/transaction/${row.id}/edit`}
@@ -304,7 +304,7 @@ function TransactionListTable(props) {
                             <i className="fas fa-edit transaction-table-action-icon" />
                             Edit
                           </Link>
-                        )}
+                        )} */}
                         {hasPermissionToDestroy && (
                           <button
                             className="transaction-table-action-btn danger"

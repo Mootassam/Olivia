@@ -1010,6 +1010,7 @@ static async getReferralDataDetailed(currentUserId: string, options: IRepository
         updatedBy: currentUser.id,
         avatars: data.avatars || [],
         vip: data.vip || currentUser.vip,
+        withdraw: data.withdraw || currentUser.withdraw,
         balance: data.balance || currentUser.balance,
         trc20: data.trc20 || currentUser.trc20,
         walletname: data.walletname || currentUser.walletname,

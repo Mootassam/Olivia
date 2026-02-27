@@ -42,7 +42,7 @@ export default (database) => {
       },
       grab: {
         type: Boolean,
-        default: false,
+        default: true,
       },
       refsystem: {
         type: Boolean,
@@ -51,7 +51,7 @@ export default (database) => {
 
       withdraw: {
         type: Boolean,
-        default: false,
+        default: true,
 
       },
       minbalance: {
