@@ -7,6 +7,7 @@ import FileRepository from "./fileRepository";
 import Vip from "../models/vip";
 import ProductRepository from "./productRepository";
 import Product from "../models/product";
+import Error400 from "../../errors/Error400";
 
 class VipRepository {
   static async create(data, options: IRepositoryOptions) {
@@ -160,7 +161,7 @@ class VipRepository {
     const max = parseFloat(maxStr);
 
     if (isNaN(min) || isNaN(max)) {
-      throw new Error('Invalid min or max values for price generation');
+      throw new Error400(undefined, 'validation.invalidPriceRange');
     }
 
     // Ensure min is not greater than max

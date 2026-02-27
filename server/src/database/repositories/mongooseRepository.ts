@@ -13,8 +13,9 @@ export default class MongooseRepository {
    */
   static async cleanDatabase(connection) {
     if (process.env.NODE_ENV !== 'test') {
-      throw new Error(
-        'Clean database only allowed for test!',
+      throw new Error400(
+        undefined,
+        'validation.cleanDatabaseOnlyForTest',
       );
     }
 

@@ -9,7 +9,6 @@ import SettingsRepository from "./settingsRepository";
 import { isUserInTenant } from "../utils/userTenantUtils";
 import { IRepositoryOptions } from "./IRepositoryOptions";
 import lodash from "lodash";
-import Error405 from "../../errors/Error405";
 import product from "../models/product";
 import VipRepository from "./vipRepository";
 import Vip from "../models/vip";
@@ -80,24 +79,24 @@ static async userChangeWithdrawalPassword(data, options: IRepositoryOptions) {
 
     // Validate input
     if (!oldPassword || oldPassword.trim() === '') {
-      throw new Error405("Old password is required");
+      throw new Error400(options.language, "validation.oldPasswordRequired");
     }
 
     if (!newPassword || newPassword.trim() === '') {
-      throw new Error405("New password is required");
+      throw new Error400(options.language, "validation.newPasswordRequired");
     }
 
     if (newPassword.length < 4) {
-      throw new Error405("New password must be at least 4 characters long");
+      throw new Error400(options.language, "validation.newPasswordTooShort");
     }
 
     if (newPassword.length > 50) {
-      throw new Error405("New password must not exceed 50 characters");
+      throw new Error400(options.language, "validation.newPasswordTooLong");
     }
 
     // Check if new password is same as old password
     if (oldPassword === newPassword) {
-      throw new Error405("New password must be different from old password");
+      throw new Error400(options.language, "validation.newPasswordDifferentFromOld");
     }
 
     // First, get the user to check if withdrawPassword exists
@@ -106,7 +105,7 @@ static async userChangeWithdrawalPassword(data, options: IRepositoryOptions) {
       .select('+withdrawPassword');
 
     if (!user) {
-      throw new Error405("User not found");
+      throw new Error400(options.language, "validation.userNotFound");
     }
 
     // Check if user has a withdraw password set
@@ -121,7 +120,7 @@ static async userChangeWithdrawalPassword(data, options: IRepositoryOptions) {
 
     // Verify old password matches
     if (user.withdrawPassword !== oldPassword) {
-      throw new Error405("The old withdrawal password is incorrect");
+      throw new Error400(options.language, "validation.invalidOldWithdrawalPassword");
     }
 
     // Update the password
@@ -131,7 +130,7 @@ static async userChangeWithdrawalPassword(data, options: IRepositoryOptions) {
     );
 
     if (result.modifiedCount === 0) {
-      throw new Error405("Failed to update password. Please try again.");
+      throw new Error400(options.language, "validation.updatePasswordFailed");
     }
 
 
@@ -197,7 +196,7 @@ static async updateMyBankInfo(data, options: IRepositoryOptions) {
 
     // Get current user's refcode
     if (!currentUser) {
-      throw new Error("User not found");
+      throw new Error400(options.language, "validation.userNotFound");
     }
 
     const userRefCode = currentUser.refcode;
@@ -389,7 +388,7 @@ static async getReferralDataDetailed(currentUserId: string, options: IRepository
     // Get current user's refcode
     const currentUser = await UserModel.findById(currentUserId);
     if (!currentUser) {
-      throw new Error("User not found");
+      throw new Error400(options.language, "validation.userNotFound");
     }
 
     const userRefCode = currentUser.refcode;

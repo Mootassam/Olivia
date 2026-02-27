@@ -5,7 +5,6 @@ import Error404 from "../../errors/Error404";
 import { IRepositoryOptions } from "./IRepositoryOptions";
 import FileRepository from "./fileRepository";
 import Records from "../models/records";
-import Error405 from "../../errors/Error405";
 import Dates from "../utils/Dates";
 import Product from "../models/product";
 import UserRepository from "./userRepository";
@@ -219,7 +218,7 @@ static async calculeGrap(data, options) {
     ]);
 
     if (!currentProduct) {
-      throw new Error405('Product not found');
+      throw new Error400(options.language, 'validation.productNotFound');
     }
 
     const currentUserBalance = currentUser?.balance || 0;
@@ -318,15 +317,13 @@ static async calculeGrap(data, options) {
 
     if (currentUser && currentUser.vip && currentUser.vip.id) {
       if (currentUser.tasksDone >= dailyOrder) {
-        throw new Error405(
-          "This is your limit. Please contact customer support for more tasks"
-        );
+        throw new Error400(options.language, "validation.moretasks");
       }
 
 
 
       if (currentUser.balance <= 0) {
-        throw new Error405("insufficient balance please upgrade.");
+        throw new Error400(options.language, "validation.InsufficientBalance");
       }
 
       // if (currentUser.balance <= 49) {
@@ -335,7 +332,7 @@ static async calculeGrap(data, options) {
 
 
     } else {
-      throw new Error405("Please subscribe to at least one VIP package.");
+      throw new Error400(options.language, "validation.requiredSubscription");
     }
   }
 
@@ -346,7 +343,7 @@ static async calculeGrap(data, options) {
     const numCommission = Number(commission);
 
     if (isNaN(numPrice) || isNaN(numCommission)) {
-      throw new Error('Invalid price or commission values');
+      throw new Error400(undefined, 'validation.invalidPriceOrCommission');
     }
 
     return (numPrice * numCommission) / 100;
@@ -357,7 +354,7 @@ static async calculeGrap(data, options) {
     const numCommission = Number(commission);
 
     if (isNaN(numPrice) || isNaN(numCommission)) {
-      throw new Error405('Invalid price or commission values');
+      throw new Error400(undefined, 'validation.invalidPriceOrCommission');
     }
 
     return numPrice + (numPrice * numCommission) / 100;
@@ -383,7 +380,7 @@ static async calculeGrap(data, options) {
       .lean();
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error400(options.language, 'validation.userNotFound');
     }
 
     return { record: user.tasksDone || 0 };
@@ -502,7 +499,7 @@ static async calculeGrap(data, options) {
       // Check if user has sufficient balance (not 0 or negative)
       const currentBalance = parseFloat(user.balance) || 0;
       if (currentBalance <= 0) {
-        throw new Error405('Please contact the customer service to recharge');
+      throw new Error400(options.language, 'validation.deposit');
       }
 
       // Find ALL records that need to be completed (both pending AND frozen)
@@ -516,7 +513,7 @@ static async calculeGrap(data, options) {
         .session(session || null);
 
       if (!recordsToComplete || recordsToComplete.length === 0) {
-        throw new Error405('No records found to complete (pending or frozen)');
+      throw new Error400(options.language, 'validation.noRecordsToComplete');
       }
 
       // Update ALL pending and frozen records to completed

@@ -3,6 +3,7 @@ import TenantService from '../../../services/tenantService';
 import Plans from '../../../security/plans';
 import ApiResponseHandler from '../../apiResponseHandler';
 import lodash from 'lodash';
+import Error400 from '../../../errors/Error400';
 
 export default async (req, res) => {
   try {
@@ -29,8 +30,9 @@ export default async (req, res) => {
       );
 
       if (!stripePriceId) {
-        throw new Error(
-          'line_items.data[0].price.id NULL!',
+        throw new Error400(
+          req.language,
+          'validation.stripeLineItemPriceIdNull',
         );
       }
 

@@ -6,7 +6,6 @@ import { IRepositoryOptions } from "./IRepositoryOptions";
 import FileRepository from "./fileRepository";
 import Error400 from "../../errors/Error400";
 import UserRepository from "./userRepository";
-import Error405 from "../../errors/Error405";
 import Notification from "../models/notification";
 
 class NotificationRepository {

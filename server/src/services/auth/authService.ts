@@ -786,7 +786,7 @@ class AuthService {
     options: any = {}
   ) {
     if (!email) {
-      throw new Error("auth-no-email");
+      throw new Error400(options.language, "validation.authNoEmail");
     }
 
     const session = await MongooseRepository.createSession(options.database);
@@ -799,7 +799,7 @@ class AuthService {
         user &&
         (user.provider !== provider || user.providerId !== providerId)
       ) {
-        throw new Error("auth-invalid-provider");
+        throw new Error400(options.language, "validation.authInvalidProvider");
       }
 
       if (!user) {

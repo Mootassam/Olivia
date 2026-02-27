@@ -3,7 +3,6 @@ import MongooseRepository from "../database/repositories/mongooseRepository";
 import { IServiceOptions } from "./IServiceOptions";
 import NotificationRepository from "../database/repositories/NotificationRepository";
 import Error402 from "../errors/Error402";
-import Error405 from "../errors/Error405";
 import Notification from "../database/models/notification";
 
 export default class NotificationService {
