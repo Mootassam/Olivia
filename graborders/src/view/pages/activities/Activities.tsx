@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SubHeader from 'src/view/shared/Header/SubHeader';
+import { i18n } from '../../../i18n';
 
 function Activities() {
   const images = [
@@ -55,10 +56,10 @@ function Activities() {
 
   return (
     <div className="activities-page">
-      <SubHeader title="Activities" path="/profile" />
+      <SubHeader title={i18n('pages.activities.title')} path="/profile" />
 
       <p className="activities-page__subtitle">
-        The promotion is in full swing, come and join it!
+        {i18n('pages.activities.subtitle')}
       </p>
 
       <div className="slider-container">

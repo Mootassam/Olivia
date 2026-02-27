@@ -124,6 +124,14 @@ const ptBR = {
       security: "Segurança",
       notifications: "Notificações",
       languages: "Idiomas",
+      bindAccount: "Vincular Conta",
+      details: "Detalhes",
+      officialWebsite: "Entrada do site oficial",
+      changeLoginPassword: "Alterar senha de login",
+      changeWithdrawPassword: "Alterar senha de saque",
+      mainFunction: "Função principal",
+      otherFunction: "Outras funções",
+      uid: "UID",
 
       // Buttons
       logout: "Sair",
@@ -138,6 +146,10 @@ const ptBR = {
       withdrawModal: {
         title: "Saque",
         text: "Por favor, entre em contato com o serviço ao cliente para proceder com seu saque."
+      },
+      reputation: {
+        title: "Regras de reputação",
+        description: "Cada conta possui um sistema de reputação baseado no desempenho do membro. Se você concluir as tarefas diárias e mantiver uma boa reputação, sua pontuação melhorará. Se você não cumprir os prazos, sua pontuação diminuirá. Se sua reputação cair abaixo de 80%, o sistema bloqueará saques. Para dúvidas, entre em contato com o atendimento ao cliente."
       }
     },
 
@@ -256,11 +268,13 @@ const ptBR = {
         completed: "Concluído",
         pending: "Pendente",
         canceled: "Cancelado"
-      }
+      },
+      submit: "Enviar"
     },
 
     changePassword: {
       title: "Alterar Senha",
+      withdrawPassword: "Alterar senha de saque",
       header: "Alterar Senha",
       oldPassword: "Senha Antiga",
       newPassword: "Nova Senha",
@@ -272,6 +286,7 @@ const ptBR = {
 
     withdraw: {
       title: "Saque",
+      announcement: "O valor mínimo de saque é €50. Todos os saques são processados em 24 horas.",
       withdrawAmount: "Valor do Saque",
       withdrawPassword: "Senha de Saque",
       availableBalance: "Saldo disponível",
@@ -281,6 +296,36 @@ const ptBR = {
         minimum: "(1) O saque mínimo é de 100 USD",
         paymentTime: "(2) O pagamento será feito dentro da próxima hora, após a aprovação do pedido de saque.",
         orderCompletion: "(3) O envio incompleto de pedidos diários está sujeito a nenhum saque, todos os produtos devem ser enviados para saque"
+      },
+      amountPlaceholder: "Digite o valor (mín. €50)",
+      selectMethod: "Selecionar método de saque",
+      methods: {
+        crypto: "Criptomoeda",
+        bank: "Transferência bancária",
+        cryptoNetworks: "TRC20 | ERC20",
+        bankNetworks: "IBAN | SWIFT"
+      },
+      status: {
+        complete: "✓ Completo",
+        incomplete: "⚠ Incompleto"
+      },
+      withdrawingTo: "Sacando para:",
+      withdrawPasswordPlaceholder: "Digite sua senha de saque",
+      bankModal: {
+        title: "Detalhes bancários incompletos",
+        required: "Detalhes bancários necessários",
+        description: "Por favor, complete seus dados bancários antes de realizar um saque:"
+      },
+      cryptoModal: {
+        title: "Detalhes cripto incompletos",
+        required: "Detalhes de criptomoeda necessários",
+        description: "Por favor, complete seus dados de criptomoeda antes de realizar um saque:"
+      },
+      goToBindAccount: "Ir para Vincular Conta",
+      completeDetailsIn: "Complete os detalhes de saque em",
+      enableAllOptions: "para habilitar todas as opções de saque.",
+      validation: {
+        selectMethod: "Por favor, selecione um método de saque"
       }
     },
 
@@ -298,6 +343,22 @@ const ptBR = {
     },
 
     grab: {
+      title: "Avaliar e Hospedar",
+      description: "Search Off the Record leva você aos bastidores do GoToMarketers Search. Cada episódio revela como ajudamos as pessoas a avaliar e descobrir hotéis — no conforto de casa.",
+      seeAllReviews: "Ver todas as avaliações",
+      searchNow: "Pesquisar agora",
+      errors: {
+        insufficientBalance: "Saldo insuficiente. Recarregue sua conta para continuar."
+      },
+      messages: {
+        completedTasks: "Você concluiu todas as tarefas disponíveis. Contate o suporte para reiniciar sua conta."
+      },
+      stats: {
+        myAssets: "Meus ativos",
+        earnings: "Ganhos",
+        tasksDone: "Tarefas concluídas",
+        onHold: "Em espera"
+      },
       // Header Section
       greeting: "Olá {0} 👏",
 
@@ -323,6 +384,35 @@ const ptBR = {
       supportHours: "Horário de Suporte Online 10:00 - 22:00",
       contactSupport: "Por favor, entre em contato com o suporte online para sua assistência!"
     },
+    grap: {
+      rateModal: {
+        title: "Avalie sua experiência",
+        label: {
+          tapToRate: "Toque para avaliar",
+          poor: "Ruim",
+          fair: "Razoável",
+          good: "Bom",
+          veryGood: "Muito bom",
+          excellent: "Excelente"
+        },
+        selectOptions: "Selecione suas opções de feedback",
+        more: "mais",
+        submit: "Enviar avaliação",
+        options: {
+          0: "Os quartos eram limpos, muito confortáveis e a equipe incrível",
+          1: "Foi ótimo. Serviço de primeira como sempre",
+          2: "A equipe desta propriedade é excelente! Eles fazem de tudo para tornar sua estadia confortável",
+          3: "Tive uma experiência maravilhosa aqui",
+          4: "A comida era ótima com muitas opções",
+          5: "Hotel excelente com localização excelente no centro",
+          6: "Muito central, quartos confortáveis com ar-condicionado incrível. Café da manhã delicioso e equipe extremamente atenciosa e simpática"
+        }
+      },
+      modal: {
+        productName: "Nome do produto",
+        positiveReviews: "avaliações positivas"
+      }
+    },
 
     grapModal: {
       orderTime: "Hora do Pedido",
@@ -334,6 +424,145 @@ const ptBR = {
       submit: "Enviar",
       quantity: "X 1",
       currency: "USD"
+    },
+    marketsHome: {
+      heroTitle: "🌙 Encontre sua calma",
+      heroSubtitle: "Hotéis de luxo · retiros privados",
+      search: {
+        destinationPlaceholder: "Destino, cidade, hotel",
+        checkIn: "Check-in",
+        checkOut: "Check-out",
+        guestsPlaceholder: "2 adultos · 0 crianças",
+        goToSearch: "Ir para a pesquisa",
+        flexibleNote: "Datas flexíveis? · Melhor preço"
+      },
+      sections: {
+        dreamEscapesTitle: "📸 Escapadas dos sonhos",
+        exploreAll: "Explorar tudo",
+        topPicksTitle: "✨ Principais escolhas para você",
+        viewAll: "Ver tudo"
+      },
+      features: {
+        freeWifi: "WiFi grátis",
+        support: "Suporte 24/7",
+        secure: "Seguro",
+        bestRate: "Melhor tarifa"
+      },
+      footerTagline: "✦ Reserve agora, relaxe depois · Sem taxas ocultas ✦"
+    },
+    activities: {
+      title: "Atividades",
+      subtitle: "A promoção está a todo vapor, venha participar!"
+    },
+    help: {
+      title: "Central de Ajuda",
+      footer: "Para mais ajuda, entre em contato com nosso suporte online.",
+      accordion: {
+        specialOrders: {
+          title: "Sobre pedidos especiais",
+          content: "<p><strong>O que é um \"Pedido especial de hotel\"?</strong></p><p>Benefícios exclusivos com hotéis de luxo selecionados; raros e apenas para VIPs de alto nível.</p><p>Mystery Box com prêmios em dinheiro e Pedidos Especiais: comissões 30–50 vezes maiores que o padrão.</p>"
+        },
+        platformRegulations: {
+          title: "Regras da plataforma",
+          content: "<p>Clique em \"Pesquisar\", aguarde um pedido e conclua. Normalmente <strong>30 minutos</strong>.</p><p>Atribuição aleatória: <strong>não pode ser modificada, cancelada ou ignorada</strong>.</p><p>Se passar de <strong>15 minutos</strong> sem depósito, contate o suporte para confirmar dados.</p><p>Horário: <strong>9:00 - 21:00</strong> todos os dias.</p><p>Uso indevido da conta: contate o suporte imediatamente.</p><p>Para publicidade: verifique o depósito e clique em <strong>\"Enviar\"</strong> para concluir o <strong>Pedido Premium</strong>.</p><p>Saques > 40.000 AED: <strong>taxa de auditoria</strong>, liberada <strong>uma hora após verificação</strong>.</p>"
+        },
+        deposits: {
+          title: "Sobre depósitos",
+          content: "<p>No seu perfil, clique em \"Recarregar\", selecione o atendente, use os dados fornecidos e envie o comprovante.</p><p>Se houver problemas, contate o suporte online.</p><p>Verifique sempre a conta de depósito (atualizada diariamente) antes de pagar.</p><p><strong>Nota:</strong> Deposite apenas se o saldo estiver abaixo do preço do pedido.</p>"
+        },
+        withdrawals: {
+          title: "Sobre saques",
+          content: "<p>Após concluir as tarefas diárias, solicite o saque (mínimo 40 AED). Garanta que seus dados de saque estejam vinculados.</p><p>Clique em \"Sacar\", informe o valor e a senha de saque. Geralmente em 30 minutos (varia conforme o banco).</p><p><strong>Horário:</strong> <strong>9:00 - 21:00</strong> diariamente.</p>"
+        },
+        luxuryOrders: {
+          title: "Sobre pedidos de luxo",
+          content: "<p><strong>Pedido de hotel de luxo:</strong> campanha promocional para aumentar a visibilidade da marca.</p><p>Beneficia todos os membros com comissões 10–30 vezes maiores; geralmente 0–2 pedidos por dia.</p><p><strong>Nota:</strong> Pedidos atribuídos devem ser concluídos; ajustes são refletidos na conta.</p>"
+        }
+      }
+    },
+    tasks: {
+      title: "Tarefas",
+      tabs: {
+        all: "Todas",
+        pending: "Pendentes",
+        completed: "Concluídas",
+        canceled: "Canceladas"
+      }
+    },
+    bindAccount: {
+      title: "Vincular Conta",
+      currentBankTitle: "Cartão bancário atualmente vinculado",
+      bank: "BANCO",
+      cryptoTitle: "Rede de criptomoedas",
+      cryptoLabel: "USDT (TRC20/ERC20)",
+      popular: "Popular"
+    },
+    bankDetails: {
+      title: "Vinculação de Cartão Bancário"
+    },
+    search: {
+      placeholder: "Pesquisar"
+    },
+    vip: {
+      title: "Níveis VIP",
+      subtitle: "Escolha seu nível de associação e desbloqueie benefícios exclusivos",
+      backToHome: "Voltar para a página inicial",
+      searchPlaceholder: "Pesquisar níveis VIP...",
+      noResults: "Nenhum nível VIP encontrado",
+      noResultsDesc: "Tente ajustar seus termos de pesquisa",
+      currentLevel: "Nível atual",
+      upgrade: "Atualizar",
+      locked: "Bloqueado",
+      currentlyOn: "Atualmente em",
+      upgradeTo: "Atualizar para",
+      levelDetails: "Detalhes do nível",
+      levelLimit: "Limite do nível",
+      dailyOrders: "Pedidos diários",
+      setperday: "Conjuntos por dia",
+      commissionRate: "Taxa de comissão",
+      premiumCommission: "Comissão Premium",
+      maxOrders: "Pedidos máximos",
+      commission: "Comissão",
+      benefits: "Benefícios",
+      cancel: "Cancelar",
+      upgradeNow: "Atualizar agora",
+      upgrading: "Atualizando...",
+      level: "Nível VIP",
+      pointPeriod: "Período de pontos: {0} dias",
+      modal: {
+        alreadyMember: "Você já é membro deste nível VIP.",
+        contactSupportMessage: "Por favor, entre em contato com o suporte para atualizar seu VIP.",
+        contactSupport: "Contatar suporte"
+      }
+    },
+    invitation: {
+      teamAmount: "Quantidade da equipe",
+      stats: {
+        dailyInvitations: "Convites diários",
+        monthlyInvitations: "Convites mensais",
+        monthlyIncome: "Renda mensal"
+      },
+      rulesButton: "Regras da atividade Convidar amigos",
+      newAgents: "Novos agentes",
+      table: {
+        memberId: "ID do Membro",
+        recharge: "Recarregar",
+        withdraw: "Sacar"
+      },
+      noMoreData: "Sem mais dados",
+      modal: {
+        title: "Convide amigos e ganhe",
+        referralCodeLabel: "Seu código de referência:",
+        copy: "Copiar",
+        shareLabel: "Compartilhe seu código de referência:"
+      },
+      notAllowed: {
+        title: "Acesso restrito",
+        message: "Você não tem permissão para convidar usuários no momento.",
+        submessage: "O sistema de indicação está desativado para sua conta. Entre em contato com o suporte para mais informações ou para solicitar acesso.",
+        contactSupport: "Contatar Suporte",
+        gotIt: "Entendi"
+      }
     },
 
     actions: {
@@ -596,6 +825,10 @@ const ptBR = {
       },
       fields: {
         id: "Id",
+        accountHolder: "Titular da conta",
+        ibanNumber: "Número IBAN",
+        bankName: "Nome do banco",
+        ifscCode: "Código IFSC",
         amountRange: "Valor",
         amount: "Valor",
         email: "Email",
@@ -770,6 +1003,7 @@ const ptBR = {
         USDT: "USDT",
         ETH: "ETH",
         BTC: "BTC",
+        TRC20: "TRC20",
       },
       gender: {
         male: "masculino",

@@ -121,6 +121,14 @@ const es = {
       security: "Seguridad",
       notifications: "Notificaciones",
       languages: "Idiomas",
+      bindAccount: "Vincular cuenta",
+      details: "Detalles",
+      officialWebsite: "Entrada al sitio oficial",
+      changeLoginPassword: "Cambiar contraseña de inicio de sesión",
+      changeWithdrawPassword: "Cambiar contraseña de retiro",
+      mainFunction: "Función principal",
+      otherFunction: "Otras funciones",
+      uid: "UID",
 
       // Buttons
       logout: "Cerrar Sesión",
@@ -135,6 +143,10 @@ const es = {
       withdrawModal: {
         title: "Retiro",
         text: "Por favor contacte al servicio al cliente para proceder con su retiro."
+      },
+      reputation: {
+        title: "Reglas de reputación",
+        description: "Cada cuenta tiene un sistema de reputación basado en el desempeño del miembro. Si completas las tareas diarias y mantienes una buena reputación, tu puntaje mejorará. Si no cumples los plazos, tu puntaje disminuirá. Si tu reputación cae por debajo del 80%, el sistema bloqueará los retiros. Para cualquier consulta, contacta con atención al cliente."
       }
     },
 
@@ -253,11 +265,13 @@ const es = {
         completed: "Completado",
         pending: "Pendiente",
         canceled: "Cancelado"
-      }
+      },
+      submit: "Enviar"
     },
 
     changePassword: {
       title: "Cambiar Contraseña",
+      withdrawPassword: "Cambiar contraseña de retiro",
       header: "Cambiar Contraseña",
       oldPassword: "Contraseña Antigua",
       newPassword: "Nueva Contraseña",
@@ -269,6 +283,7 @@ const es = {
 
     withdraw: {
       title: "Retiro",
+      announcement: "El monto mínimo de retiro es de €50. Todos los retiros se procesan en 24 horas.",
       withdrawAmount: "Monto del Retiro",
       withdrawPassword: "Contraseña de Retiro",
       availableBalance: "Saldo disponible",
@@ -278,6 +293,36 @@ const es = {
         minimum: "(1) El retiro mínimo es de 100 USD",
         paymentTime: "(2) El pago se realizará dentro de la próxima hora, después de que se apruebe la solicitud de retiro.",
         orderCompletion: "(3) El envío incompleto de pedidos diarios está sujeto a ningún retiro, todos los productos deben enviarse para retiro"
+      },
+      amountPlaceholder: "Ingrese monto (mín. €50)",
+      selectMethod: "Seleccionar método de retiro",
+      methods: {
+        crypto: "Criptomoneda",
+        bank: "Transferencia bancaria",
+        cryptoNetworks: "TRC20 | ERC20",
+        bankNetworks: "IBAN | SWIFT"
+      },
+      status: {
+        complete: "✓ Completo",
+        incomplete: "⚠ Incompleto"
+      },
+      withdrawingTo: "Retirando a:",
+      withdrawPasswordPlaceholder: "Ingrese su contraseña de retiro",
+      bankModal: {
+        title: "Datos bancarios incompletos",
+        required: "Se requieren datos bancarios",
+        description: "Por favor complete sus datos bancarios antes de realizar un retiro:"
+      },
+      cryptoModal: {
+        title: "Datos cripto incompletos",
+        required: "Se requieren datos de criptomonedas",
+        description: "Por favor complete sus datos de criptomonedas antes de realizar un retiro:"
+      },
+      goToBindAccount: "Ir a Vincular Cuenta",
+      completeDetailsIn: "Complete sus datos de retiro en",
+      enableAllOptions: "para habilitar todas las opciones de retiro.",
+      validation: {
+        selectMethod: "Por favor seleccione un método de retiro"
       }
     },
 
@@ -295,6 +340,22 @@ const es = {
     },
 
     grab: {
+      title: "Valorar y alojarse",
+      description: "Search Off the Record te lleva detrás de escena de GoToMarketers Search. Cada episodio revela cómo ayudamos a las personas a calificar y descubrir hoteles desde casa.",
+      seeAllReviews: "Ver todas las reseñas",
+      searchNow: "Buscar ahora",
+      errors: {
+        insufficientBalance: "Saldo insuficiente. Recarga tu cuenta para continuar."
+      },
+      messages: {
+        completedTasks: "Has completado todas las tareas disponibles. Contacta al soporte para reiniciar tu cuenta."
+      },
+      stats: {
+        myAssets: "Mis activos",
+        earnings: "Ganancias",
+        tasksDone: "Tareas realizadas",
+        onHold: "En espera"
+      },
       // Header Section
       greeting: "Hola {0} 👏",
 
@@ -320,6 +381,35 @@ const es = {
       supportHours: "Horario de Soporte en Línea 10:00 - 22:00",
       contactSupport: "¡Por favor contacta al soporte en línea para tu asistencia!"
     },
+    grap: {
+      rateModal: {
+        title: "Califica tu experiencia",
+        label: {
+          tapToRate: "Toca para calificar",
+          poor: "Pobre",
+          fair: "Regular",
+          good: "Bueno",
+          veryGood: "Muy bueno",
+          excellent: "Excelente"
+        },
+        selectOptions: "Selecciona tus opciones de comentario",
+        more: "más",
+        submit: "Enviar reseña",
+        options: {
+          0: "Las habitaciones estaban limpias, muy cómodas y el personal increíble",
+          1: "Estuvo genial. Servicio de primera como siempre",
+          2: "¡El personal de esta propiedad es excelente! Hacen todo lo posible para que tu estadía sea cómoda",
+          3: "Tuve una experiencia maravillosa aquí",
+          4: "La comida fue excelente con muchas opciones para elegir",
+          5: "Hotel excelente con ubicación excelente en el centro",
+          6: "Muy céntrico, habitaciones cómodas y aire acondicionado increíble. El desayuno delicioso y el personal muy servicial y amable"
+        }
+      },
+      modal: {
+        productName: "Nombre del producto",
+        positiveReviews: "reseñas positivas"
+      }
+    },
 
     grapModal: {
       orderTime: "Hora del Pedido",
@@ -331,6 +421,145 @@ const es = {
       submit: "Enviar",
       quantity: "X 1",
       currency: "USD"
+    },
+    marketsHome: {
+      heroTitle: "🌙 Encuentra tu calma",
+      heroSubtitle: "Hoteles de lujo · retiros privados",
+      search: {
+        destinationPlaceholder: "Destino, ciudad, hotel",
+        checkIn: "Check-in",
+        checkOut: "Check-out",
+        guestsPlaceholder: "2 adultos · 0 niños",
+        goToSearch: "Ir a la búsqueda",
+        flexibleNote: "¿Fechas flexibles? · Mejor precio"
+      },
+      sections: {
+        dreamEscapesTitle: "📸 Escapadas de ensueño",
+        exploreAll: "Explorar todo",
+        topPicksTitle: "✨ Recomendaciones para ti",
+        viewAll: "Ver todo"
+      },
+      features: {
+        freeWifi: "WiFi gratis",
+        support: "Soporte 24/7",
+        secure: "Seguro",
+        bestRate: "Mejor tarifa"
+      },
+      footerTagline: "✦ Reserva ahora, relájate después · Sin tarifas ocultas ✦"
+    },
+    activities: {
+      title: "Actividades",
+      subtitle: "La promoción está en pleno auge, ¡ven y únete!"
+    },
+    help: {
+      title: "Centro de Ayuda",
+      footer: "Para más ayuda, contacta a nuestro soporte al cliente en línea.",
+      accordion: {
+        specialOrders: {
+          title: "Sobre los pedidos especiales",
+          content: "<p><strong>¿Qué es un \"Pedido de hotel especial\"?</strong></p><p>Son beneficios exclusivos ofrecidos por X Business con hoteles de lujo seleccionados. Son poco comunes y solo están disponibles para miembros VIP de alto nivel.</p><p>Los miembros VIP pueden recibir recompensas Mystery Box que incluyen premios en efectivo y Pedidos Especiales, con comisiones de 30 a 50 veces la tarifa estándar.</p>"
+        },
+        platformRegulations: {
+          title: "Reglamento de la plataforma",
+          content: "<p>Para realizar pedidos de hotel, ve a la página correspondiente y haz clic en \"Buscar\". Espera a que aparezca un pedido adecuado y complétalo. Completar y retirar un pedido de hotel suele tardar <strong>30 minutos</strong>.</p><p>Todos los pedidos se asignan aleatoriamente por el motor de emparejamiento de la plataforma y <strong>no pueden modificarse, cancelarse ni saltarse</strong>.</p><p>Para pedidos de diferentes comercios, si pasan más de <strong>15 minutos</strong> sin completar el depósito, debes contactar al soporte y confirmar los datos de la cuenta de depósito.</p><p>La plataforma opera diariamente de <strong>9:00 a 21:00</strong>; los miembros pueden enviar pedidos durante este horario.</p><p>Si tu cuenta es mal utilizada o accedida por otra persona, contacta al soporte inmediatamente.</p><p>Si realizas un pedido de publicidad, una vez recibido, contacta al soporte para verificar el depósito y luego pulsa <strong>\"Enviar\"</strong> en la orden para completar el <strong>Pedido Premium</strong>.</p><p>Si retiras más de 40.000 AED, se requiere una <strong>tasa de auditoría</strong> para verificación; podrá retirarse <strong>una hora después de completarse</strong>.</p>"
+        },
+        deposits: {
+          title: "Sobre los depósitos",
+          content: "<p>Realiza depósitos desde tu cuenta personal. Pulsa \"Recargar\" y elige el agente. Usa los datos de depósito proporcionados y envía el comprobante cuando esté hecho.</p><p>Si hay problemas durante el depósito, contacta al soporte en línea.</p><p>Por el alto volumen, verifica la cuenta de depósito de la plataforma antes de pagar; cambia a diario.</p><p><strong>Nota:</strong> Deposita solo si tu saldo es menor al precio del pedido.</p>"
+        },
+        withdrawals: {
+          title: "Sobre los retiros",
+          content: "<p>Tras completar tus tareas diarias, puedes solicitar retiro (mínimo 40 AED). Asegúrate de tener vinculada tu información de retiro.</p><p>Pulsa \"Retirar\", ingresa el monto y tu contraseña de retiro. Normalmente se acredita en 30 minutos, según el banco.</p><p><strong>Horario:</strong> de <strong>9:00 a 21:00</strong> todos los días.</p>"
+        },
+        luxuryOrders: {
+          title: "Sobre los pedidos de lujo",
+          content: "<p><strong>¿Qué es un \"Pedido de hotel de lujo\"?</strong></p><p>Son campañas publicitarias en plataformas de reservas para aumentar marca y clientes.</p><p>Benefician a todos los miembros con comisiones de 10 a 30 veces el monto original.</p><p>Los agentes suelen recibir entre 0 y 2 pedidos de lujo al día.</p><p><strong>Nota:</strong> Si recibes un pedido de lujo, debes completarlo; los ajustes se reflejarán en tu cuenta.</p>"
+        }
+      }
+    },
+    tasks: {
+      title: "Tareas",
+      tabs: {
+        all: "Todas",
+        pending: "Pendientes",
+        completed: "Completadas",
+        canceled: "Canceladas"
+      }
+    },
+    bindAccount: {
+      title: "Vincular cuenta",
+      currentBankTitle: "Tarjeta bancaria vinculada actualmente",
+      bank: "BANCO",
+      cryptoTitle: "Red de criptomonedas",
+      cryptoLabel: "USDT (TRC20/ERC20)",
+      popular: "Popular"
+    },
+    bankDetails: {
+      title: "Vinculación de tarjeta bancaria"
+    },
+    search: {
+      placeholder: "Buscar"
+    },
+    vip: {
+      title: "Niveles VIP",
+      subtitle: "Elige tu nivel de membresía y desbloquea beneficios exclusivos",
+      backToHome: "Volver al inicio",
+      searchPlaceholder: "Buscar niveles VIP...",
+      noResults: "No se encontraron niveles VIP",
+      noResultsDesc: "Intenta ajustar tus términos de búsqueda",
+      currentLevel: "Nivel actual",
+      upgrade: "Mejorar",
+      locked: "Bloqueado",
+      currentlyOn: "Actualmente en",
+      upgradeTo: "Mejorar a",
+      levelDetails: "Detalles del nivel",
+      levelLimit: "Límite del nivel",
+      dailyOrders: "Pedidos diarios",
+      setperday: "Conjuntos por día",
+      commissionRate: "Tasa de comisión",
+      premiumCommission: "Comisión Premium",
+      maxOrders: "Órdenes máximas",
+      commission: "Comisión",
+      benefits: "Beneficios",
+      cancel: "Cancelar",
+      upgradeNow: "Mejorar ahora",
+      upgrading: "Actualizando...",
+      level: "Nivel VIP",
+      pointPeriod: "Período de puntos: {0} días",
+      modal: {
+        alreadyMember: "Ya eres miembro de este nivel VIP.",
+        contactSupportMessage: "Por favor contacta al soporte para mejorar tu VIP.",
+        contactSupport: "Contactar soporte"
+      }
+    },
+    invitation: {
+      teamAmount: "Cantidad del equipo",
+      stats: {
+        dailyInvitations: "Invitaciones diarias",
+        monthlyInvitations: "Invitaciones mensuales",
+        monthlyIncome: "Ingresos mensuales"
+      },
+      rulesButton: "Reglas de actividad Invitar amigos",
+      newAgents: "Nuevos agentes",
+      table: {
+        memberId: "ID de Miembro",
+        recharge: "Recargar",
+        withdraw: "Retirar"
+      },
+      noMoreData: "No hay más datos",
+      modal: {
+        title: "Invita amigos y gana",
+        referralCodeLabel: "Tu código de referencia:",
+        copy: "Copiar",
+        shareLabel: "Comparte tu código de referencia:"
+      },
+      notAllowed: {
+        title: "Acceso restringido",
+        message: "No tienes permitido invitar usuarios en este momento.",
+        submessage: "El sistema de referidos está deshabilitado actualmente para tu cuenta. Por favor contacta a soporte para más información o para solicitar acceso.",
+        contactSupport: "Contactar soporte",
+        gotIt: "Entendido"
+      }
     },
 
     actions: {
@@ -591,6 +820,10 @@ const es = {
       },
       fields: {
         id: "Id",
+        accountHolder: "Titular de la cuenta",
+        ibanNumber: "Número IBAN",
+        bankName: "Nombre del banco",
+        ifscCode: "Código IFSC",
         amountRange: "Monto",
         amount: "Monto",
         email: "Correo Electrónico",
@@ -764,6 +997,7 @@ const es = {
         USDT: "USDT",
         ETH: "ETH",
         BTC: "BTC",
+        TRC20: "TRC20"
       },
       gender: {
         male: "masculino",
@@ -1055,6 +1289,111 @@ const es = {
     formats: `Formato no válido. Debe ser uno de los siguientes: {0}.`,
   },
 
+  settings: {
+    title: "Configuración",
+    menu: "Configuración",
+    save: {
+      success:
+        "Configuración guardada correctamente. La página se recargará en {0} segundos para aplicar los cambios.",
+    },
+    fields: {
+      theme: "Tema",
+      logos: "Logo",
+      backgroundImages: "Imagen de fondo",
+    },
+    colors: {
+      default: "Oscuro",
+      light: "Claro",
+      cyan: "Cian",
+      "geek-blue": "Azul geek",
+      gold: "Oro",
+      lime: "Lima",
+      magenta: "Magenta",
+      orange: "Naranja",
+      "polar-green": "Verde polar",
+      purple: "Púrpura",
+      red: "Rojo",
+      volcano: "Volcán",
+      yellow: "Amarillo",
+    },
+  },
+  dashboard: {
+    menu: "Panel",
+    valider: "Validar",
+    file: "Ningún archivo seleccionado",
+    typecsv: "Tipo de archivo inválido. Selecciona un archivo CSV.",
+    reset: "Restablecer",
+    phone: "Subir números",
+    check: "Verificar número",
+    labelphone: "Escribe el número de teléfono",
+    add: "Agregar número",
+    download: "Descargar la plantilla",
+    added: "Número añadido",
+    duplicated: "Número duplicado",
+    Wrong: "Número incorrecto",
+    notFound: "Lo sentimos, no pudimos encontrar los elementos que buscas.",
+    validation: "Número añadido con éxito",
+    Success: "Número añadido con éxito",
+    numberValidation: "Escribe un número válido. Gracias.",
+    message:
+      "Esta página usa datos ficticios solo para fines de demostración. Puedes editarla en frontend/view/dashboard/DashboardPage.ts.",
+    charts: {
+      day: "Día",
+      red: "Rojo",
+      green: "Verde",
+      yellow: "Amarillo",
+      grey: "Gris",
+      blue: "Azul",
+      orange: "Naranja",
+      months: {
+        1: "Enero",
+        2: "Febrero",
+        3: "Marzo",
+        4: "Abril",
+        5: "Mayo",
+        6: "Junio",
+        7: "Julio",
+        8: "Agosto",
+        9: "Septiembre",
+        10: "Octubre",
+        11: "Noviembre",
+        12: "Diciembre",
+      },
+      eating: "Comer",
+      drinking: "Beber",
+      sleeping: "Dormir",
+      designing: "Diseño",
+      coding: "Programación",
+      cycling: "Ciclismo",
+      running: "Correr",
+      customer: "Cliente",
+      objectif: "Objetivos por estado",
+      projectS: "Proyectos por estado",
+      projectT: "Proyectos por tipo",
+      adherent: "Número de miembros",
+      news: "Número de noticias",
+      project: "Número de proyectos",
+      partner: "Número de socios",
+      nodata: "sin datos para mostrar",
+    },
+  },
+  imagesViewer: {
+    noImage: "Sin imagen",
+  },
+  autocomplete: {
+    loading: "Cargando...",
+    noOptions: "No se encontraron datos",
+  },
+  table: {
+    noData: "No se encontraron registros",
+    loading: "Cargando...",
+  },
+  footer: {
+    copyright: "© {0} GoToMarketersers Marketing digital",
+  },
+  preview: {
+    error: "Esta operación no está permitida en modo de vista previa.",
+  },
 };
 
 export default es;

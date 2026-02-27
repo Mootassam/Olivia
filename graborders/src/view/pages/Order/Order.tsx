@@ -120,7 +120,7 @@ function Portfolio() {
                     className="submit_staus"
                     onClick={() => submitStatus(item.id)}
                   >
-                    Submit
+                    {i18n("pages.portfolio.submit")}
                   </button>
                 )}
               </div>

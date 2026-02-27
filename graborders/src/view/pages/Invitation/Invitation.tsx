@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import authSelectors from "src/modules/auth/authSelectors";
 import actions from "src/modules/user/form/userFormActions";
 import selectors from "src/modules/user/form/userFormSelectors";
+import { i18n } from "../../../i18n";
 
 function InvitePage() {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ function InvitePage() {
       <div className="invite-page loading-page">
         <div className="loading-spinner">
           <div className="spinner"></div>
-          <p>Loading...</p>
+          <p>{i18n('table.loading')}</p>
         </div>
         <style>{`
           .loading-page {
@@ -116,37 +117,37 @@ function InvitePage() {
       <div className="content">
         {/* Section 1: Team amount (on gradient) */}
         <div className="team-section">
-          <h2 className="team-title">Team amount</h2>
+          <h2 className="team-title">{i18n('pages.invitation.teamAmount')}</h2>
 
           <div className="stats-row">
             <div className="stat-item">
               <div className="stat-number">{list?.totalDailyInvitations || 0}</div>
-              <div className="stat-label">Daily invitations</div>
+              <div className="stat-label">{i18n('pages.invitation.stats.dailyInvitations')}</div>
             </div>
             <div className="stat-item with-divider">
               <div className="stat-number">{list?.totalMonthlyInvitations || 0}</div>
-              <div className="stat-label">Monthly invitations</div>
+              <div className="stat-label">{i18n('pages.invitation.stats.monthlyInvitations')}</div>
             </div>
             <div className="stat-item with-divider">
               <div className="stat-number">€{list?.totalMonthlyIncome || 0}</div>
-              <div className="stat-label">Monthly income</div>
+              <div className="stat-label">{i18n('pages.invitation.stats.monthlyIncome')}</div>
             </div>
           </div>
 
           <button className="rules-button" onClick={handleInviteClick}>
-            Invite friends activity rules
+            {i18n('pages.invitation.rulesButton')}
           </button>
         </div>
 
         {/* Section 2: New agent in (light card) */}
         <div className="table-card">
-          <h3 className="table-title">New agent in</h3>
+          <h3 className="table-title">{i18n('pages.invitation.newAgents')}</h3>
 
           <div className="table">
             <div className="table-header">
-              <div className="table-cell">Member ID</div>
-              <div className="table-cell">Recharge</div>
-              <div className="table-cell">Withdraw</div>
+              <div className="table-cell">{i18n('pages.invitation.table.memberId')}</div>
+              <div className="table-cell">{i18n('pages.invitation.table.recharge')}</div>
+              <div className="table-cell">{i18n('pages.invitation.table.withdraw')}</div>
             </div>
 
             {list?.referrals && list.referrals.length > 0 && list.referrals.map((member) => (
@@ -158,7 +159,7 @@ function InvitePage() {
             ))}
           </div>
 
-          <div className="no-more-data">No more data</div>
+          <div className="no-more-data">{i18n('pages.invitation.noMoreData')}</div>
         </div>
       </div>
 
@@ -188,21 +189,21 @@ function InvitePage() {
                   </defs>
                 </svg>
               </div>
-              <h3 className="modal-title">Invite Friends & Earn</h3>
+              <h3 className="modal-title">{i18n('pages.invitation.modal.title')}</h3>
             </div>
             
             <div className="ref-code-section">
-              <p className="ref-code-label">Your Referral Code:</p>
+              <p className="ref-code-label">{i18n('pages.invitation.modal.referralCodeLabel')}</p>
               <div className="ref-code-box">
                 <span className="ref-code">{currentUser?.refcode || 'REF123456'}</span>
                 <button className="copy-button" onClick={handleCopyRefCode}>
-                  {copySuccess ? '✓' : 'Copy'}
+                  {copySuccess ? '✓' : i18n('pages.invitation.modal.copy')}
                 </button>
               </div>
             </div>
 
             <div className="share-section">
-              <p className="share-label">Share your referral code:</p>
+              <p className="share-label">{i18n('pages.invitation.modal.shareLabel')}</p>
               <div className="share-buttons">
                 <button className="share-btn telegram" onClick={() => handleShare('telegram')} title="Share on Telegram">
                   <svg className="share-icon" viewBox="0 0 24 24" width="24" height="24">
@@ -242,23 +243,22 @@ function InvitePage() {
               </svg>
             </div>
             
-            <h3 className="not-allowed-title">Access Restricted</h3>
+            <h3 className="not-allowed-title">{i18n('pages.invitation.notAllowed.title')}</h3>
             
             <p className="not-allowed-message">
-              You are not allowed to invite users at this time.
+              {i18n('pages.invitation.notAllowed.message')}
             </p>
             
             <p className="not-allowed-submessage">
-              The referral system is currently disabled for your account. 
-              Please contact support for more information or to request access.
+              {i18n('pages.invitation.notAllowed.submessage')}
             </p>
 
             <div className="not-allowed-actions">
               <button className="contact-support-btn" onClick={() => window.location.href = '/support'}>
-                Contact Support
+                {i18n('pages.invitation.notAllowed.contactSupport')}
               </button>
               <button className="got-it-btn" onClick={() => setShowNotAllowedModal(false)}>
-                Got It
+                {i18n('pages.invitation.notAllowed.gotIt')}
               </button>
             </div>
           </div>

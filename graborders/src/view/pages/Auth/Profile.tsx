@@ -95,79 +95,79 @@ function Profile() {
     main: [
       {
         icon: "/images/profile/cashin.png",
-        name: "Cash In",
+        name: i18n('pages.profile.recharge'),
         action: () => setRecharge(true),
       },
       {
         icon: "/images/profile/cashout.png",
-        name: "Cash out",
+        name: i18n('pages.profile.withdraw'),
         action: () => goto("/withdraw"),
       },
       {
         icon: "/images/profile/bindaccount.png",
-        name: "Bind account",
+        name: i18n('pages.profile.bindAccount'),
         action: () => goto("/bind-account"),
       },
       {
         icon: "/images/profile/details.png",
-        name: "Details",
+        name: i18n('pages.profile.details'),
         action: () => goto("/details"),
       },
     ],
     other: [
       {
         icon: "fa-solid fa-globe",
-        name: "Official website entrance",
+        name: i18n('pages.profile.officialWebsite'),
         action: () => window.open("https://GoToMarketersers.com", "_blank"),
       },
       {
         icon: "fa-solid fa-star",
-        name: "Reputation Rules",
+        name: i18n('pages.profile.reputation.title'),
         action: () => setShowReputation(true),
       },
       {
         icon: "fa-solid fa-calendar-alt",
-        name: "Activities",
+        name: i18n('pages.activities.title'),
         action: () => goto("/activities"),
       },
       {
         icon: "fa-solid fa-crown",
-        name: "VIP",
+        name: i18n('pages.vip.title'),
         action: () => goto("/vip"),
       },
       {
         icon: "fa-solid fa-headset",
-        name: "Contact Us",
+        name: i18n('pages.profile.contactUs'),
         action: () => goto("/support"),
       },
       {
         icon: "fa-solid fa-key",
-        name: "Change login password",
+        name: i18n('pages.profile.changeLoginPassword'),
         action: () => goto("/security"),
       },
       {
         icon: "fa-solid fa-lock",
-        name: "Change withdrawal password",
+        name: i18n('pages.profile.changeWithdrawPassword'),
         action: () => goto("/change-withdrawal-password"),
       },
       {
         icon: "fa-solid fa-language",
-        name: "Language setting",
+        name: i18n('pages.profile.languages'),
         action: () => goto("/languages"),
       },
       {
         icon: "fa-solid fa-question-circle",
-        name: "Help Center",
+        name: i18n('pages.help.title'),
         action: () => goto("/help"),
       },
       {
         icon: "fa-solid fa-info-circle",
-        name: "About Us",
+        name: i18n('pages.actions.company'),
         action: () => goto("/company"),
       },
       {
         icon: "fa-solid fa-sign-out-alt",
-        name: "Log Out",
+        name: i18n('pages.profile.logout'),
         action: doSignout,
       },
     ],
@@ -193,9 +193,9 @@ function Profile() {
         </div>
         <div className="user-details">
           <div className="user-phone">{currentUser?.email || "131784"}</div>
-          <div className="user-uid">UID:{currentUser?.mnemberId || "131784"}</div>
+          <div className="user-uid">{i18n('pages.profile.uid')}: {currentUser?.mnemberId || "131784"}</div>
           <div className="invitation-row">
-            <span className="invitation-label">Invitation code:</span>
+            <span className="invitation-label">{i18n('pages.profile.invitationCode')}:</span>
             <span ref={referenceCodeRef} className="invitation-code">
               { currentUser.refsystem ?  currentUser?.refcode || "64WS65" : "******" }
             </span>
@@ -211,7 +211,7 @@ function Profile() {
       <div className="menu-sections">
         {/* Main Function - Horizontal Tiles */}
         <div className="menu-section">
-          <div className="section-title">Main function</div>
+          <div className="section-title">{i18n('pages.profile.mainFunction')}</div>
           <div className="main-function-items">
             {menuItems.main.map((item, index) => (
               <div
@@ -230,7 +230,7 @@ function Profile() {
 
         {/* Other Function - Vertical List */}
         <div className="menu-section">
-          <div className="section-title">Other function</div>
+          <div className="section-title">{i18n('pages.profile.otherFunction')}</div>
           <div className="section-items">
             {menuItems.other.map((item, index) => (
               <div
@@ -302,7 +302,7 @@ function Profile() {
         <div className="modal-overlay" onClick={() => setShowReputation(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <div className="modal-title">Reputation Rules</div>
+              <div className="modal-title">{i18n('pages.profile.reputation.title')}</div>
               <i
                 className="fa fa-close modal-close"
                 onClick={() => setShowReputation(false)}
@@ -324,11 +324,7 @@ function Profile() {
               />
             </div>
             <p className="reputation-description">
-              Each account has a reputation system based on the member's performance.
-              If you complete daily tasks and maintain a good reputation, your score
-              will improve. But if you don't meet the deadlines, your score will go
-              down. If your reputation drops below 80%, the system will block
-              withdrawals. If you have any questions, please contact customer service.
+              {i18n('pages.profile.reputation.description')}
             </p>
           </div>
         </div>

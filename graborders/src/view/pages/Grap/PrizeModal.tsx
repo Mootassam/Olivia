@@ -124,11 +124,11 @@ function PrizeModal(props) {
                             </span>
                         </div>
                         <div className="prize-row">
-                            <span className="prize-label">Order number</span>
+                            <span className="prize-label">{i18n('pages.grapModal.orderNumber')}</span>
                             <span className="prize-value">N{number}</span>
                         </div>
                         <div className="prize-row">
-                            <span className="prize-label">Date</span>
+                            <span className="prize-label">{i18n('pages.grapModal.orderTime')}</span>
                             <span className="prize-value">{Dates.current()}</span>
                         </div>
                     </div>

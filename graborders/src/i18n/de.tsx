@@ -124,6 +124,14 @@ const de = {
       security: "Sicherheit",
       notifications: "Benachrichtigungen",
       languages: "Sprachen",
+      bindAccount: "Konto verknüpfen",
+      details: "Details",
+      officialWebsite: "Zugang zur offiziellen Website",
+      changeLoginPassword: "Login-Passwort ändern",
+      changeWithdrawPassword: "Auszahlungs-Passwort ändern",
+      mainFunction: "Hauptfunktion",
+      otherFunction: "Weitere Funktionen",
+      uid: "UID",
 
       // Buttons
       logout: "Abmelden",
@@ -138,6 +146,10 @@ const de = {
       withdrawModal: {
         title: "Auszahlung",
         text: "Bitte kontaktieren Sie den Kundenservice, um mit Ihrer Auszahlung fortzufahren."
+      },
+      reputation: {
+        title: "Reputationsregeln",
+        description: "Jedes Konto verfügt über ein Reputationssystem basierend auf der Leistung des Mitglieds. Wenn Sie tägliche Aufgaben erledigen und eine gute Reputation aufrechterhalten, verbessert sich Ihr Score. Wenn Sie Fristen nicht einhalten, sinkt Ihr Score. Fällt Ihre Reputation unter 80 %, blockiert das System Auszahlungen. Bei Fragen wenden Sie sich bitte an den Kundendienst."
       }
     },
 
@@ -256,11 +268,13 @@ const de = {
         completed: "Abgeschlossen",
         pending: "Ausstehend",
         canceled: "Storniert"
-      }
+      },
+      submit: "Absenden"
     },
 
     changePassword: {
       title: "Passwort ändern",
+      withdrawPassword: "Auszahlungs-Passwort ändern",
       header: "Passwort ändern",
       oldPassword: "Altes Passwort",
       newPassword: "Neues Passwort",
@@ -281,6 +295,36 @@ const de = {
         minimum: "(1) Mindestauszahlung beträgt 100 USD",
         paymentTime: "(2) Die Zahlung wird innerhalb der nächsten Stunde nach Genehmigung des Auszahlungsantrags getätigt.",
         orderCompletion: "(3) Unvollständige tägliche Auftragserfüllung führt zu keiner Auszahlung, alle Produkte müssen für die Auszahlung eingereicht werden"
+      },
+      amountPlaceholder: "Betrag eingeben (min. €50)",
+      selectMethod: "Auszahlungsmethode wählen",
+      methods: {
+        crypto: "Kryptowährung",
+        bank: "Banküberweisung",
+        cryptoNetworks: "TRC20 | ERC20",
+        bankNetworks: "IBAN | SWIFT"
+      },
+      status: {
+        complete: "✓ Vollständig",
+        incomplete: "⚠ Unvollständig"
+      },
+      withdrawingTo: "Auszahlung an:",
+      withdrawPasswordPlaceholder: "Geben Sie Ihr Auszahlungs-Passwort ein",
+      bankModal: {
+        title: "Unvollständige Bankdaten",
+        required: "Bankdaten erforderlich",
+        description: "Bitte vervollständigen Sie Ihre Bankdaten, bevor Sie eine Auszahlung vornehmen:"
+      },
+      cryptoModal: {
+        title: "Unvollständige Krypto-Daten",
+        required: "Kryptodaten erforderlich",
+        description: "Bitte vervollständigen Sie Ihre Kryptodaten, bevor Sie eine Auszahlung vornehmen:"
+      },
+      goToBindAccount: "Zu Konto verknüpfen",
+      completeDetailsIn: "Vervollständigen Sie Ihre Auszahlungsdetails in",
+      enableAllOptions: "um alle Auszahlungsoptionen zu aktivieren.",
+      validation: {
+        selectMethod: "Bitte wählen Sie eine Auszahlungsmethode"
       }
     },
 
@@ -298,6 +342,16 @@ const de = {
     },
 
     grab: {
+      title: "Bewerten & Übernachten",
+      description: "Search Off the Record führt Sie hinter die Kulissen von GoToMarketers Search. Jede Folge zeigt, wie wir Menschen helfen, Hotels von zu Hause aus zu bewerten und zu entdecken.",
+      seeAllReviews: "Alle Bewertungen ansehen",
+      searchNow: "Jetzt suchen",
+      stats: {
+        myAssets: "Meine Vermögenswerte",
+        earnings: "Einnahmen",
+        tasksDone: "Abgeschlossene Aufgaben",
+        onHold: "In Wartestellung"
+      },
       // Header Section
       greeting: "Hallo {0} 👏",
 
@@ -323,6 +377,35 @@ const de = {
       supportHours: "Online-Supportzeiten 10:00 - 22:00",
       contactSupport: "Bitte kontaktieren Sie den Online-Support für Ihre Unterstützung!"
     },
+    grap: {
+      rateModal: {
+        title: "Bewerten Sie Ihre Erfahrung",
+        label: {
+          tapToRate: "Zum Bewerten tippen",
+          poor: "Schlecht",
+          fair: "Mittel",
+          good: "Gut",
+          veryGood: "Sehr gut",
+          excellent: "Ausgezeichnet"
+        },
+        selectOptions: "Wählen Sie Ihre Feedback-Optionen",
+        more: "mehr",
+        submit: "Bewertung senden",
+        options: {
+          0: "Die Zimmer waren sauber, sehr komfortabel und das Personal war großartig",
+          1: "Es war großartig. Service wie immer erstklassig",
+          2: "Das Personal dieser Unterkunft ist hervorragend! Sie tun alles, um Ihren Aufenthalt angenehm zu machen",
+          3: "Ich hatte hier eine wunderbare Erfahrung",
+          4: "Das Essen war großartig mit vielen Auswahlmöglichkeiten",
+          5: "Ausgezeichnetes Hotel mit hervorragender Lage im Stadtzentrum",
+          6: "Sehr zentral, komfortable Zimmer mit toller Klimaanlage. Frühstück war köstlich und das Personal äußerst hilfsbereit und freundlich"
+        }
+      },
+      modal: {
+        productName: "Produktname",
+        positiveReviews: "positive Bewertungen"
+      }
+    },
 
     grapModal: {
       orderTime: "Bestellzeit",
@@ -334,6 +417,145 @@ const de = {
       submit: "Absenden",
       quantity: "X 1",
       currency: "USD"
+    },
+    marketsHome: {
+      heroTitle: "🌙 Finde deine Ruhe",
+      heroSubtitle: "Luxushotels · private Rückzugsorte",
+      search: {
+        destinationPlaceholder: "Reiseziel, Stadt, Hotel",
+        checkIn: "Check-in",
+        checkOut: "Check-out",
+        guestsPlaceholder: "2 Erwachsene · 0 Kinder",
+        goToSearch: "Zur Suche",
+        flexibleNote: "Flexible Daten? · Bester Preis"
+      },
+      sections: {
+        dreamEscapesTitle: "📸 Traumhafte Auszeiten",
+        exploreAll: "Alles erkunden",
+        topPicksTitle: "✨ Top-Empfehlungen für dich",
+        viewAll: "Alle ansehen"
+      },
+      features: {
+        freeWifi: "Kostenloses WLAN",
+        support: "24/7 Support",
+        secure: "Sicher",
+        bestRate: "Bester Preis"
+      },
+      footerTagline: "✦ Jetzt buchen, später entspannen · Keine versteckten Gebühren ✦"
+    },
+    activities: {
+      title: "Aktivitäten",
+      subtitle: "Die Aktion läuft auf Hochtouren, mach mit!"
+    },
+    help: {
+      title: "Hilfe-Center",
+      footer: "Für weitere Unterstützung wenden Sie sich bitte an unseren Online-Kundensupport.",
+      accordion: {
+        specialOrders: {
+          title: "Zu Sonderaufträgen",
+          content: "<p><strong>Was ist ein „besonderer Hotelauftrag“?</strong></p><p>Exklusive Vorteile mit ausgewählten Luxushotels; selten und nur für VIPs hoher Stufe.</p><p>Mystery-Box-Belohnungen möglich (Geldpreise und Sonderaufträge) mit 30–50-facher Provision.</p>"
+        },
+        platformRegulations: {
+          title: "Plattformregeln",
+          content: "<p>Auf „Suchen“ klicken, Auftrag abwarten und abschließen. Typisch <strong>30 Minuten</strong>.</p><p>Zufällige Zuweisung: <strong>keine Änderung/Stornierung/Überspringen</strong>.</p><p>Bei > <strong>15 Minuten</strong> ohne Einzahlung Support kontaktieren und Kontodaten bestätigen.</p><p>Öffnungszeiten: täglich <strong>9:00–21:00</strong>.</p><p>Bei Missbrauch des Kontos sofort Support kontaktieren.</p><p>Werbeauftrag: Einzahlung prüfen, dann <strong>„Senden“</strong> für <strong>Premium-Auftrag</strong>.</p><p>> 40.000 AED: <strong>Prüfgebühr</strong>, eine Stunde nach Verifizierung abhebbar.</p>"
+        },
+        deposits: {
+          title: "Zu Einzahlungen",
+          content: "<p>Über Ihr Konto „Aufladen“, Agent wählen, bereitgestellte Daten nutzen und Nachweis senden.</p><p>Bei Problemen Support kontaktieren.</p><p>Kontodaten vor Zahlung prüfen (tägliche Aktualisierung).</p><p><strong>Hinweis:</strong> Nur einzahlen, wenn Guthaben unter dem Auftragswert liegt.</p>"
+        },
+        withdrawals: {
+          title: "Zu Auszahlungen",
+          content: "<p>Nach täglichen Aufgaben Auszahlung anfordern (min. 40 AED). Auszahlungsinfos verknüpfen.</p><p>„Auszahlen“, Betrag und Passwort eingeben. Meist innerhalb 30 Minuten (bankabhängig).</p><p><strong>Zeiten:</strong> täglich <strong>9:00–21:00</strong>.</p>"
+        },
+        luxuryOrders: {
+          title: "Zu Luxusaufträgen",
+          content: "<p><strong>„Luxus-Hotelauftrag“:</strong> Werbekampagne zur Steigerung der Sichtbarkeit.</p><p>Kommissionen 10–30-fach; üblicherweise 0–2 Aufträge/Tag.</p><p><strong>Hinweis:</strong> Zugewiesene Aufträge müssen abgeschlossen werden; Anpassungen erscheinen im Konto.</p>"
+        }
+      }
+    },
+    tasks: {
+      title: "Aufgaben",
+      tabs: {
+        all: "Alle",
+        pending: "Ausstehend",
+        completed: "Abgeschlossen",
+        canceled: "Storniert"
+      }
+    },
+    bindAccount: {
+      title: "Konto verknüpfen",
+      currentBankTitle: "Derzeit verknüpfte Bankkarte",
+      bank: "BANK",
+      cryptoTitle: "Kryptowährungsnetzwerk",
+      cryptoLabel: "USDT (TRC20/ERC20)",
+      popular: "Beliebt"
+    },
+    bankDetails: {
+      title: "Bankkarte verknüpfen"
+    },
+    search: {
+      placeholder: "Suchen"
+    },
+    vip: {
+      title: "VIP-Stufen",
+      subtitle: "Wählen Sie Ihre Mitgliedsstufe und schalten Sie exklusive Vorteile frei",
+      backToHome: "Zurück zur Startseite",
+      searchPlaceholder: "VIP-Stufen suchen...",
+      noResults: "Keine VIP-Stufen gefunden",
+      noResultsDesc: "Versuchen Sie, Ihre Suchbegriffe anzupassen",
+      currentLevel: "Aktuelle Stufe",
+      upgrade: "Upgrade",
+      locked: "Gesperrt",
+      currentlyOn: "Derzeit auf",
+      upgradeTo: "Upgrade auf",
+      levelDetails: "Stufendetails",
+      levelLimit: "Stufenlimit",
+      dailyOrders: "Tägliche Bestellungen",
+      setperday: "Sets pro Tag",
+      commissionRate: "Provisionssatz",
+      premiumCommission: "Premium-Provision",
+      maxOrders: "Max. Bestellungen",
+      commission: "Provision",
+      benefits: "Vorteile",
+      cancel: "Abbrechen",
+      upgradeNow: "Jetzt upgraden",
+      upgrading: "Wird aktualisiert...",
+      level: "VIP-Stufe",
+      pointPeriod: "Punktezeitraum: {0} Tage",
+      modal: {
+        alreadyMember: "Sie sind bereits Mitglied dieser VIP-Stufe.",
+        contactSupportMessage: "Bitte kontaktieren Sie den Kundensupport, um Ihr VIP zu erhöhen.",
+        contactSupport: "Support kontaktieren"
+      }
+    },
+    invitation: {
+      teamAmount: "Team-Betrag",
+      stats: {
+        dailyInvitations: "Tägliche Einladungen",
+        monthlyInvitations: "Monatliche Einladungen",
+        monthlyIncome: "Monatliches Einkommen"
+      },
+      rulesButton: "Regeln der Freunde-einladen-Aktion",
+      newAgents: "Neue Agenten",
+      table: {
+        memberId: "Mitglieds-ID",
+        recharge: "Aufladen",
+        withdraw: "Auszahlen"
+      },
+      noMoreData: "Keine weiteren Daten",
+      modal: {
+        title: "Freunde einladen und verdienen",
+        referralCodeLabel: "Ihr Empfehlungscode:",
+        copy: "Kopieren",
+        shareLabel: "Teilen Sie Ihren Empfehlungscode:"
+      },
+      notAllowed: {
+        title: "Zugriff eingeschränkt",
+        message: "Sie dürfen derzeit keine Benutzer einladen.",
+        submessage: "Das Empfehlungssystem ist derzeit für Ihr Konto deaktiviert. Bitte kontaktieren Sie den Support für weitere Informationen oder um Zugriff anzufordern.",
+        contactSupport: "Support kontaktieren",
+        gotIt: "Verstanden"
+      }
     },
 
     actions: {
@@ -593,6 +815,10 @@ const de = {
       },
       fields: {
         id: "Id",
+        accountHolder: "Kontoinhaber",
+        ibanNumber: "IBAN-Nummer",
+        bankName: "Bankname",
+        ifscCode: "IFSC-Code",
         amountRange: "Betrag",
         amount: "Betrag",
         email: "E-Mail",
@@ -767,6 +993,7 @@ const de = {
         USDT: "USDT",
         ETH: "ETH",
         BTC: "BTC",
+        TRC20: "TRC20"
       },
       gender: {
         male: "männlich",
@@ -1063,6 +1290,112 @@ const de = {
     image: "Sie müssen ein Bild hochladen",
     size: "Die Datei ist zu groß. Die maximal erlaubte Größe beträgt {0}",
     formats: `Ungültiges Format. Muss eines der folgenden sein: {0}.`,
+  },
+
+  settings: {
+    title: "Einstellungen",
+    menu: "Einstellungen",
+    save: {
+      success:
+        "Einstellungen erfolgreich gespeichert. Die Seite lädt in {0} Sekunden neu, damit die Änderungen wirksam werden.",
+    },
+    fields: {
+      theme: "Theme",
+      logos: "Logo",
+      backgroundImages: "Hintergrundbild",
+    },
+    colors: {
+      default: "Dunkel",
+      light: "Hell",
+      cyan: "Cyan",
+      "geek-blue": "Geek Blau",
+      gold: "Gold",
+      lime: "Limette",
+      magenta: "Magenta",
+      orange: "Orange",
+      "polar-green": "Polar Grün",
+      purple: "Lila",
+      red: "Rot",
+      volcano: "Vulkan",
+      yellow: "Gelb",
+    },
+  },
+  dashboard: {
+    menu: "Dashboard",
+    valider: "Validieren",
+    file: "Keine Datei ausgewählt",
+    typecsv: "Ungültiger Dateityp. Bitte wählen Sie eine CSV-Datei.",
+    reset: "Zurücksetzen",
+    phone: "Nummern hochladen",
+    check: "Nummer prüfen",
+    labelphone: "Telefonnummer eingeben",
+    add: "Nummer hinzufügen",
+    download: "Vorlage herunterladen",
+    added: "Nummer hinzugefügt",
+    duplicated: "Nummer dupliziert",
+    Wrong: "Nummer falsch",
+    notFound: "Entschuldigung, wir konnten die gesuchten Elemente nicht finden.",
+    validation: "Nummer erfolgreich hinzugefügt",
+    Success: "Nummer erfolgreich hinzugefügt",
+    numberValidation: "Geben Sie eine gültige Nummer ein. Danke.",
+    message:
+      "Diese Seite verwendet Beispieldaten nur zu Demonstrationszwecken. Sie können sie unter frontend/view/dashboard/DashboardPage.ts bearbeiten.",
+    charts: {
+      day: "Tag",
+      red: "Rot",
+      green: "Grün",
+      yellow: "Gelb",
+      grey: "Grau",
+      blue: "Blau",
+      orange: "Orange",
+      months: {
+        1: "Januar",
+        2: "Februar",
+        3: "März",
+        4: "April",
+        5: "Mai",
+        6: "Juni",
+        7: "Juli",
+        8: "August",
+        9: "September",
+        10: "Oktober",
+        11: "November",
+        12: "Dezember",
+      },
+      eating: "Essen",
+      drinking: "Trinken",
+      sleeping: "Schlafen",
+      designing: "Designen",
+      coding: "Programmieren",
+      cycling: "Radfahren",
+      running: "Laufen",
+      customer: "Kunde",
+      objectif: "Ziele nach Status",
+      projectS: "Projekte nach Status",
+      projectT: "Projekte nach Typ",
+      adherent: "Anzahl der Mitglieder",
+      news: "Anzahl der Nachrichten",
+      project: "Anzahl der Projekte",
+      partner: "Anzahl der Partner",
+      nodata: "Keine Daten zum Anzeigen",
+    },
+  },
+  imagesViewer: {
+    noImage: "Kein Bild",
+  },
+  autocomplete: {
+    loading: "Laden...",
+    noOptions: "Keine Daten gefunden",
+  },
+  table: {
+    noData: "Keine Einträge gefunden",
+    loading: "Laden...",
+  },
+  footer: {
+    copyright: "© {0} GoToMarketersers Digitales Marketing",
+  },
+  preview: {
+    error: "Diese Operation ist im Vorschaumodus nicht erlaubt.",
   },
 
 };

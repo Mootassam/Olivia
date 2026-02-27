@@ -1,11 +1,12 @@
 import React from 'react'
 import SubHeader from 'src/view/shared/Header/SubHeader'
 import { Link } from 'react-router-dom'
+import { i18n } from '../../../i18n'
 
 function BindAccount() {
   return (
     <>
-      <SubHeader title="Bind Account" path="/profile" />
+      <SubHeader title={i18n('pages.bindAccount.title')} path="/profile" />
       
       <style>{`
         .container {
@@ -125,7 +126,7 @@ function BindAccount() {
       `}</style>
 
       <div className="container">
-        <h1 className="title">Currently tied bank card</h1>
+        <h1 className="title">{i18n('pages.bindAccount.currentBankTitle')}</h1>
         <Link to="/bank_details" className="remove__blue">
           <div className="card">
             <div className="left-section">
@@ -138,7 +139,7 @@ function BindAccount() {
                   <circle cx="16" cy="16" r="1" fill="white" />
                 </svg>
               </div>
-              <span className="label">BANK</span>
+              <span className="label">{i18n('pages.bindAccount.bank')}</span>
             </div>
 
             {/* Removed the center-section with dash-symbol to match USDT card style */}
@@ -149,7 +150,7 @@ function BindAccount() {
           </div>
         </Link>
 
-        <h2 className="subtitle">Cryptocurrency Network</h2>
+        <h2 className="subtitle">{i18n('pages.bindAccount.cryptoTitle')}</h2>
         
         <Link to="/wallet" className="remove__blue">
           <div className="card">
@@ -161,8 +162,8 @@ function BindAccount() {
                   <circle cx="18.5" cy="15" r="1" fill="#1e1e1e"/>
                 </svg>
               </div>
-              <span className="label">USDT (TRC20/ERC20)</span>
-              <span className="badge">Popular</span>
+              <span className="label">{i18n('pages.bindAccount.cryptoLabel')}</span>
+              <span className="badge">{i18n('pages.bindAccount.popular')}</span>
             </div>
 
             <button className="arrow-button" aria-label="Next">

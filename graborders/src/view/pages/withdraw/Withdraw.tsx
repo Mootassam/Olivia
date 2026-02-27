@@ -119,7 +119,7 @@ const schema = yup.object().shape({
       required: true,
     }
   ),
-  withdrawalMethod: yup.string().required("Please select a withdrawal method"),
+  withdrawalMethod: yup.string().required(i18n("pages.withdraw.validation.selectMethod")),
 });
 
 function Withdraw() {
@@ -168,20 +168,20 @@ function Withdraw() {
   // Get missing bank fields
   const getMissingBankFields = useCallback(() => {
     const missing = [];
-    if (!currentUser?.accountHolder) missing.push("Account Holder");
-    if (!currentUser?.ibanNumber) missing.push("IBAN Number");
-    if (!currentUser?.bankName) missing.push("Bank Name");
-    if (!currentUser?.ifscCode) missing.push("IFSC Code");
+    if (!currentUser?.accountHolder) missing.push(i18n("entities.transaction.fields.accountHolder"));
+    if (!currentUser?.ibanNumber) missing.push(i18n("entities.transaction.fields.ibanNumber"));
+    if (!currentUser?.bankName) missing.push(i18n("entities.transaction.fields.bankName"));
+    if (!currentUser?.ifscCode) missing.push(i18n("entities.transaction.fields.ifscCode"));
     return missing;
   }, [currentUser]);
 
   // Get missing crypto fields
   const getMissingCryptoFields = useCallback(() => {
     const missing = [];
-    if (!currentUser?.trc20) missing.push("TRC20 Address");
-    if (!currentUser?.walletname) missing.push("Wallet Name");
-    if (!currentUser?.usernamewallet) missing.push("Username Wallet");
-    if (!currentUser?.preferredcoin) missing.push("Preferred Coin");
+    if (!currentUser?.trc20) missing.push(i18n("user.fields.trc20"));
+    if (!currentUser?.walletname) missing.push(i18n("pages.wallet.walletName"));
+    if (!currentUser?.usernamewallet) missing.push(i18n("pages.wallet.username"));
+    if (!currentUser?.preferredcoin) missing.push(i18n("pages.wallet.choosePreferredCoin"));
     return missing;
   }, [currentUser]);
 
@@ -238,14 +238,14 @@ function Withdraw() {
       {showBankModal && (
         <CustomModal
           visible={showBankModal}
-          title="Incomplete Bank Details"
+          title={i18n('pages.withdraw.bankModal.title')}
           onClose={() => setShowBankModal(false)}
         >
           <div style={{ textAlign: "center" }}>
             <i className="fa-solid fa-circle-exclamation" style={{ fontSize: "48px", color: "#ff9800", marginBottom: "15px" }}></i>
-            <h3 style={{ marginBottom: "15px", color: "#333" }}>Bank Details Required</h3>
+            <h3 style={{ marginBottom: "15px", color: "#333" }}>{i18n('pages.withdraw.bankModal.required')}</h3>
             <p style={{ marginBottom: "20px", color: "#666" }}>
-              Please complete your bank details before making a withdrawal:
+              {i18n('pages.withdraw.bankModal.description')}
             </p>
             <ul style={{ textAlign: "left", marginBottom: "20px", color: "#555", listStyle: "none", padding: 0 }}>
               {getMissingBankFields().map((field, index) => (
@@ -267,7 +267,7 @@ function Withdraw() {
                   flex: 1
                 }}
               >
-                Cancel
+                {i18n('common.cancel')}
               </button>
               <Link to="/bind-account" style={{ flex: 1 }}>
                 <button
@@ -281,7 +281,7 @@ function Withdraw() {
                     width: "100%"
                   }}
                 >
-                  Go to Bind Account
+                  {i18n('pages.withdraw.goToBindAccount')}
                 </button>
               </Link>
             </div>
@@ -293,14 +293,14 @@ function Withdraw() {
       {showCryptoModal && (
         <CustomModal
           visible={showCryptoModal}
-          title="Incomplete Crypto Details"
+          title={i18n('pages.withdraw.cryptoModal.title')}
           onClose={() => setShowCryptoModal(false)}
         >
           <div style={{ textAlign: "center" }}>
             <i className="fa-solid fa-circle-exclamation" style={{ fontSize: "48px", color: "#ff9800", marginBottom: "15px" }}></i>
-            <h3 style={{ marginBottom: "15px", color: "#333" }}>Cryptocurrency Details Required</h3>
+            <h3 style={{ marginBottom: "15px", color: "#333" }}>{i18n('pages.withdraw.cryptoModal.required')}</h3>
             <p style={{ marginBottom: "20px", color: "#666" }}>
-              Please complete your cryptocurrency details before making a withdrawal:
+              {i18n('pages.withdraw.cryptoModal.description')}
             </p>
             <ul style={{ textAlign: "left", marginBottom: "20px", color: "#555", listStyle: "none", padding: 0 }}>
               {getMissingCryptoFields().map((field, index) => (
@@ -322,7 +322,7 @@ function Withdraw() {
                   flex: 1
                 }}
               >
-                Cancel
+                {i18n('common.cancel')}
               </button>
               <Link to="/bind-account" style={{ flex: 1 }}>
                 <button
@@ -336,7 +336,7 @@ function Withdraw() {
                     width: "100%"
                   }}
                 >
-                  Go to Bind Account
+                  {i18n('pages.withdraw.goToBindAccount')}
                 </button>
               </Link>
             </div>
@@ -575,12 +575,12 @@ function Withdraw() {
             <div className="form-group">
               <div className="label__form">
                 <span style={{ color: "red", marginRight: "4px" }}>*</span>
-                <span style={{ fontSize: "14px", fontWeight: "500" }}>Withdrawal Amount</span>
+                <span style={{ fontSize: "14px", fontWeight: "500" }}>{i18n('pages.withdraw.withdrawAmount')}</span>
               </div>
               <InputFormItem
                 type="number"
                 name="amount"
-                placeholder="Enter amount (min. €50)"
+                placeholder={i18n('pages.withdraw.amountPlaceholder')}
                 className="input"
               />
             </div>
@@ -589,7 +589,7 @@ function Withdraw() {
             <div className="form-group">
               <div className="label__form">
                 <span style={{ color: "red", marginRight: "4px" }}>*</span>
-                <span style={{ fontSize: "14px", fontWeight: "500" }}>Select Withdrawal Method</span>
+                <span style={{ fontSize: "14px", fontWeight: "500" }}>{i18n('pages.withdraw.selectMethod')}</span>
               </div>
               
               <div className="method-selection">
@@ -599,11 +599,11 @@ function Withdraw() {
                   onClick={() => form.setValue('withdrawalMethod', 'crypto', { shouldValidate: true })}
                 >
                   <i className="fa-brands fa-bitcoin method-icon"></i>
-                  <div className="method-label">Cryptocurrency</div>
+                  <div className="method-label">{i18n('pages.withdraw.methods.crypto')}</div>
                   <div className={`method-status ${hasCompleteCryptoDetails() ? 'status-complete' : 'status-incomplete'}`}>
-                    {hasCompleteCryptoDetails() ? '✓ Complete' : '⚠ Incomplete'}
+                    {hasCompleteCryptoDetails() ? i18n('pages.withdraw.status.complete') : i18n('pages.withdraw.status.incomplete')}
                   </div>
-                  <div style={{ fontSize: '11px', color: '#666', marginTop: '6px' }}>TRC20 | ERC20</div>
+                  <div style={{ fontSize: '11px', color: '#666', marginTop: '6px' }}>{i18n('pages.withdraw.methods.cryptoNetworks')}</div>
                 </div>
 
                 {/* Bank Option */}
@@ -612,11 +612,11 @@ function Withdraw() {
                   onClick={() => form.setValue('withdrawalMethod', 'bank', { shouldValidate: true })}
                 >
                   <i className="fa-solid fa-building-columns method-icon"></i>
-                  <div className="method-label">Bank Transfer</div>
+                  <div className="method-label">{i18n('pages.withdraw.methods.bank')}</div>
                   <div className={`method-status ${hasCompleteBankDetails() ? 'status-complete' : 'status-incomplete'}`}>
-                    {hasCompleteBankDetails() ? '✓ Complete' : '⚠ Incomplete'}
+                    {hasCompleteBankDetails() ? i18n('pages.withdraw.status.complete') : i18n('pages.withdraw.status.incomplete')}
                   </div>
-                  <div style={{ fontSize: '11px', color: '#666', marginTop: '6px' }}>IBAN | SWIFT</div>
+                  <div style={{ fontSize: '11px', color: '#666', marginTop: '6px' }}>{i18n('pages.withdraw.methods.bankNetworks')}</div>
                 </div>
               </div>
               
@@ -637,7 +637,7 @@ function Withdraw() {
             {form.watch('withdrawalMethod') === 'crypto' && hasCompleteCryptoDetails() && (
               <div className="preview-box">
                 <i className="fa-brands fa-bitcoin" style={{ color: 'rgb(0, 157, 254)', marginRight: '8px' }}></i>
-                <strong>Withdrawing to:</strong><br/>
+                <strong>{i18n('pages.withdraw.withdrawingTo')}</strong><br/>
                 <span style={{ fontSize: '12px', color: '#666' }}>
                   {currentUser?.preferredcoin?.toUpperCase()}: {currentUser?.trc20?.substring(0, 12)}...
                 </span>
@@ -647,7 +647,7 @@ function Withdraw() {
             {form.watch('withdrawalMethod') === 'bank' && hasCompleteBankDetails() && (
               <div className="preview-box">
                 <i className="fa-solid fa-building-columns" style={{ color: 'rgb(0, 157, 254)', marginRight: '8px' }}></i>
-                <strong>Withdrawing to:</strong><br/>
+                <strong>{i18n('pages.withdraw.withdrawingTo')}</strong><br/>
                 <span style={{ fontSize: '12px', color: '#666' }}>
                   {currentUser?.bankName} - {currentUser?.accountHolder}
                 </span>
@@ -658,12 +658,12 @@ function Withdraw() {
             <div className="form-group withdraw-password-section">
               <div className="label__form">
                 <span style={{ color: "red", marginRight: "4px" }}>*</span>
-                <span style={{ fontSize: "14px", fontWeight: "500" }}>Withdrawal Password</span>
+                <span style={{ fontSize: "14px", fontWeight: "500" }}>{i18n('pages.withdraw.withdrawPassword')}</span>
               </div>
               <InputFormItem
                 type="password"
                 name="withdrawPassword"
-                placeholder="Enter your withdrawal password"
+                placeholder={i18n('pages.withdraw.withdrawPasswordPlaceholder')}
                 className="input"
               />
             </div>
@@ -672,7 +672,7 @@ function Withdraw() {
             <div className="announcement-container">
               <i className="fa-solid fa-volume-high speaker" aria-hidden="true"></i>
               <div className="announcement-text">
-                <strong>Notice:</strong> Withdrawals are processed within 24 hours. Minimum withdrawal amount: €50. A small fee may apply.
+                {i18n('pages.withdraw.announcement')}
               </div>
             </div>
 
@@ -683,7 +683,7 @@ function Withdraw() {
               disabled={!currentUser?.withdraw}
             >
               <i className="fa-solid fa-check" style={{ marginRight: '8px' }}></i>
-              Confirm Withdrawal
+              {i18n('pages.withdraw.confirm')}
             </button>
 
             {/* Help text for incomplete profiles */}
@@ -691,11 +691,11 @@ function Withdraw() {
               <div className="tip-box">
                 <i className="fa-solid fa-info-circle fa-lg"></i>
                 <span>
-                  Complete your withdrawal details in 
+                  {i18n('pages.withdraw.completeDetailsIn')}{' '}
                   <Link to="/bind-account" style={{ marginLeft: '4px', marginRight: '4px' }}>
-                    Bind Account
+                    {i18n('pages.bindAccount.title')}
                   </Link> 
-                  to enable all withdrawal options.
+                  {i18n('pages.withdraw.enableAllOptions')}
                 </span>
               </div>
             )}

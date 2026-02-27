@@ -130,6 +130,14 @@ const tr = {
       security: "Güvenlik",
       notifications: "Bildirimler",
       languages: "Diller",
+      bindAccount: "Hesap Bağla",
+      details: "Detaylar",
+      officialWebsite: "Resmi site girişi",
+      changeLoginPassword: "Giriş şifresini değiştir",
+      changeWithdrawPassword: "Para çekme şifresini değiştir",
+      mainFunction: "Ana fonksiyon",
+      otherFunction: "Diğer fonksiyonlar",
+      uid: "UID",
 
       // Buttons
       logout: "Çıkış Yap",
@@ -144,6 +152,10 @@ const tr = {
       withdrawModal: {
         title: "Çekim",
         text: "Çekim işleminize devam etmek için lütfen müşteri hizmetleriyle iletişime geçin."
+      },
+      reputation: {
+        title: "İtibar Kuralları",
+        description: "Her hesabın, üyenin performansına dayanan bir itibar sistemi vardır. Günlük görevleri tamamlarsanız ve iyi bir itibarı korursanız puanınız artar. Son teslim tarihlerini kaçırırsanız puanınız düşer. İtibarınız %80’in altına düşerse sistem para çekme işlemlerini engeller. Sorularınız için müşteri hizmetleriyle iletişime geçin."
       }
     },
 
@@ -262,11 +274,13 @@ const tr = {
         completed: "Tamamlandı",
         pending: "Beklemede",
         canceled: "İptal Edildi"
-      }
+      },
+      submit: "Gönder"
     },
 
     changePassword: {
       title: "Şifre Değiştir",
+      withdrawPassword: "Para çekme şifresini değiştir",
       header: "Şifre Değiştir",
       oldPassword: "Eski Şifre",
       newPassword: "Yeni Şifre",
@@ -278,6 +292,7 @@ const tr = {
 
     withdraw: {
       title: "Çekim",
+      announcement: "Minimum çekim tutarı €50'dir. Tüm çekimler 24 saat içinde işlenir.",
       withdrawAmount: "Çekim Miktarı",
       withdrawPassword: "Çekim Şifresi",
       availableBalance: "Kullanılabilir bakiye",
@@ -287,6 +302,36 @@ const tr = {
         minimum: "(1) Minimum çekim 100 USD'dir",
         paymentTime: "(2) Ödeme, çekim başvurusu onaylandıktan sonraki 1 saat içinde yapılacaktır.",
         orderCompletion: "(3) Eksik günlük sipariş gönderimi çekime tabi değildir, çekim için tüm ürünler gönderilmelidir"
+      },
+      amountPlaceholder: "Tutar girin (min. €50)",
+      selectMethod: "Çekim yöntemini seçin",
+      methods: {
+        crypto: "Kripto para",
+        bank: "Banka transferi",
+        cryptoNetworks: "TRC20 | ERC20",
+        bankNetworks: "IBAN | SWIFT"
+      },
+      status: {
+        complete: "✓ Tamamlandı",
+        incomplete: "⚠ Eksik"
+      },
+      withdrawingTo: "Şuraya çekiliyor:",
+      withdrawPasswordPlaceholder: "Çekim şifrenizi girin",
+      bankModal: {
+        title: "Eksik banka bilgileri",
+        required: "Banka bilgileri gerekli",
+        description: "Lütfen para çekmeden önce banka bilgilerinizi tamamlayın:"
+      },
+      cryptoModal: {
+        title: "Eksik kripto bilgileri",
+        required: "Kripto para bilgileri gerekli",
+        description: "Lütfen para çekmeden önce kripto para bilgilerinizi tamamlayın:"
+      },
+      goToBindAccount: "Hesap Bağla sayfasına git",
+      completeDetailsIn: "Çekim detaylarını şurada tamamla",
+      enableAllOptions: "tüm çekim seçeneklerini etkinleştirmek için.",
+      validation: {
+        selectMethod: "Lütfen bir çekim yöntemi seçin"
       }
     },
 
@@ -304,6 +349,26 @@ const tr = {
     },
 
     grab: {
+      title: "Değerlendir ve Konakla",
+      description: "Search Off the Record, GoToMarketers Search’ün perde arkasını gösterir. Her bölüm, otelleri evden değerlendirmeye ve keşfetmeye nasıl yardımcı olduğumuzu gösterir.",
+      seeAllReviews: "Tüm değerlendirmeleri gör",
+      searchNow: "Şimdi ara",
+      errors: {
+        insufficientBalance: "Yetersiz bakiye. Devam etmek için lütfen hesabınızı doldurun."
+      },
+      messages: {
+        completedTasks: "Tüm mevcut görevleri tamamladınız. Hesabınızı sıfırlamak için destekle iletişime geçin."
+      },
+      stats: {
+        myAssets: "Varlıklarım",
+        earnings: "Kazançlar",
+        tasksDone: "Tamamlanan görevler",
+        onHold: "Beklemede"
+      },
+      title: "Değerlendir ve Konakla",
+      description: "Search Off the Record, GoToMarketers Search’ün perde arkasını gösterir. Her bölüm, insanlara otelleri evden değerlendirme ve keşfetme konusunda nasıl yardımcı olduğumuzu anlatır.",
+      seeAllReviews: "Tüm değerlendirmeleri gör",
+      searchNow: "Şimdi ara",
       // Header Section
       greeting: "Merhaba {0} 👏",
 
@@ -329,6 +394,35 @@ const tr = {
       supportHours: "Çevrimiçi Destek Saatleri 10:00 - 22:00",
       contactSupport: "Yardım için lütfen çevrimiçi destekle iletişime geçin!"
     },
+    grap: {
+      rateModal: {
+        title: "Deneyiminizi değerlendirin",
+        label: {
+          tapToRate: "Değerlendirmek için dokunun",
+          poor: "Kötü",
+          fair: "Vasat",
+          good: "İyi",
+          veryGood: "Çok iyi",
+          excellent: "Mükemmel"
+        },
+        selectOptions: "Geri bildirim seçeneklerinizi seçin",
+        more: "daha",
+        submit: "Değerlendirmeyi gönder",
+        options: {
+          0: "Odalar temizdi, çok rahattı ve personel harikaydı",
+          1: "Harikaydı. Her zamanki gibi birinci sınıf hizmet",
+          2: "Bu tesisteki personel harika! Konaklamanızı rahat hale getirmek için ellerinden geleni yapıyorlar",
+          3: "Burada harika bir deneyim yaşadım",
+          4: "Birçok seçenekle yemekler harikaydı",
+          5: "Şehir merkezinde mükemmel konuma sahip mükemmel otel",
+          6: "Çok merkezi, harika klimaya sahip konforlu odalar. Kahvaltı lezzetliydi ve personel son derece yardımsever ve dost canlısıydı"
+        }
+      },
+      modal: {
+        productName: "Ürün adı",
+        positiveReviews: "olumlu değerlendirme"
+      }
+    },
 
     grapModal: {
       orderTime: "Sipariş Zamanı",
@@ -340,6 +434,145 @@ const tr = {
       submit: "Gönder",
       quantity: "X 1",
       currency: "USD"
+    },
+    marketsHome: {
+      heroTitle: "🌙 Sükunetinizi bulun",
+      heroSubtitle: "Lüks oteller · özel kaçamaklar",
+      search: {
+        destinationPlaceholder: "Gidilecek yer, şehir, otel",
+        checkIn: "Giriş",
+        checkOut: "Çıkış",
+        guestsPlaceholder: "2 yetişkin · 0 çocuk",
+        goToSearch: "Aramaya git",
+        flexibleNote: "Esnek tarihler? · En iyi fiyat"
+      },
+      sections: {
+        dreamEscapesTitle: "📸 Rüya kaçamakları",
+        exploreAll: "Hepsini keşfet",
+        topPicksTitle: "✨ Sizin için önerilenler",
+        viewAll: "Hepsini gör"
+      },
+      features: {
+        freeWifi: "Ücretsiz WiFi",
+        support: "7/24 destek",
+        secure: "Güvenli",
+        bestRate: "En iyi fiyat"
+      },
+      footerTagline: "✦ Şimdi rezerve edin, sonra rahatlayın · Gizli ücret yok ✦"
+    },
+    activities: {
+      title: "Aktiviteler",
+      subtitle: "Kampanya tüm hızıyla devam ediyor, haydi katıl!"
+    },
+    help: {
+      title: "Yardım Merkezi",
+      footer: "Daha fazla yardım için çevrimiçi destekle iletişime geçin.",
+      accordion: {
+        specialOrders: {
+          title: "Özel siparişler hakkında",
+          content: "<p><strong>\"Özel otel siparişi\" nedir?</strong></p><p>Seçili lüks otellerle sağlanan özel avantajlardır; nadirdir ve yalnızca üst seviye VIP’lere sunulur.</p><p>Mystery Box (nakit ödül ve Özel Sipariş) ile 30–50 kat komisyon mümkündür.</p>"
+        },
+        platformRegulations: {
+          title: "Platform kuralları",
+          content: "<p>\"Ara\"ya tıklayın, siparişi bekleyin ve tamamlayın. Genellikle <strong>30 dakika</strong>.</p><p>Siparişler rastgele atanır ve <strong>değiştirilemez, iptal edilemez, atlanamaz</strong>.</p><p><strong>15 dakikadan</strong> fazla depozito yapılmadıysa, destekle iletişime geçip hesap bilgilerini doğrulayın.</p><p>Çalışma saatleri: her gün <strong>9:00–21:00</strong>.</p><p>Hesabın kötüye kullanımı durumunda derhal destekle iletişime geçin.</p><p>Reklam siparişi: depozitoyu doğrulayın ve <strong>\"Gönder\"</strong>e basarak <strong>Premium Siparişi</strong> tamamlayın.</p><p>> 40.000 AED çekimlerde <strong>denetim ücreti</strong> gerekir; <strong>doğrulamadan bir saat sonra</strong> çekilebilir.</p>"
+        },
+        deposits: {
+          title: "Yatırmalar hakkında",
+          content: "<p>Profilinizden \"Yükleme\", yetkili kişiyi seçin, sağlanan bilgileri kullanın ve dekontu gönderin.</p><p>Problemlerde çevrimiçi destekle iletişime geçin.</p><p>Ödeme öncesi depozito hesabını doğrulayın (günlük güncellenir).</p><p><strong>Not:</strong> Bakiye sipariş fiyatından düşükse yatırım yapın.</p>"
+        },
+        withdrawals: {
+          title: "Çekimler hakkında",
+          content: "<p>Günlük görevlerden sonra çekim talep edin (min 40 AED). Çekim bilgilerinizin bağlı olduğundan emin olun.</p><p>\"Çekim\"e tıklayın, tutarı ve şifreyi girin. Genellikle 30 dakikada (bankaya bağlı).</p><p><strong>Saatler:</strong> her gün <strong>9:00–21:00</strong>.</p>"
+        },
+        luxuryOrders: {
+          title: "Lüks siparişler hakkında",
+          content: "<p><strong>Lüks otel siparişi:</strong> marka görünürlüğünü artıran reklam kampanyası.</p><p>Üyelere 10–30 kat komisyon; genelde günde 0–2 sipariş.</p><p><strong>Not:</strong> Atanan siparişler tamamlanmalıdır; hesapta yansıtılır.</p>"
+        }
+      }
+    },
+    tasks: {
+      title: "Görevler",
+      tabs: {
+        all: "Tümü",
+        pending: "Beklemede",
+        completed: "Tamamlandı",
+        canceled: "İptal Edildi"
+      }
+    },
+    bindAccount: {
+      title: "Hesap Bağla",
+      currentBankTitle: "Şu anda bağlı banka kartı",
+      bank: "BANKA",
+      cryptoTitle: "Kripto Ağı",
+      cryptoLabel: "USDT (TRC20/ERC20)",
+      popular: "Popüler"
+    },
+    bankDetails: {
+      title: "Banka Kartı Bağlama"
+    },
+    search: {
+      placeholder: "Ara"
+    },
+    vip: {
+      title: "VIP Seviyeleri",
+      subtitle: "Üyelik seviyenizi seçin ve özel avantajların kilidini açın",
+      backToHome: "Ana sayfaya dön",
+      searchPlaceholder: "VIP seviyelerini ara...",
+      noResults: "VIP seviyesi bulunamadı",
+      noResultsDesc: "Arama terimlerinizi değiştirmeyi deneyin",
+      currentLevel: "Mevcut seviye",
+      upgrade: "Yükselt",
+      locked: "Kilitli",
+      currentlyOn: "Şu anda",
+      upgradeTo: "Şuna yükselt",
+      levelDetails: "Seviye Detayları",
+      levelLimit: "Seviye Limiti",
+      dailyOrders: "Günlük Siparişler",
+      setperday: "Günlük set",
+      commissionRate: "Komisyon Oranı",
+      premiumCommission: "Premium Komisyon",
+      maxOrders: "Maksimum sipariş",
+      commission: "Komisyon",
+      benefits: "Avantajlar",
+      cancel: "İptal",
+      upgradeNow: "Hemen Yükselt",
+      upgrading: "Yükseltiliyor...",
+      level: "VIP Seviyesi",
+      pointPeriod: "Puan dönemi: {0} gün",
+      modal: {
+        alreadyMember: "Bu VIP seviyesinin zaten üyesisiniz.",
+        contactSupportMessage: "VIP seviyenizi yükseltmek için lütfen müşteri desteğine başvurun.",
+        contactSupport: "Desteğe Ulaş"
+      }
+    },
+    invitation: {
+      teamAmount: "Takım miktarı",
+      stats: {
+        dailyInvitations: "Günlük davetler",
+        monthlyInvitations: "Aylık davetler",
+        monthlyIncome: "Aylık gelir"
+      },
+      rulesButton: "Arkadaş davet etme etkinliği kuralları",
+      newAgents: "Yeni temsilciler",
+      table: {
+        memberId: "Üye ID",
+        recharge: "Yükleme",
+        withdraw: "Çekim"
+      },
+      noMoreData: "Daha fazla veri yok",
+      modal: {
+        title: "Arkadaşlarını davet et ve kazan",
+        referralCodeLabel: "Referans Kodun:",
+        copy: "Kopyala",
+        shareLabel: "Referans kodunu paylaş:"
+      },
+      notAllowed: {
+        title: "Erişim Kısıtlı",
+        message: "Şu anda kullanıcı davet etme izniniz yok.",
+        submessage: "Referans sistemi hesabınız için şu anda devre dışı. Daha fazla bilgi veya erişim talebi için destekle iletişime geçin.",
+        contactSupport: "Desteğe Ulaş",
+        gotIt: "Anladım"
+      }
     },
 
     actions: {
@@ -601,6 +834,10 @@ const tr = {
       },
       fields: {
         id: "Id",
+        accountHolder: "Hesap Sahibi",
+        ibanNumber: "IBAN Numarası",
+        bankName: "Banka Adı",
+        ifscCode: "IFSC Kodu",
         amountRange: "Tutar",
         amount: "Tutar",
         email: "E-posta",
@@ -775,6 +1012,7 @@ const tr = {
         USDT: "USDT",
         ETH: "ETH",
         BTC: "BTC",
+        TRC20: "TRC20",
       },
       gender: {
         male: "erkek",

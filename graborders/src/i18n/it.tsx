@@ -125,6 +125,14 @@ const it = {
             security: "Sicurezza",
             notifications: "Notifiche",
             languages: "Lingue",
+            bindAccount: "Collega account",
+            details: "Dettagli",
+            officialWebsite: "Ingresso sito ufficiale",
+            changeLoginPassword: "Cambia password di accesso",
+            changeWithdrawPassword: "Cambia password di prelievo",
+            mainFunction: "Funzione principale",
+            otherFunction: "Altre funzioni",
+            uid: "UID",
 
             // Buttons
             logout: "Disconnetti",
@@ -139,6 +147,10 @@ const it = {
             withdrawModal: {
                 title: "Prelievo",
                 text: "Si prega di contattare il servizio clienti per procedere con il prelievo."
+            },
+            reputation: {
+                title: "Regole di reputazione",
+                description: "Ogni account ha un sistema di reputazione basato sulle prestazioni del membro. Se completi le attività giornaliere e mantieni una buona reputazione, il tuo punteggio migliorerà. Se non rispetti le scadenze, il tuo punteggio diminuirà. Se la tua reputazione scende sotto l'80%, il sistema bloccherà i prelievi. Per qualsiasi domanda, contatta il servizio clienti."
             }
         },
 
@@ -257,11 +269,13 @@ const it = {
                 completed: "Completata",
                 pending: "In Attesa",
                 canceled: "Annullata"
-            }
+            },
+            submit: "Invia"
         },
 
         changePassword: {
             title: "Cambia Password",
+            withdrawPassword: "Cambia password di prelievo",
             header: "Cambia Password",
             oldPassword: "Vecchia Password",
             newPassword: "Nuova Password",
@@ -282,6 +296,36 @@ const it = {
                 minimum: "(1) Il prelievo minimo è di 100 USD",
                 paymentTime: "(2) Il pagamento verrà effettuato entro l'ora successiva, dopo l'approvazione della richiesta di prelievo.",
                 orderCompletion: "(3) L'invio incompleto degli ordini giornalieri è soggetto a nessun prelievo, tutti i prodotti devono essere inviati per il prelievo"
+            },
+            amountPlaceholder: "Inserisci importo (min. €50)",
+            selectMethod: "Seleziona metodo di prelievo",
+            methods: {
+                crypto: "Criptovaluta",
+                bank: "Bonifico bancario",
+                cryptoNetworks: "TRC20 | ERC20",
+                bankNetworks: "IBAN | SWIFT"
+            },
+            status: {
+                complete: "✓ Completo",
+                incomplete: "⚠ Incompleto"
+            },
+            withdrawingTo: "Prelievo verso:",
+            withdrawPasswordPlaceholder: "Inserisci la tua password di prelievo",
+            bankModal: {
+                title: "Dettagli bancari incompleti",
+                required: "Dettagli bancari richiesti",
+                description: "Completa i tuoi dettagli bancari prima di effettuare un prelievo:"
+            },
+            cryptoModal: {
+                title: "Dettagli crypto incompleti",
+                required: "Dettagli criptovaluta richiesti",
+                description: "Completa i tuoi dettagli di criptovaluta prima di effettuare un prelievo:"
+            },
+            goToBindAccount: "Vai a Collega account",
+            completeDetailsIn: "Completa i dettagli di prelievo in",
+            enableAllOptions: "per abilitare tutte le opzioni di prelievo.",
+            validation: {
+                selectMethod: "Seleziona un metodo di prelievo"
             }
         },
 
@@ -299,6 +343,10 @@ const it = {
         },
 
         grab: {
+            title: "Valuta e soggiorna",
+            description: "Search Off the Record ti porta dietro le quinte di GoToMarketers Search. Ogni episodio rivela come aiutiamo le persone a valutare e scoprire hotel da casa.",
+            seeAllReviews: "Vedi tutte le recensioni",
+            searchNow: "Cerca ora",
             // Header Section
             greeting: "Ciao {0} 👏",
 
@@ -322,7 +370,48 @@ const it = {
             // Notice Section
             notice: "Avviso",
             supportHours: "Orari Supporto Online 10:00 - 22:00",
-            contactSupport: "Si prega di contattare il supporto online per assistenza!"
+            contactSupport: "Si prega di contattare il supporto online per assistenza!",
+            errors: {
+                insufficientBalance: "Saldo insufficiente. Ricarica il tuo conto per continuare."
+            },
+            messages: {
+                completedTasks: "Hai completato tutte le attività disponibili. Contatta il supporto per reimpostare il tuo account."
+            },
+            stats: {
+                myAssets: "I miei asset",
+                earnings: "Guadagni",
+                tasksDone: "Attività completate",
+                onHold: "In attesa"
+            }
+        },
+        grap: {
+            rateModal: {
+                title: "Valuta la tua esperienza",
+                label: {
+                    tapToRate: "Tocca per valutare",
+                    poor: "Scarso",
+                    fair: "Discreto",
+                    good: "Buono",
+                    veryGood: "Molto buono",
+                    excellent: "Eccellente"
+                },
+                selectOptions: "Seleziona le opzioni di feedback",
+                more: "altro",
+                submit: "Invia recensione",
+                options: {
+                    0: "Le camere erano pulite, molto confortevoli e lo staff era fantastico",
+                    1: "È stato ottimo. Servizio di prima classe come sempre",
+                    2: "Il personale di questa struttura è eccellente! Fanno di tutto per rendere il soggiorno confortevole",
+                    3: "Ho avuto un'esperienza meravigliosa qui",
+                    4: "Il cibo era ottimo con molte scelte",
+                    5: "Hotel eccellente con posizione eccellente nel centro città",
+                    6: "Molto centrale con camere confortevoli e aria condizionata fantastica. Colazione deliziosa e personale estremamente disponibile e cordiale"
+                }
+            },
+            modal: {
+                productName: "Nome prodotto",
+                positiveReviews: "recensioni positive"
+            }
         },
 
         grapModal: {
@@ -335,6 +424,145 @@ const it = {
             submit: "Invia",
             quantity: "X 1",
             currency: "USD"
+        },
+        marketsHome: {
+            heroTitle: "🌙 Trova la tua calma",
+            heroSubtitle: "Hotel di lusso · ritiri privati",
+            search: {
+                destinationPlaceholder: "Destinazione, città, hotel",
+                checkIn: "Check-in",
+                checkOut: "Check-out",
+                guestsPlaceholder: "2 adulti · 0 bambini",
+                goToSearch: "Vai alla ricerca",
+                flexibleNote: "Date flessibili? · Miglior prezzo"
+            },
+            sections: {
+                dreamEscapesTitle: "📸 Fughe da sogno",
+                exploreAll: "Esplora tutto",
+                topPicksTitle: "✨ Scelte migliori per te",
+                viewAll: "Vedi tutto"
+            },
+            features: {
+                freeWifi: "WiFi gratuito",
+                support: "Supporto 24/7",
+                secure: "Sicuro",
+                bestRate: "Miglior tariffa"
+            },
+            footerTagline: "✦ Prenota ora, rilassati dopo · Nessuna tariffa nascosta ✦"
+        },
+        activities: {
+            title: "Attività",
+            subtitle: "La promozione è in pieno svolgimento, vieni e unisciti!"
+        },
+        help: {
+            title: "Centro assistenza",
+            footer: "Per ulteriore assistenza, contatta il nostro supporto clienti online.",
+            accordion: {
+                specialOrders: {
+                    title: "Riguardo agli ordini speciali",
+                    content: "<p><strong>Cos'è un \"Ordine speciale d'hotel\"?</strong></p><p>Vantaggi esclusivi con hotel di lusso selezionati; rari e solo per VIP di alto livello.</p><p>Mystery Box con premi in denaro e Ordini Speciali: commissioni 30–50 volte la tariffa standard.</p>"
+                },
+                platformRegulations: {
+                    title: "Regole della piattaforma",
+                    content: "<p>Premi \"Cerca\", attendi l'ordine e completalo. In genere <strong>30 minuti</strong>.</p><p>Assegnazione casuale: <strong>non modificabile, annullabile o ignorabile</strong>.</p><p>Se passano > <strong>15 minuti</strong> senza deposito, contatta il supporto e conferma i dati.</p><p>Orari: <strong>9:00 - 21:00</strong> ogni giorno.</p><p>Se l'account è usato impropriamente, contatta subito il supporto.</p><p>Per la pubblicità: verifica il deposito e premi <strong>\"Invia\"</strong> per completare l'<strong>Ordine Premium</strong>.</p><p>Per prelievi > 40.000 AED: <strong>tassa di verifica</strong>, prelevabile <strong>un'ora dopo la verifica</strong>.</p>"
+                },
+                deposits: {
+                    title: "Informazioni sui depositi",
+                    content: "<p>Dal tuo account, premi \"Ricarica\", scegli l'incaricato, usa i dati forniti e invia la ricevuta.</p><p>Se hai problemi, contatta il supporto online.</p><p>Verifica sempre il conto di deposito (aggiornato quotidianamente) prima di pagare.</p><p><strong>Nota:</strong> Deposita solo se il saldo è inferiore al prezzo dell'ordine.</p>"
+                },
+                withdrawals: {
+                    title: "Informazioni sui prelievi",
+                    content: "<p>Dopo le attività giornaliere, richiedi il prelievo (min 40 AED). Associa le informazioni di prelievo.</p><p>Premi \"Prelievo\", inserisci l'importo e la password. In genere entro 30 minuti (dipende dalla banca).</p><p><strong>Orari:</strong> <strong>9:00 - 21:00</strong> ogni giorno.</p>"
+                },
+                luxuryOrders: {
+                    title: "Riguardo agli ordini di lusso",
+                    content: "<p><strong>Ordine d'hotel di lusso:</strong> campagna per aumentare la visibilità del marchio.</p><p>Commissioni 10–30 volte superiori; 0–2 ordini al giorno.</p><p><strong>Nota:</strong> Gli ordini assegnati devono essere completati; l'accredito si riflette sull'account.</p>"
+                }
+            }
+        },
+        tasks: {
+            title: "Attività",
+            tabs: {
+                all: "Tutte",
+                pending: "In attesa",
+                completed: "Completate",
+                canceled: "Annullate"
+            }
+        },
+        bindAccount: {
+            title: "Collega account",
+            currentBankTitle: "Carta bancaria attualmente collegata",
+            bank: "BANCA",
+            cryptoTitle: "Rete di criptovaluta",
+            cryptoLabel: "USDT (TRC20/ERC20)",
+            popular: "Popolare"
+        },
+        bankDetails: {
+            title: "Collegamento carta bancaria"
+        },
+        search: {
+            placeholder: "Cerca"
+        },
+        vip: {
+            title: "Livelli VIP",
+            subtitle: "Scegli il tuo livello di abbonamento e sblocca vantaggi esclusivi",
+            backToHome: "Torna alla Home",
+            searchPlaceholder: "Cerca livelli VIP...",
+            noResults: "Nessun livello VIP trovato",
+            noResultsDesc: "Prova a modificare i termini di ricerca",
+            currentLevel: "Livello corrente",
+            upgrade: "Aggiorna",
+            locked: "Bloccato",
+            currentlyOn: "Attualmente su",
+            upgradeTo: "Aggiorna a",
+            levelDetails: "Dettagli livello",
+            levelLimit: "Limite livello",
+            dailyOrders: "Ordini giornalieri",
+            setperday: "Set al giorno",
+            commissionRate: "Tasso di commissione",
+            premiumCommission: "Commissione Premium",
+            maxOrders: "Ordini massimi",
+            commission: "Commissione",
+            benefits: "Benefici",
+            cancel: "Annulla",
+            upgradeNow: "Aggiorna ora",
+            upgrading: "Aggiornamento...",
+            level: "Livello VIP",
+            pointPeriod: "Periodo punti: {0} giorni",
+            modal: {
+                alreadyMember: "Sei già membro di questo livello VIP.",
+                contactSupportMessage: "Contatta il supporto clienti per aggiornare il tuo VIP.",
+                contactSupport: "Contatta il supporto"
+            }
+        },
+        invitation: {
+            teamAmount: "Importo del team",
+            stats: {
+                dailyInvitations: "Inviti giornalieri",
+                monthlyInvitations: "Inviti mensili",
+                monthlyIncome: "Reddito mensile"
+            },
+            rulesButton: "Regole attività Invita amici",
+            newAgents: "Nuovi agenti",
+            table: {
+                memberId: "ID Membro",
+                recharge: "Ricarica",
+                withdraw: "Prelievo"
+            },
+            noMoreData: "Nessun altro dato",
+            modal: {
+                title: "Invita amici e guadagna",
+                referralCodeLabel: "Il tuo codice di riferimento:",
+                copy: "Copia",
+                shareLabel: "Condividi il tuo codice di riferimento:"
+            },
+            notAllowed: {
+                title: "Accesso limitato",
+                message: "Al momento non ti è consentito invitare utenti.",
+                submessage: "Il sistema di referral è attualmente disabilitato per il tuo account. Contatta il supporto per maggiori informazioni o per richiedere l'accesso.",
+                contactSupport: "Contatta il supporto",
+                gotIt: "Ho capito"
+            }
         },
 
         actions: {
@@ -594,6 +822,10 @@ const it = {
             },
             fields: {
                 id: "Id",
+                accountHolder: "Intestatario del conto",
+                ibanNumber: "Numero IBAN",
+                bankName: "Nome banca",
+                ifscCode: "Codice IFSC",
                 amountRange: "Importo",
                 amount: "Importo",
                 email: "Email",
@@ -767,6 +999,7 @@ const it = {
                 USDT: "USDT",
                 ETH: "ETH",
                 BTC: "BTC",
+                TRC20: "TRC20",
             },
             gender: {
                 male: "maschio",
@@ -948,6 +1181,112 @@ const it = {
         image: "Devi caricare un'immagine",
         size: "Il file è troppo grande. La dimensione massima consentita è {0}",
         formats: "Formato non valido. Deve essere uno di: {0}."
+    },
+
+    settings: {
+        title: "Impostazioni",
+        menu: "Impostazioni",
+        save: {
+            success:
+                "Impostazioni salvate con successo. La pagina verrà ricaricata tra {0} secondi per applicare le modifiche.",
+        },
+        fields: {
+            theme: "Tema",
+            logos: "Logo",
+            backgroundImages: "Immagine di sfondo",
+        },
+        colors: {
+            default: "Scuro",
+            light: "Chiaro",
+            cyan: "Ciano",
+            "geek-blue": "Geek Blu",
+            gold: "Oro",
+            lime: "Lime",
+            magenta: "Magenta",
+            orange: "Arancione",
+            "polar-green": "Verde Polare",
+            purple: "Viola",
+            red: "Rosso",
+            volcano: "Vulcano",
+            yellow: "Giallo",
+        },
+    },
+    dashboard: {
+        menu: "Dashboard",
+        valider: "Convalida",
+        file: "Nessun file selezionato",
+        typecsv: "Tipo di file non valido. Seleziona un file CSV.",
+        reset: "Reimposta",
+        phone: "Carica numeri",
+        check: "Controlla numero",
+        labelphone: "Scrivi il numero di telefono",
+        add: "Aggiungi numero",
+        download: "Scarica il modello",
+        added: "Numero aggiunto",
+        duplicated: "Numero duplicato",
+        Wrong: "Numero errato",
+        notFound: "Spiacente, non abbiamo trovato gli elementi cercati.",
+        validation: "Numero aggiunto con successo",
+        Success: "Numero aggiunto con successo",
+        numberValidation: "Scrivi un numero valido. Grazie.",
+        message:
+            "Questa pagina utilizza dati fittizi solo a scopo dimostrativo. Puoi modificarla in frontend/view/dashboard/DashboardPage.ts.",
+        charts: {
+            day: "Giorno",
+            red: "Rosso",
+            green: "Verde",
+            yellow: "Giallo",
+            grey: "Grigio",
+            blue: "Blu",
+            orange: "Arancione",
+            months: {
+                1: "Gennaio",
+                2: "Febbraio",
+                3: "Marzo",
+                4: "Aprile",
+                5: "Maggio",
+                6: "Giugno",
+                7: "Luglio",
+                8: "Agosto",
+                9: "Settembre",
+                10: "Ottobre",
+                11: "Novembre",
+                12: "Dicembre",
+            },
+            eating: "Mangiare",
+            drinking: "Bere",
+            sleeping: "Dormire",
+            designing: "Progettazione",
+            coding: "Programmazione",
+            cycling: "Ciclismo",
+            running: "Corsa",
+            customer: "Cliente",
+            objectif: "Obiettivi per stato",
+            projectS: "Progetti per stato",
+            projectT: "Progetti per tipo",
+            adherent: "Numero di membri",
+            news: "Numero di notizie",
+            project: "Numero di progetti",
+            partner: "Numero di partner",
+            nodata: "nessun dato da visualizzare",
+        },
+    },
+    imagesViewer: {
+        noImage: "Nessuna immagine",
+    },
+    autocomplete: {
+        loading: "Caricamento...",
+        noOptions: "Nessun dato trovato",
+    },
+    table: {
+        noData: "Nessun record trovato",
+        loading: "Caricamento...",
+    },
+    footer: {
+        copyright: "© {0} GoToMarketersers Marketing Digitale",
+    },
+    preview: {
+        error: "Questa operazione non è consentita in modalità anteprima.",
     }
 };
 

@@ -107,7 +107,14 @@ const en = {
       benefits: "Benefits",
       cancel: "Cancel",
       upgradeNow: "Upgrade Now",
-      upgrading: "Upgrading..."
+      upgrading: "Upgrading...",
+      level: "VIP Level",
+      pointPeriod: "Point Period: {0} days",
+      modal: {
+        alreadyMember: "You are already a member of this VIP level.",
+        contactSupportMessage: "Please contact customer support to upgrade your VIP.",
+        contactSupport: "Contact Support"
+      }
     },
     tabBottomNavigator: {
       home: "home",
@@ -137,6 +144,8 @@ const en = {
       contactUs: "Contact us",
       profile: "Profile",
       updateWithdrawal: "Update withdrawal details",
+      bindAccount: "Bind Account",
+      details: "Details",
 
       // Other Items
       transaction: "Transaction",
@@ -144,6 +153,12 @@ const en = {
       security: "Security",
       notifications: "Notifications",
       languages: "Languages",
+      officialWebsite: "Official website entrance",
+      changeLoginPassword: "Change login password",
+      changeWithdrawPassword: "Change withdrawal password",
+      mainFunction: "Main function",
+      otherFunction: "Other function",
+      uid: "UID",
 
       // Buttons
       logout: "Logout",
@@ -158,6 +173,10 @@ const en = {
       withdrawModal: {
         title: "Withdrawal",
         text: "Please contact customer service to proceed with your withdrawal."
+      },
+      reputation: {
+        title: "Reputation Rules",
+        description: "Each account has a reputation system based on the member's performance. If you complete daily tasks and maintain a good reputation, your score will improve. If you don't meet the deadlines, your score will decrease. If your reputation drops below 80%, the system will block withdrawals. For questions, please contact customer service."
       }
     },
 
@@ -279,7 +298,8 @@ const en = {
         pending: "Pending",
         canceled: "Canceled",
         frozen: "Frozen",
-      }
+      },
+      submit: "Submit"
     },
 
     changePassword: {
@@ -297,8 +317,8 @@ const en = {
 
     withdraw: {
       title: "Withdraw",
-      announcement: "The minimum withdrawal amount is €50. All withdrawals are processed and completed within one hour.",
-      withdrawAmount: "Withdraw Amount",
+      announcement: "The minimum withdrawal amount is €50. All withdrawals are processed within 24 hours.",
+      withdrawAmount: "Withdrawal Amount",
       withdrawPassword: "Withdraw Password",
       availableBalance: "Available balance",
       confirm: "Confirm",
@@ -307,6 +327,36 @@ const en = {
         minimum: "(1) Minimum withdraw is €100",
         paymentTime: "(2) The payment will be made within the next 1 hour, after withdrawal application has been approved.",
         orderCompletion: "(3) Incomplete daily order submission is subjected to no withdrawal, all products must be submitted for withdrawal"
+      },
+      amountPlaceholder: "Enter amount (min. €50)",
+      selectMethod: "Select Withdrawal Method",
+      methods: {
+        crypto: "Cryptocurrency",
+        bank: "Bank Transfer",
+        cryptoNetworks: "TRC20 | ERC20",
+        bankNetworks: "IBAN | SWIFT"
+      },
+      status: {
+        complete: "✓ Complete",
+        incomplete: "⚠ Incomplete"
+      },
+      withdrawingTo: "Withdrawing to:",
+      withdrawPasswordPlaceholder: "Enter your withdrawal password",
+      bankModal: {
+        title: "Incomplete Bank Details",
+        required: "Bank Details Required",
+        description: "Please complete your bank details before making a withdrawal:"
+      },
+      cryptoModal: {
+        title: "Incomplete Crypto Details",
+        required: "Cryptocurrency Details Required",
+        description: "Please complete your cryptocurrency details before making a withdrawal:"
+      },
+      goToBindAccount: "Go to Bind Account",
+      completeDetailsIn: "Complete your withdrawal details in",
+      enableAllOptions: "to enable all withdrawal options.",
+      validation: {
+        selectMethod: "Please select a withdrawal method"
       }
     },
 
@@ -325,6 +375,10 @@ const en = {
     },
 
     grab: {
+      title: "Rate & Stay",
+      description: "Search Off the Record takes you behind the scenes of GoToMarketers Search. Each episode reveals how we help people rate and discover hotels — from the comfort of home.",
+      seeAllReviews: "See all reviews",
+      searchNow: "Search Now",
       // Header Section
       greeting: "Hi {0} 👏",
 
@@ -349,6 +403,19 @@ const en = {
       notice: "Notice",
       supportHours: "Online Support Hours 10:00 - 22:00",
       contactSupport: "Please contact online support for your assistance!"
+    ,
+      errors: {
+        insufficientBalance: "Insufficient balance. Please top up your account to continue."
+      },
+      messages: {
+        completedTasks: "You have completed all available tasks. Please contact customer support to reset your account."
+      },
+      stats: {
+        myAssets: "My assets",
+        earnings: "Earnings",
+        tasksDone: "Tasks Done",
+        onHold: "On-Hold"
+      }
     },
 
     grapModal: {
@@ -373,6 +440,35 @@ const en = {
       yourWinnings: "Your Winnings",
       claimPrize: "Claim Prize",
       celebrationMessage: "Enjoy your reward!",
+    },
+    grap: {
+      rateModal: {
+        title: "Rate your experience",
+        label: {
+          tapToRate: "Tap to rate",
+          poor: "Poor",
+          fair: "Fair",
+          good: "Good",
+          veryGood: "Very Good",
+          excellent: "Excellent"
+        },
+        selectOptions: "Select your feedback options",
+        more: "more",
+        submit: "Submit Review",
+        options: {
+          0: "The rooms were clean, very comfortable, and the staff was amazing",
+          1: "It was great. Service top notch as always",
+          2: "The staff at this property are all great! They all go above and beyond to make your stay comfortable",
+          3: "I had a wonderful experience here",
+          4: "Food was great with many choices to choose from",
+          5: "Excellent hotel with excellent location located at the city center",
+          6: "Very central with comfort rooms with amazing aircon. Breakfast was delicious and the staff extremely helpful and friendly"
+        }
+      },
+      modal: {
+        productName: "Product name",
+        positiveReviews: "positive reviews"
+      }
     },
 
 
@@ -438,6 +534,113 @@ const en = {
       platformNames: {
         whatsapp: "WhatsApp",
         telegram: "Telegram"
+      }
+    },
+    marketsHome: {
+      heroTitle: "🌙 Find your calm",
+      heroSubtitle: "Luxury hotels · private retreats",
+      search: {
+        destinationPlaceholder: "Destination, city, hotel",
+        checkIn: "Check-in",
+        checkOut: "Check-out",
+        guestsPlaceholder: "2 adults · 0 children",
+        goToSearch: "Go to search",
+        flexibleNote: "Flexible dates? · Best price"
+      },
+      sections: {
+        dreamEscapesTitle: "📸 Dream escapes",
+        exploreAll: "Explore all",
+        topPicksTitle: "✨ Top picks for you",
+        viewAll: "View all"
+      },
+      features: {
+        freeWifi: "Free WiFi",
+        support: "24/7 support",
+        secure: "Secure",
+        bestRate: "Best rate"
+      },
+      footerTagline: "✦ Book now, relax later · No hidden fees ✦"
+    },
+    activities: {
+      title: "Activities",
+      subtitle: "The promotion is in full swing, come and join it!"
+    },
+    help: {
+      title: "Help Center",
+      footer: "For further assistance, please contact our online customer support.",
+      accordion: {
+        specialOrders: {
+          title: "Regarding Special Orders",
+          content: "<p><strong>What is a \"Special Hotel Order\"?</strong></p><p>Special Hotel Orders are exclusive benefits offered by X Business in collaboration with selected luxury hotels. These orders are rare and available only to high-level VIP members.</p><p>VIP members may receive Mystery Box rewards, which can include cash prizes and Special Hotel Orders, offering commissions ranging from 30 to 50 times the standard rate.</p>"
+        },
+        platformRegulations: {
+          title: "Platform Regulations",
+          content: "<p>To place hotel orders, go to the relevant page and click on \"Search\". Wait for a suitable order to appear, then proceed to complete the hotel order. Completing and withdrawing a hotel order typically takes around <strong>30 minutes</strong>.</p><p>All hotel orders are randomly assigned by the platform's matching engine and <strong>cannot be modified, cancelled, or skipped</strong>.</p><p>For hotel orders from different merchants, if more than <strong>15 minutes</strong> have passed without completing the deposit, you must contact customer support and confirm the deposit account details with the merchant.</p><p>The platform operates daily from <strong>9:00 AM to 9:00 PM</strong>, and members may submit hotel orders during these hours.</p><p>If your account is misused or accessed by someone else, please contact customer support immediately. The platform will take appropriate emergency action and may pursue legal proceedings.</p><p>If you place an order for hotel advertising, once the order is received, contact online customer support to verify the deposit status. Then, click the <strong>\"Submit\"</strong> button on the order page to complete the <strong>Premium Hotel Order</strong>.</p><p>If you withdraw more than UAE 40,000, an <strong>audit fee</strong> will be required for initial verification and security purposes. This fee may be withdrawn <strong>one hour after the verification is completed</strong>.</p><p><strong>Note:</strong> For further information, please contact the platform's online customer support.</p>"
+        },
+        deposits: {
+          title: "About Deposits",
+          content: "<p>Members can make deposits via their personal account page. Click on \"Deposit\", then select the designated customer service representative to proceed. Use the deposit account details provided by customer service to complete the transfer. Once the transfer is successful, please send a screenshot of the transaction as confirmation.</p><p>If you experience any issues during the deposit process that cannot be resolved, please contact the appropriate online customer service representative.</p><p>Due to the high volume of messages, it is essential to verify the platform's deposit account before making any payment. Please note that the platform updates its deposit account details daily.</p><p><strong>Note:</strong> Members should only make a deposit if their account balance is lower than the current price of the hotel order.</p><p>For any enquiries, please contact the platform's online customer service.</p>"
+        },
+        withdrawals: {
+          title: "About Withdrawals",
+          content: "<p>After completing your daily tasks, you may submit a withdrawal request (minimum withdrawal amount UAE 40). Before doing so, please ensure your withdrawal information is linked on the platform.</p><p>Click the \"Withdraw\" button, enter the amount you wish to withdraw, and input your withdrawal password. Withdrawals are typically processed and credited within 30 minutes; however, the exact time may vary depending on your bank or payment provider.</p><p><strong>Please note:</strong> Withdrawal processing hours are from <strong>9:00 AM to 9:00 PM</strong> daily.</p>"
+        },
+        luxuryOrders: {
+          title: "Regarding Luxury Orders",
+          content: "<p><strong>What is a \"Luxury Hotel Order\"?</strong></p><p>These orders serve as a form of advertising, designed to generate profit through promotional campaigns on hotel booking platforms. Luxury Hotel Orders assist merchants in gaining brand support with the aim of attracting a larger customer base.</p><p>Luxury Hotel Orders provide a benefit to all members, enabling them to earn additional commission. The objective for both suppliers and distributors is to allow members and agents to earn commissions ranging from 10 to 30 times the original amount.</p><p>Agents typically receive between 0 (minimum) and 2 (maximum) Luxury Hotel Orders per day, though this may vary.</p><p><strong>Note:</strong> If you are assigned a Luxury Hotel Order, all members are required to complete the task. The final status of the order will be reflected as a credit adjustment to the user's account. Any negative balance displayed represents the amount that must be deposited.</p>"
+        }
+      }
+    },
+    tasks: {
+      title: "Tasks",
+      tabs: {
+        all: "All",
+        pending: "Pending",
+        completed: "Completed",
+        canceled: "Canceled"
+      }
+    },
+    bindAccount: {
+      title: "Bind Account",
+      currentBankTitle: "Currently tied bank card",
+      bank: "BANK",
+      cryptoTitle: "Cryptocurrency Network",
+      cryptoLabel: "USDT (TRC20/ERC20)",
+      popular: "Popular"
+    },
+    bankDetails: {
+      title: "Bank Card Binding"
+    },
+    search: {
+      placeholder: "Search"
+    },
+    invitation: {
+      teamAmount: "Team amount",
+      stats: {
+        dailyInvitations: "Daily invitations",
+        monthlyInvitations: "Monthly invitations",
+        monthlyIncome: "Monthly income"
+      },
+      rulesButton: "Invite friends activity rules",
+      newAgents: "New agents",
+      table: {
+        memberId: "Member ID",
+        recharge: "Recharge",
+        withdraw: "Withdraw"
+      },
+      noMoreData: "No more data",
+      modal: {
+        title: "Invite Friends & Earn",
+        referralCodeLabel: "Your Referral Code:",
+        copy: "Copy",
+        shareLabel: "Share your referral code:"
+      },
+      notAllowed: {
+        title: "Access Restricted",
+        message: "You are not allowed to invite users at this time.",
+        submessage: "The referral system is currently disabled for your account. Please contact support for more information or to request access.",
+        contactSupport: "Contact Support",
+        gotIt: "Got It"
       }
     },
   },
@@ -1186,6 +1389,10 @@ const en = {
   table: {
     noData: "No records found",
     loading: "Loading...",
+  },
+
+  footer: {
+    copyright: "© {0} GoToMarketersers Digital Marketing",
   },
 
 

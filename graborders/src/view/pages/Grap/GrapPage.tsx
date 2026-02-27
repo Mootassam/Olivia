@@ -35,20 +35,20 @@ const Grappage = () => {
 
   useEffect(() => {
     if (currentUser.balance <= 0) {
-      Message.error('Insufficient balance. Please top up your account to continue.');
+      Message.error(i18n('pages.grab.errors.insufficientBalance'));
     }
     if (currentUser.tasksDone >= currentUser.vip.dailyorder) {
-      Message.success('You have completed all available tasks. Please contact customer support to reset your account.');
+      Message.success(i18n('pages.grab.messages.completedTasks'));
     }
   }, [currentUser.balance, currentUser.tasksDone, currentUser.vip.dailyorder]);
 
   const rollAll = async () => {
     if (currentUser.balance <= 0) {
-      Message.error('Insufficient balance. Please top up your account to continue.');
+      Message.error(i18n('pages.grab.errors.insufficientBalance'));
       return;
     }
     if (currentUser.tasksDone >= currentUser.vip.dailyorder) {
-      Message.success('You have completed all available tasks. Please contact customer support to reset your account.');
+      Message.success(i18n('pages.grab.messages.completedTasks'));
       return;
     }
     await dispatch(actions.doFetch());
@@ -93,11 +93,11 @@ const Grappage = () => {
 
         {/* Content panel */}
         <div className="content-panel">
-          <div className="app-title">Rate & Stay</div>
+          <div className="app-title">{i18n('pages.grab.title')}</div>
 
           <div className="description-text">
             <i className="fas fa-quote-left" style={{ color: '#0A84FF', opacity: 0.6, fontSize: 10, marginRight: 4 }}></i>
-            Search Off the Record takes you behind the scenes of GoToMarketers Search. Each episode reveals how we help people rate and discover hotels — from the comfort of home.
+            {i18n('pages.grab.description')}
           </div>
 
           {/* Rating row */}
@@ -112,13 +112,13 @@ const Grappage = () => {
             <span className="rating-value">4.8</span>
             <span className="review-count">(4,981)</span>
             <span className="see-all-review" onClick={goToRecords}>
-              See all review
+              {i18n('pages.grab.seeAllReviews')}
             </span>
           </div>
 
           {/* Search Now button */}
           <div className="search-btn" onClick={handleSearch}>
-            {loading ? <i className="fas fa-spinner fa-spin"></i> :         <> <i className="fas fa-search"></i> Search Now </>}
+            {loading ? <i className="fas fa-spinner fa-spin"></i> : <> <i className="fas fa-search"></i> {i18n('pages.grab.searchNow')} </>}
           </div>
 
           {/* Stats grid */}
@@ -126,7 +126,7 @@ const Grappage = () => {
             <div className="stat-card">
               <div className="stat-header">
                 <i className="fas fa-wallet stat-icon"></i>
-                <span className="stat-label">My assets</span>
+                <span className="stat-label">{i18n('pages.grab.stats.myAssets')}</span>
               </div>
               <div className="stat-value">€{currentUser.balance?.toFixed(2) || "0.00"}</div>
             </div>
@@ -134,7 +134,7 @@ const Grappage = () => {
             <div className="stat-card">
               <div className="stat-header">
                 <i className="fas fa-chart-line stat-icon"></i>
-                <span className="stat-label">Earnings</span>
+                <span className="stat-label">{i18n('pages.grab.stats.earnings')}</span>
               </div>
               <div className="stat-value">€{totalperday || "0"}</div>
             </div>
@@ -142,7 +142,7 @@ const Grappage = () => {
             <div className="stat-card">
               <div className="stat-header">
                 <i className="fas fa-check-circle stat-icon"></i>
-                <span className="stat-label">Tasks Done</span>
+                <span className="stat-label">{i18n('pages.grab.stats.tasksDone')}</span>
               </div>
               <div className="stat-value tasks">
                 {currentUser.tasksDone || 0} / {currentUser.vip?.dailyorder || 0}
@@ -152,7 +152,7 @@ const Grappage = () => {
             <div className="stat-card">
               <div className="stat-header">
                 <i className="fas fa-pause-circle stat-icon"></i>
-                <span className="stat-label">On-Hold</span>
+                <span className="stat-label">{i18n('pages.grab.stats.onHold')}</span>
               </div>
               <div className="stat-value">
                 €{currentUser.freezeblance?.toFixed(2) || "0.00"}

@@ -99,6 +99,14 @@ tabBottomNavigator: {
       security: "Sécurité",
       notifications: "Notifications",
       languages: "Langues",
+      bindAccount: "Lier un compte",
+      details: "Détails",
+      officialWebsite: "Entrée du site officiel",
+      changeLoginPassword: "Changer le mot de passe de connexion",
+      changeWithdrawPassword: "Changer le mot de passe de retrait",
+      mainFunction: "Fonction principale",
+      otherFunction: "Autres fonctions",
+      uid: "UID",
 
       // Buttons
       logout: "Déconnexion",
@@ -113,6 +121,10 @@ tabBottomNavigator: {
       withdrawModal: {
         title: "Retrait",
         text: "Veuillez contacter le service client pour procéder à votre retrait."
+      },
+      reputation: {
+        title: "Règles de réputation",
+        description: "Chaque compte dispose d’un système de réputation basé sur la performance du membre. Si vous terminez les tâches quotidiennes et maintenez une bonne réputation, votre score s’améliorera. Si vous ne respectez pas les délais, votre score diminuera. Si votre réputation tombe en dessous de 80 %, le système bloquera les retraits. Pour toute question, contactez le service client."
       }
     },
 
@@ -231,11 +243,13 @@ tabBottomNavigator: {
         completed: "Terminée",
         pending: "En attente",
         canceled: "Annulée"
-      }
+      },
+      submit: "Soumettre",
     },
 
     changePassword: {
       title: "Changer le mot de passe",
+      withdrawPassword: "Changer le mot de passe de retrait",
       header: "Changer le mot de passe",
       oldPassword: "Ancien mot de passe",
       newPassword: "Nouveau mot de passe",
@@ -256,6 +270,36 @@ tabBottomNavigator: {
         minimum: "(1) Le retrait minimum est de 100 USD",
         paymentTime: "(2) Le paiement sera effectué dans l'heure suivante, après l'approbation de la demande de retrait.",
         orderCompletion: "(3) La soumission incomplète des commandes quotidiennes est soumise à aucun retrait, tous les produits doivent être soumis pour le retrait"
+      },
+      amountPlaceholder: "Entrez le montant (min. €50)",
+      selectMethod: "Sélectionner la méthode de retrait",
+      methods: {
+        crypto: "Cryptomonnaie",
+        bank: "Virement bancaire",
+        cryptoNetworks: "TRC20 | ERC20",
+        bankNetworks: "IBAN | SWIFT"
+      },
+      status: {
+        complete: "✓ Complet",
+        incomplete: "⚠ Incomplet"
+      },
+      withdrawingTo: "Retrait vers :",
+      withdrawPasswordPlaceholder: "Entrez votre mot de passe de retrait",
+      bankModal: {
+        title: "Détails bancaires incomplets",
+        required: "Détails bancaires requis",
+        description: "Veuillez compléter vos informations bancaires avant d’effectuer un retrait :"
+      },
+      cryptoModal: {
+        title: "Détails crypto incomplets",
+        required: "Détails de cryptomonnaie requis",
+        description: "Veuillez compléter vos informations de cryptomonnaie avant d’effectuer un retrait :"
+      },
+      goToBindAccount: "Aller à Lier un compte",
+      completeDetailsIn: "Complétez vos détails de retrait dans",
+      enableAllOptions: "pour activer toutes les options de retrait.",
+      validation: {
+        selectMethod: "Veuillez sélectionner une méthode de retrait"
       }
     },
 
@@ -273,6 +317,10 @@ tabBottomNavigator: {
     },
 
     grab: {
+      title: "Noter et séjourner",
+      description: "Search Off the Record vous emmène dans les coulisses de GoToMarketers Search. Chaque épisode révèle comment nous aidons les gens à noter et découvrir des hôtels — depuis chez eux.",
+      seeAllReviews: "Voir tous les avis",
+      searchNow: "Rechercher maintenant",
       // Header Section
       greeting: "Salut {0} 👏",
 
@@ -297,6 +345,48 @@ tabBottomNavigator: {
       notice: "Avis",
       supportHours: "Heures de support en ligne 10:00 - 22:00",
       contactSupport: "Veuillez contacter le support en ligne pour votre assistance!"
+      ,
+      errors: {
+        insufficientBalance: "Solde insuffisant. Veuillez recharger votre compte pour continuer."
+      },
+      messages: {
+        completedTasks: "Vous avez terminé toutes les tâches disponibles. Contactez le support pour réinitialiser votre compte."
+      },
+      stats: {
+        myAssets: "Mes actifs",
+        earnings: "Gains",
+        tasksDone: "Tâches terminées",
+        onHold: "En attente"
+      }
+    },
+    grap: {
+      rateModal: {
+        title: "Évaluez votre expérience",
+        label: {
+          tapToRate: "Touchez pour évaluer",
+          poor: "Mauvais",
+          fair: "Passable",
+          good: "Bon",
+          veryGood: "Très bon",
+          excellent: "Excellent"
+        },
+        selectOptions: "Sélectionnez vos options de retour",
+        more: "de plus",
+        submit: "Envoyer l’avis",
+        options: {
+          0: "Les chambres étaient propres, très confortables, et le personnel était incroyable",
+          1: "C’était super. Service au top comme toujours",
+          2: "Le personnel de cet établissement est excellent ! Ils font tout pour rendre votre séjour confortable",
+          3: "J’ai eu une expérience merveilleuse ici",
+          4: "La nourriture était excellente avec de nombreux choix",
+          5: "Hôtel excellent avec un emplacement idéal au centre-ville",
+          6: "Très central avec des chambres confortables et une climatisation incroyable. Petit-déjeuner délicieux et personnel très serviable et sympathique"
+        }
+      },
+      modal: {
+        productName: "Nom du produit",
+        positiveReviews: "avis positifs"
+      }
     },
 
     grapModal: {
@@ -309,6 +399,145 @@ tabBottomNavigator: {
       submit: "Soumettre",
       quantity: "X 1",
       currency: "USD"
+    },
+    marketsHome: {
+      heroTitle: "🌙 Trouvez votre calme",
+      heroSubtitle: "Hôtels de luxe · retraites privées",
+      search: {
+        destinationPlaceholder: "Destination, ville, hôtel",
+        checkIn: "Arrivée",
+        checkOut: "Départ",
+        guestsPlaceholder: "2 adultes · 0 enfants",
+        goToSearch: "Aller à la recherche",
+        flexibleNote: "Dates flexibles ? · Meilleur prix"
+      },
+      sections: {
+        dreamEscapesTitle: "📸 Évasions de rêve",
+        exploreAll: "Tout explorer",
+        topPicksTitle: "✨ Nos choix pour vous",
+        viewAll: "Tout voir"
+      },
+      features: {
+        freeWifi: "WiFi gratuit",
+        support: "Support 24/7",
+        secure: "Sécurisé",
+        bestRate: "Meilleur tarif"
+      },
+      footerTagline: "✦ Réservez maintenant, détendez-vous plus tard · Pas de frais cachés ✦"
+    },
+    activities: {
+      title: "Activités",
+      subtitle: "La promotion bat son plein, venez y participer !"
+    },
+    help: {
+      title: "Centre d’aide",
+      footer: "Pour toute aide supplémentaire, contactez notre support client en ligne.",
+      accordion: {
+        specialOrders: {
+          title: "À propos des commandes spéciales",
+          content: "<p><strong>Qu’est-ce qu’une « commande d’hôtel spéciale » ?</strong></p><p>Avantages exclusifs offerts par X Business avec des hôtels de luxe sélectionnés, réservés aux membres VIP de haut niveau.</p><p>Récompenses Mystery Box possibles (prix en espèces et commandes spéciales), commissions 30 à 50 fois supérieures.</p>"
+        },
+        platformRegulations: {
+          title: "Règlement de la plateforme",
+          content: "<p>Cliquez sur « Rechercher » pour obtenir une commande, puis complétez-la. En général, <strong>30 minutes</strong>.</p><p>Commandes attribuées aléatoirement : <strong>non modifiables, non annulables, non ignorables</strong>.</p><p>Si > <strong>15 min</strong> sans dépôt, contactez le support et confirmez les coordonnées.</p><p>Horaires : <strong>9h00 - 21h00</strong> chaque jour.</p><p>En cas d’usage frauduleux du compte, contactez immédiatement le support.</p><p>Pour la publicité : vérifiez le dépôt puis cliquez sur <strong>« Soumettre »</strong> pour finaliser la <strong>Commande Premium</strong>.</p><p>Retrait > 40 000 AED : <strong>frais d’audit</strong>, retirable <strong>une heure après vérification</strong>.</p>"
+        },
+        deposits: {
+          title: "À propos des dépôts",
+          content: "<p>Depuis votre compte, « Recharger », choisir l’agent, utiliser les coordonnées fournies, puis envoyer la preuve.</p><p>En cas de problème, contactez le support.</p><p>Vérifiez le compte de dépôt (mis à jour quotidiennement) avant toute opération.</p><p><strong>Note :</strong> Déposez uniquement si le solde est inférieur au prix de la commande.</p>"
+        },
+        withdrawals: {
+          title: "À propos des retraits",
+          content: "<p>Après vos tâches quotidiennes, demandez un retrait (min 40 AED). Associez vos infos de retrait.</p><p>« Retirer », montant + mot de passe. Crédit en env. 30 min (variable banque).</p><p><strong>Horaires :</strong> <strong>9h00 - 21h00</strong> chaque jour.</p>"
+        },
+        luxuryOrders: {
+          title: "À propos des commandes de luxe",
+          content: "<p><strong>Commande d’hôtel de luxe :</strong> campagne publicitaire pour accroître la notoriété.</p><p>Bénéfice pour tous les membres : commissions 10 à 30 fois supérieures.</p><p>Agents : 0 à 2 commandes/jour (variable).</p><p><strong>Note :</strong> Les commandes attribuées doivent être complétées ; ajustements reflétés sur le compte.</p>"
+        }
+      }
+    },
+    tasks: {
+      title: "Tâches",
+      tabs: {
+        all: "Toutes",
+        pending: "En attente",
+        completed: "Terminées",
+        canceled: "Annulées"
+      }
+    },
+    bindAccount: {
+      title: "Lier un compte",
+      currentBankTitle: "Carte bancaire actuellement liée",
+      bank: "BANQUE",
+      cryptoTitle: "Réseau de cryptomonnaie",
+      cryptoLabel: "USDT (TRC20/ERC20)",
+      popular: "Populaire"
+    },
+    bankDetails: {
+      title: "Liaison de carte bancaire"
+    },
+    search: {
+      placeholder: "Rechercher"
+    },
+    vip: {
+      title: "Niveaux VIP",
+      subtitle: "Choisissez votre niveau d'adhésion et débloquez des avantages exclusifs",
+      backToHome: "Retour à l'accueil",
+      searchPlaceholder: "Rechercher des niveaux VIP...",
+      noResults: "Aucun niveau VIP trouvé",
+      noResultsDesc: "Essayez d'ajuster vos termes de recherche",
+      currentLevel: "Niveau actuel",
+      upgrade: "Améliorer",
+      locked: "Verrouillé",
+      currentlyOn: "Actuellement sur",
+      upgradeTo: "Améliorer vers",
+      levelDetails: "Détails du niveau",
+      levelLimit: "Limite du niveau",
+      dailyOrders: "Commandes quotidiennes",
+      setperday: "Ensembles par jour",
+      commissionRate: "Taux de commission",
+      premiumCommission: "Commission Premium",
+      maxOrders: "Commandes max",
+      commission: "Commission",
+      benefits: "Avantages",
+      cancel: "Annuler",
+      upgradeNow: "Améliorer maintenant",
+      upgrading: "Amélioration en cours...",
+      level: "Niveau VIP",
+      pointPeriod: "Période de points : {0} jours",
+      modal: {
+        alreadyMember: "Vous êtes déjà membre de ce niveau VIP.",
+        contactSupportMessage: "Veuillez contacter le support client pour améliorer votre niveau VIP.",
+        contactSupport: "Contacter le support"
+      }
+    },
+    invitation: {
+      teamAmount: "Montant de l’équipe",
+      stats: {
+        dailyInvitations: "Invitations quotidiennes",
+        monthlyInvitations: "Invitations mensuelles",
+        monthlyIncome: "Revenu mensuel"
+      },
+      rulesButton: "Règles de l’activité Inviter des amis",
+      newAgents: "Nouveaux agents",
+      table: {
+        memberId: "ID Membre",
+        recharge: "Recharger",
+        withdraw: "Retirer"
+      },
+      noMoreData: "Plus de données",
+      modal: {
+        title: "Invitez des amis et gagnez",
+        referralCodeLabel: "Votre code de parrainage :",
+        copy: "Copier",
+        shareLabel: "Partagez votre code de parrainage :"
+      },
+      notAllowed: {
+        title: "Accès restreint",
+        message: "Vous n’êtes pas autorisé à inviter des utilisateurs pour le moment.",
+        submessage: "Le système de parrainage est actuellement désactivé pour votre compte. Veuillez contacter le support pour plus d’informations ou pour demander l’accès.",
+        contactSupport: "Contacter le support",
+        gotIt: "Compris"
+      }
     },
 
     actions: {
@@ -570,6 +799,10 @@ tabBottomNavigator: {
       },
       fields: {
         id: "Id",
+        accountHolder: "Titulaire du compte",
+        ibanNumber: "Numéro IBAN",
+        bankName: "Nom de la banque",
+        ifscCode: "Code IFSC",
         amountRange: "Montant",
         amount: "Montant",
         email: "Email",
@@ -744,6 +977,7 @@ tabBottomNavigator: {
         USDT: "USDT",
         ETH: "ETH",
         BTC: "BTC",
+        TRC20: "TRC20"
       },
       gender: {
         male: "masculin",
@@ -982,6 +1216,111 @@ tabBottomNavigator: {
     formats: `Format invalide. Doit être l'un des suivants : {0}.`,
   },
 
+  settings: {
+    title: "Paramètres",
+    menu: "Paramètres",
+    save: {
+      success:
+        "Paramètres enregistrés avec succès. La page se rechargera dans {0} secondes pour appliquer les modifications.",
+    },
+    fields: {
+      theme: "Thème",
+      logos: "Logo",
+      backgroundImages: "Image d'arrière-plan",
+    },
+    colors: {
+      default: "Sombre",
+      light: "Clair",
+      cyan: "Cyan",
+      "geek-blue": "Geek Bleu",
+      gold: "Or",
+      lime: "Citron vert",
+      magenta: "Magenta",
+      orange: "Orange",
+      "polar-green": "Vert polaire",
+      purple: "Violet",
+      red: "Rouge",
+      volcano: "Volcan",
+      yellow: "Jaune",
+    },
+  },
+  dashboard: {
+    menu: "Tableau de bord",
+    valider: "Valider",
+    file: "Aucun fichier sélectionné",
+    typecsv: "Type de fichier invalide. Veuillez sélectionner un fichier CSV.",
+    reset: "Réinitialiser",
+    phone: "Télécharger des numéros",
+    check: "Vérifier le numéro",
+    labelphone: "Écrire le numéro de téléphone",
+    add: "Ajouter un numéro",
+    download: "Télécharger le modèle",
+    added: "Numéro ajouté",
+    duplicated: "Numéro dupliqué",
+    Wrong: "Numéro incorrect",
+    notFound: "Désolé, nous n'avons pas pu trouver les éléments recherchés.",
+    validation: "Numéro ajouté avec succès",
+    Success: "Numéro ajouté avec succès",
+    numberValidation: "Écrivez un numéro valide. Merci.",
+    message:
+      "Cette page utilise des données fictives à des fins de démonstration uniquement. Vous pouvez la modifier dans frontend/view/dashboard/DashboardPage.ts.",
+    charts: {
+      day: "Jour",
+      red: "Rouge",
+      green: "Vert",
+      yellow: "Jaune",
+      grey: "Gris",
+      blue: "Bleu",
+      orange: "Orange",
+      months: {
+        1: "Janvier",
+        2: "Février",
+        3: "Mars",
+        4: "Avril",
+        5: "Mai",
+        6: "Juin",
+        7: "Juillet",
+        8: "Août",
+        9: "Septembre",
+        10: "Octobre",
+        11: "Novembre",
+        12: "Décembre",
+      },
+      eating: "Manger",
+      drinking: "Boire",
+      sleeping: "Dormir",
+      designing: "Conception",
+      coding: "Codage",
+      cycling: "Cyclisme",
+      running: "Course",
+      customer: "Client",
+      objectif: "Objectifs par statut",
+      projectS: "Projets par statut",
+      projectT: "Projets par type",
+      adherent: "Nombre de membres",
+      news: "Nombre de nouvelles",
+      project: "Nombre de projets",
+      partner: "Nombre de partenaires",
+      nodata: "aucune donnée à afficher",
+    },
+  },
+  imagesViewer: {
+    noImage: "Aucune image",
+  },
+  autocomplete: {
+    loading: "Chargement...",
+    noOptions: "Aucune donnée trouvée",
+  },
+  table: {
+    noData: "Aucun enregistrement trouvé",
+    loading: "Chargement...",
+  },
+  footer: {
+    copyright: "© {0} GoToMarketersers Marketing numérique",
+  },
+  preview: {
+    error: "Cette opération n'est pas autorisée en mode aperçu.",
+  },
 
 };
 

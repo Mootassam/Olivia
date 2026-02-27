@@ -27,13 +27,13 @@ interface RateModalProps {
 function RateModal({ onClose, onSubmit }: RateModalProps) {
   // List of review options (same as in the HTML)
   const options = [
-    'The rooms were clean, very comfortable, and the staff was amazing',
-    'It was great. Service top notch as always',
-    'The staff at this property are all great! They all go above and beyond to make your stay comfortable',
-    'I had a wonderful experience here',
-    'Food was great with many choices to choose from',
-    'Excellent hotel with excellent location located at the city center',
-    'Very central with comfort rooms with amazing aircon. Breakfast was delicious and the staff extremely helpful and friendly',
+    i18n('pages.grap.rateModal.options.0'),
+    i18n('pages.grap.rateModal.options.1'),
+    i18n('pages.grap.rateModal.options.2'),
+    i18n('pages.grap.rateModal.options.3'),
+    i18n('pages.grap.rateModal.options.4'),
+    i18n('pages.grap.rateModal.options.5'),
+    i18n('pages.grap.rateModal.options.6'),
   ];
 
   // State to track which checkboxes are selected (first one selected by default)
@@ -61,9 +61,9 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
   // Get the preview text based on selected options
   const getPreviewText = () => {
     const selectedOptions = options.filter((_, idx) => selected[idx]);
-    if (selectedOptions.length === 0) return 'Select your feedback options';
+    if (selectedOptions.length === 0) return i18n('pages.grap.rateModal.selectOptions');
     if (selectedOptions.length === 1) return `“${selectedOptions[0]}”`;
-    return `“${selectedOptions[0]}” +${selectedOptions.length - 1} more`;
+    return `“${selectedOptions[0]}” +${selectedOptions.length - 1} ${i18n('pages.grap.rateModal.more')}`;
   };
 
   // Render stars
@@ -90,7 +90,7 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
       <div className="rate-modal" onClick={(e) => e.stopPropagation()}>
         {/* header */}
         <div className="rate-modal-header">
-          <h2>Rate your experience</h2>
+          <h2>{i18n('pages.grap.rateModal.title')}</h2>
           <div className="rate-close-icon" onClick={onClose}>
             <i className="fas fa-times"></i>
           </div>
@@ -102,12 +102,12 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
             {renderStars()}
           </div>
           <div className="rate-rating-label">
-            {rating === 0 && 'Tap to rate'}
-            {rating === 1 && 'Poor'}
-            {rating === 2 && 'Fair'}
-            {rating === 3 && 'Good'}
-            {rating === 4 && 'Very Good'}
-            {rating === 5 && 'Excellent'}
+            {rating === 0 && i18n('pages.grap.rateModal.label.tapToRate')}
+            {rating === 1 && i18n('pages.grap.rateModal.label.poor')}
+            {rating === 2 && i18n('pages.grap.rateModal.label.fair')}
+            {rating === 3 && i18n('pages.grap.rateModal.label.good')}
+            {rating === 4 && i18n('pages.grap.rateModal.label.veryGood')}
+            {rating === 5 && i18n('pages.grap.rateModal.label.excellent')}
           </div>
         </div>
 
@@ -139,7 +139,7 @@ function RateModal({ onClose, onSubmit }: RateModalProps) {
           onClick={rating > 0 ? handleSubmit : undefined}
           style={rating === 0 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
         >
-          Submit Review
+          {i18n('pages.grap.rateModal.submit')}
         </div>
       </div>
 
@@ -401,10 +401,10 @@ function GrapModal(props) {
 
           {/* Product title and rating line with random values */}
           <div className="product-title-main">
-            {items?.title || 'Product name'}
+            {items?.title || i18n('pages.grap.modal.productName')}
           </div>
           <div className="review-subtitle">
-            <i className="fas fa-star" style={{ color: '#ffb340' }}></i> {reviewData.rating} · {reviewData.reviewCount} positive reviews
+            <i className="fas fa-star" style={{ color: '#ffb340' }}></i> {reviewData.rating} · {reviewData.reviewCount} {i18n('pages.grap.modal.positiveReviews')}
           </div>
 
           {/* Amenities row (static for now; can be dynamic) */}
@@ -420,15 +420,15 @@ function GrapModal(props) {
           {/* Order details card */}
           <div className="order-card">
             <div className="order-row">
-              <span className="order-label">Order number</span>
+              <span className="order-label">{i18n('pages.grapModal.orderNumber')}</span>
               <span className="order-value">N{number}</span>
             </div>
             <div className="order-row">
-              <span className="order-label">Total amount</span>
+              <span className="order-label">{i18n('pages.grapModal.totalOrderAmount')}</span>
               <span className="order-value">€ {items?.amount || '0.00'}</span>
             </div>
             <div className="order-row">
-              <span className="order-label">Predetermined time</span>
+              <span className="order-label">{i18n('pages.grapModal.orderTime')}</span>
               <span className="order-value">{Dates.current()}</span>
             </div>
           </div>
@@ -448,10 +448,10 @@ function GrapModal(props) {
           <div className="submission-row">
             <div className="left-commission">
               <span className="x1-large">x1</span>
-              <span className="commission-label-small">Commission</span>
+              <span className="commission-label-small">{i18n('pages.grapModal.commission')}</span>
             </div>
             <button className="right-button" onClick={handleOrderSubmission}>
-              <i className="fas fa-check-circle"></i> Order submission
+              <i className="fas fa-check-circle"></i> {i18n('pages.grapModal.submit')}
             </button>
           </div>
         </div>

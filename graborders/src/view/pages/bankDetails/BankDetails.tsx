@@ -179,7 +179,7 @@ function Withdraw() {
         }
       `}</style>
 
-      <SubHeader title='Bank Card Binding' path="/profile" />
+      <SubHeader title={i18n('pages.bankDetails.title')} path="/profile" />
       <div className="withdraw-page-container">
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

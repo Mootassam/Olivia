@@ -121,7 +121,7 @@ function VipPage() {
           </div>
 
           <div className="vip-level-info">
-            <h4 className="level-title">{vip?.title || "VIP Level"}</h4>
+            <h4 className="level-title">{vip?.title || i18n('pages.vip.level')}</h4>
 
             {vip.description && (
               <p className="level-description">{vip.description}</p>
@@ -130,17 +130,17 @@ function VipPage() {
             <div className="level-features">
               <div className="feature-item">
                 <i className="fa-solid fa-percentage feature-icon"></i>
-                <span>{vip.comisionrate || "0"}% Commission</span>
+                <span>{vip.comisionrate || "0"}% {i18n("pages.vip.commissionRate")}</span>
               </div>
 
               <div className="feature-item">
                 <i className="fa-solid fa-box feature-icon"></i>
-                <span>Daily task per set: {tasksPerDay}</span>
+                <span>{i18n("pages.vip.setperday")}: {tasksPerDay}</span>
               </div>
 
               <div className="feature-item">
                 <i className="fa-solid fa-calendar-alt feature-icon"></i>
-                <span>Point Period: 365 days</span>
+                <span>{i18n("pages.vip.pointPeriod", 365)}</span>
               </div>
             </div>
 
@@ -258,12 +258,12 @@ function VipPage() {
                   ></i>
                 </div>
                 <p className="modal-message">
-                  You are already a member of this VIP level.
+                  {i18n("pages.vip.modal.alreadyMember")}
                 </p>
               </div>
               <div className="modal-actions">
                 <button className="confirm-btn" onClick={handleCloseModals}>
-                  OK
+                  {i18n("common.continue")}
                 </button>
               </div>
             </div>
@@ -291,15 +291,15 @@ function VipPage() {
                   ></i>
                 </div>
                 <p className="modal-message">
-                  Please contact customer support to upgrade your VIP.
+                  {i18n("pages.vip.modal.contactSupportMessage")}
                 </p>
               </div>
               <div className="modal-actions">
                 <button className="cancel-btn" onClick={handleCloseModals}>
-                  Cancel
+                  {i18n("common.cancel")}
                 </button>
                 <button className="confirm-btn" onClick={handleContactSupport}>
-                  Contact Support
+                  {i18n("pages.vip.modal.contactSupport")}
                 </button>
               </div>
             </div>

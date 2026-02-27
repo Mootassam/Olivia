@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { i18n } from '../../../i18n'
 
 function Home() {
   return (
@@ -374,8 +375,8 @@ function Home() {
         {/* tall hero with crisp, large image */}
         <div className="hero">
           <div className="hero-content">
-            <h3>🌙 find your calm</h3>
-            <p>luxury hotels · private retreats</p>
+            <h3>{i18n('pages.marketsHome.heroTitle')}</h3>
+            <p>{i18n('pages.marketsHome.heroSubtitle')}</p>
           </div>
         </div>
 
@@ -384,42 +385,42 @@ function Home() {
           <div className="form-row">
             <div className="input-group">
               <i className="fas fa-map-pin" />
-              <input type="text" placeholder="Destination, city, hotel" />
+              <input type="text" placeholder={i18n('pages.marketsHome.search.destinationPlaceholder')} />
             </div>
           </div>
           <div className="form-row double">
             <div className="input-group">
               <i className="fas fa-calendar-alt" />
-              <input type="text" placeholder="Check-in" />
+              <input type="text" placeholder={i18n('pages.marketsHome.search.checkIn')} />
             </div>
             <div className="input-group">
               <i className="fas fa-calendar-check" />
-              <input type="text" placeholder="Check-out" />
+              <input type="text" placeholder={i18n('pages.marketsHome.search.checkOut')} />
             </div>
           </div>
           <div className="form-row">
             <div className="input-group">
               <i className="fas fa-user-group" />
-              <input type="text" placeholder="2 adults · 0 children" />
+              <input type="text" placeholder={i18n('pages.marketsHome.search.guestsPlaceholder')} />
             </div>
           </div>
           <Link className="search-btn remove__blue" to="/grap">
-            <span>Go to search</span>
+            <span>{i18n('pages.marketsHome.search.goToSearch')}</span>
             <i
               className="fas fa-arrow-right"
               style={{ fontSize: 15, marginLeft: 6 }}
             />
           </Link>
           <div className="helper-note">
-            <i className="far fa-clock" /> <span>flexible dates? · best price</span>
+            <i className="far fa-clock" /> <span>{i18n('pages.marketsHome.search.flexibleNote')}</span>
           </div>
         </div>
 
         {/* DREAM ESCAPES - Hidden scrollbar with unique images */}
         <div className="section">
           <div className="section-header">
-            <h4>📸 dream escapes</h4>
-            <a href="#">explore all</a>
+            <h4>{i18n('pages.marketsHome.sections.dreamEscapesTitle')}</h4>
+            <a href="#">{i18n('pages.marketsHome.sections.exploreAll')}</a>
           </div>
           <div className="photo-scroll">
             <div className="photo-item">
@@ -493,8 +494,8 @@ function Home() {
         {/* TOP PICKS FOR YOU - All unique images, none repeated from dream escapes */}
         <div className="section">
           <div className="section-header">
-            <h4>✨ top picks for you</h4>
-            <a href="#">view all</a>
+            <h4>{i18n('pages.marketsHome.sections.topPicksTitle')}</h4>
+            <a href="#">{i18n('pages.marketsHome.sections.viewAll')}</a>
           </div>
           <div className="card-grid">
             {/* card 1 - New unique image */}
@@ -608,23 +609,23 @@ function Home() {
         <div className="section">
           <div className="features">
             <div className="feature-item">
-              <i className="fas fa-wifi" /> Free WiFi
+              <i className="fas fa-wifi" /> {i18n('pages.marketsHome.features.freeWifi')}
             </div>
             <div className="feature-item">
-              <i className="fas fa-headset" /> 24/7 support
+              <i className="fas fa-headset" /> {i18n('pages.marketsHome.features.support')}
             </div>
             <div className="feature-item">
-              <i className="fas fa-shield-alt" /> Secure
+              <i className="fas fa-shield-alt" /> {i18n('pages.marketsHome.features.secure')}
             </div>
             <div className="feature-item">
-              <i className="fas fa-tag" /> Best rate
+              <i className="fas fa-tag" /> {i18n('pages.marketsHome.features.bestRate')}
             </div>
           </div>
         </div>
 
         {/* footer */}
         <div className="attribution">
-          ✦ book now, relax later · no hidden fees ✦
+          {i18n('pages.marketsHome.footerTagline')}
         </div>
       </div>
     </>
