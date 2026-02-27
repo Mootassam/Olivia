@@ -56,12 +56,14 @@ function Signin() {
   return (
     <div className="auth__page">
       {/* Language switcher */}
+
+          <Link to="/languages"  className="remove_blue">
       <div className="language-switcher">
         <button onClick={handleLanguageToggle} className="lang-btn" aria-label="Switch language">
           <i className="fa-solid fa-language" style={{color:'#4488f7'}}/>
         </button>
       </div>
-
+</Link>
       <div className="auth__card">
         <div className="auth__header">
           <div className="auth__icon">🏨</div>
@@ -101,9 +103,7 @@ function Signin() {
                   />
                   <span>{i18n("user.fields.rememberMe")}</span>
                 </label>
-                <Link to="/auth/forgot-password" className="forgot-link">
-                  {i18n("auth.forgotPassword")}
-                </Link>
+              
               </div>
             </div>
 

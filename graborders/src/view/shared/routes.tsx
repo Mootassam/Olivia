@@ -209,6 +209,13 @@ const publicRoutes = [
 
 
   {
+    path: "/languages",
+    loader: () => import("src/view/pages/language/Language"),
+    permissionRequired: permissions.categoryRead,
+    exact: true,
+  },
+
+  {
     path: "/auth/signup",
     loader: () => import("src/view/pages/Auth/Signup"),
   },
