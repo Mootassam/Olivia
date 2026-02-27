@@ -17,7 +17,7 @@ export default class UserService {
 
 
 
-    static async editBankDetails(data) {
+  static async editBankDetails(data) {
     const body = {
       data,
     };
@@ -32,8 +32,20 @@ export default class UserService {
 
 
 
-    static async fetchAllcurrentUser() {
-  
+  static async changeWithdrawPassword(data) {
+
+    const tenantId = AuthCurrentTenant.get();
+    const response = await authAxios.put(
+      `/tenant/${tenantId}/user/changeWithdrawalPassword`,
+      data,
+    );
+
+    return response.data;
+  }
+
+
+  static async fetchAllcurrentUser() {
+
     const tenantId = AuthCurrentTenant.get();
     const response = await authAxios.get(
       `/tenant/${tenantId}/getAllUserRef`,

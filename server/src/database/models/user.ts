@@ -70,7 +70,7 @@ export default (database) => {
 
       preferredcoin: {
         type: String,
-        enum: ["trc20", "eth", "btc"],
+        enum: ["trc20", "erc20"],
         default: "trc20",
       },
 

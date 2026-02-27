@@ -1,4 +1,3 @@
-
 import React, { useCallback, useEffect, useState } from "react";
 import SubHeader from "src/view/shared/Header/SubHeader";
 import authSelectors from "src/modules/auth/authSelectors";
@@ -11,7 +10,104 @@ import { useDispatch, useSelector } from "react-redux";
 import InputFormItem from "src/shared/form/InputFormItem";
 import actions from "src/modules/transaction/form/transactionFormActions";
 import authActions from "src/modules/auth/authActions";
+import { Link } from "react-router-dom";
 
+// Custom Modal Component (in the same file)
+const CustomModal = ({ visible, title, onClose, children }) => {
+  if (!visible) return null;
+
+  return (
+    <>
+      <style>{`
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          animation: fadeIn 0.3s ease;
+        }
+
+        .modal-container {
+          background-color: white;
+          border-radius: 8px;
+          width: 90%;
+          max-width: 400px;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+          animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+          padding: 15px 20px;
+          border-bottom: 1px solid #e0e0e0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .modal-header h3 {
+          margin: 0;
+          color: #333;
+          font-size: 1.2rem;
+        }
+
+        .modal-close {
+          background: none;
+          border: none;
+          font-size: 24px;
+          cursor: pointer;
+          color: #666;
+          transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+          color: #000;
+        }
+
+        .modal-body {
+          padding: 20px;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+          from {
+            transform: translateY(-50px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
+      
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-header">
+            <h3>{title}</h3>
+            <button className="modal-close" onClick={onClose}>&times;</button>
+          </div>
+          <div className="modal-body">
+            {children}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+// Update schema to include withdrawal method
 const schema = yup.object().shape({
   amount: yupFormSchemas.integer(i18n("entities.transaction.fields.amount"), {
     required: true,
@@ -23,17 +119,86 @@ const schema = yup.object().shape({
       required: true,
     }
   ),
+  withdrawalMethod: yup.string().required("Please select a withdrawal method"),
 });
 
 function Withdraw() {
   const currentUser = useSelector(authSelectors.selectCurrentUser);
   const dispatch = useDispatch();
+  
+  // State for modals
+  const [showBankModal, setShowBankModal] = useState(false);
+  const [showCryptoModal, setShowCryptoModal] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState(null);
 
   const refreshItems = useCallback(async () => {
     await dispatch(authActions.doRefreshCurrentUser());
   }, [dispatch]);
 
-  const onSubmit = async ({ amount, withdrawPassword }) => {
+  // Check if bank details are complete
+  const hasCompleteBankDetails = useCallback(() => {
+    if (!currentUser) return false;
+    return (
+      currentUser.accountHolder &&
+      currentUser.accountHolder.trim() !== "" &&
+      currentUser.ibanNumber &&
+      currentUser.ibanNumber.trim() !== "" &&
+      currentUser.bankName &&
+      currentUser.bankName.trim() !== "" &&
+      currentUser.ifscCode &&
+      currentUser.ifscCode.trim() !== ""
+    );
+  }, [currentUser]);
+
+  // Check if crypto details are complete
+  const hasCompleteCryptoDetails = useCallback(() => {
+    if (!currentUser) return false;
+    return (
+      currentUser.trc20 &&
+      currentUser.trc20.trim() !== "" &&
+      currentUser.walletname &&
+      currentUser.walletname.trim() !== "" &&
+      currentUser.usernamewallet &&
+      currentUser.usernamewallet.trim() !== "" &&
+      currentUser.preferredcoin &&
+      currentUser.preferredcoin.trim() !== ""
+    );
+  }, [currentUser]);
+
+  // Get missing bank fields
+  const getMissingBankFields = useCallback(() => {
+    const missing = [];
+    if (!currentUser?.accountHolder) missing.push("Account Holder");
+    if (!currentUser?.ibanNumber) missing.push("IBAN Number");
+    if (!currentUser?.bankName) missing.push("Bank Name");
+    if (!currentUser?.ifscCode) missing.push("IFSC Code");
+    return missing;
+  }, [currentUser]);
+
+  // Get missing crypto fields
+  const getMissingCryptoFields = useCallback(() => {
+    const missing = [];
+    if (!currentUser?.trc20) missing.push("TRC20 Address");
+    if (!currentUser?.walletname) missing.push("Wallet Name");
+    if (!currentUser?.usernamewallet) missing.push("Username Wallet");
+    if (!currentUser?.preferredcoin) missing.push("Preferred Coin");
+    return missing;
+  }, [currentUser]);
+
+  const onSubmit = async ({ amount, withdrawPassword, withdrawalMethod }) => {
+    // Check if the selected method has complete details
+    if (withdrawalMethod === "bank" && !hasCompleteBankDetails()) {
+      setSelectedMethod("bank");
+      setShowBankModal(true);
+      return;
+    }
+    
+    if (withdrawalMethod === "crypto" && !hasCompleteCryptoDetails()) {
+      setSelectedMethod("crypto");
+      setShowCryptoModal(true);
+      return;
+    }
+
     const values = {
       status: "pending",
       date: new Date(),
@@ -42,23 +207,159 @@ function Withdraw() {
       amount: amount,
       vip: currentUser,
       withdrawPassword: withdrawPassword,
+      withdrawalMethod: withdrawalMethod,
+      // Add specific details based on method
+      ...(withdrawalMethod === "bank" && {
+        bankDetails: {
+          accountHolder: currentUser.accountHolder,
+          ibanNumber: currentUser.ibanNumber,
+          bankName: currentUser.bankName,
+          ifscCode: currentUser.ifscCode,
+        }
+      }),
+      ...(withdrawalMethod === "crypto" && {
+        cryptoDetails: {
+          address: currentUser.trc20,
+          walletname: currentUser.walletname,
+          usernamewallet: currentUser.usernamewallet,
+          preferredcoin: currentUser.preferredcoin,
+        }
+      })
     };
+    
     await dispatch(actions.doCreate(values));
     await refreshItems();
   };
 
   const [initialValues] = useState({
     amount: "",
+    withdrawalMethod: "",
   });
+
   const form = useForm({
     resolver: yupResolver(schema),
     mode: "onSubmit",
     defaultValues: initialValues,
   });
 
+  // Withdrawal method options
+  const withdrawalMethodOptions = [
+    { value: "crypto", label: "Cryptocurrency (TRC20/ERC20)" },
+    { value: "bank", label: "Bank Transfer" },
+  ];
+
   return (
     <div>
-      {/* Inline styles (same as ChangePassword page) */}
+      {/* Bank Details Modal */}
+      {showBankModal && (
+        <CustomModal
+          visible={showBankModal}
+          title="Incomplete Bank Details"
+          onClose={() => setShowBankModal(false)}
+        >
+          <div style={{ textAlign: "center" }}>
+            <i className="fa-solid fa-circle-exclamation" style={{ fontSize: "48px", color: "#ff9800", marginBottom: "15px" }}></i>
+            <h3 style={{ marginBottom: "15px", color: "#333" }}>Bank Details Required</h3>
+            <p style={{ marginBottom: "20px", color: "#666" }}>
+              Please complete your bank details before making a withdrawal:
+            </p>
+            <ul style={{ textAlign: "left", marginBottom: "20px", color: "#555", listStyle: "none", padding: 0 }}>
+              {getMissingBankFields().map((field, index) => (
+                <li key={index} style={{ marginBottom: "10px", padding: "8px", backgroundColor: "#f8f8f8", borderRadius: "4px" }}>
+                  <i className="fa-solid fa-times" style={{ color: "red", marginRight: "8px" }}></i>
+                  {field}
+                </li>
+              ))}
+            </ul>
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button
+                onClick={() => setShowBankModal(false)}
+                style={{
+                  padding: "10px 20px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  background: "#fff",
+                  cursor: "pointer",
+                  flex: 1
+                }}
+              >
+                Cancel
+              </button>
+              <Link to="/bind-account" style={{ flex: 1 }}>
+                <button
+                  style={{
+                    padding: "10px 20px",
+                    border: "none",
+                    borderRadius: "4px",
+                    background: "rgb(0, 157, 254)",
+                    color: "#fff",
+                    cursor: "pointer",
+                    width: "100%"
+                  }}
+                >
+                  Go to Bind Account
+                </button>
+              </Link>
+            </div>
+          </div>
+        </CustomModal>
+      )}
+
+      {/* Crypto Details Modal */}
+      {showCryptoModal && (
+        <CustomModal
+          visible={showCryptoModal}
+          title="Incomplete Crypto Details"
+          onClose={() => setShowCryptoModal(false)}
+        >
+          <div style={{ textAlign: "center" }}>
+            <i className="fa-solid fa-circle-exclamation" style={{ fontSize: "48px", color: "#ff9800", marginBottom: "15px" }}></i>
+            <h3 style={{ marginBottom: "15px", color: "#333" }}>Cryptocurrency Details Required</h3>
+            <p style={{ marginBottom: "20px", color: "#666" }}>
+              Please complete your cryptocurrency details before making a withdrawal:
+            </p>
+            <ul style={{ textAlign: "left", marginBottom: "20px", color: "#555", listStyle: "none", padding: 0 }}>
+              {getMissingCryptoFields().map((field, index) => (
+                <li key={index} style={{ marginBottom: "10px", padding: "8px", backgroundColor: "#f8f8f8", borderRadius: "4px" }}>
+                  <i className="fa-solid fa-times" style={{ color: "red", marginRight: "8px" }}></i>
+                  {field}
+                </li>
+              ))}
+            </ul>
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button
+                onClick={() => setShowCryptoModal(false)}
+                style={{
+                  padding: "10px 20px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  background: "#fff",
+                  cursor: "pointer",
+                  flex: 1
+                }}
+              >
+                Cancel
+              </button>
+              <Link to="/bind-account" style={{ flex: 1 }}>
+                <button
+                  style={{
+                    padding: "10px 20px",
+                    border: "none",
+                    borderRadius: "4px",
+                    background: "rgb(0, 157, 254)",
+                    color: "#fff",
+                    cursor: "pointer",
+                    width: "100%"
+                  }}
+                >
+                  Go to Bind Account
+                </button>
+              </Link>
+            </div>
+          </div>
+        </CustomModal>
+      )}
+
       <style>{`
         /* Black and white theme for Withdraw page */
         .withdraw-page-container {
@@ -71,7 +372,7 @@ function Withdraw() {
         }
 
         .form-group {
-          margin-bottom: 0.4rem;
+          margin-bottom: 1rem;
           display: flex;
           flex-direction: column;
         }
@@ -84,28 +385,29 @@ function Withdraw() {
           color: #333;
         }
 
-        .input {
+        .input, .select-input {
           width: 100%;
-          padding: 0.5rem 0.75rem;
+          padding: 0.75rem;
           border: 1px solid #ccc;
-          border-radius: 4px;
+          border-radius: 8px;
           font-size: 1rem;
           background-color: #fff;
           color: #000;
-          transition: border-color 0.2s;
+          transition: all 0.2s;
         }
 
-        .input:focus {
+        .input:focus, .select-input:focus {
           border-color: rgb(0, 157, 254);
           outline: none;
+          box-shadow: 0 0 0 3px rgba(0, 157, 254, 0.1);
         }
 
         .button {
           background-color: rgb(0, 157, 254) !important;
           color: #fff !important;
           border: none;
-          border-radius: 4px;
-          padding: 0.6rem 1.2rem;
+          border-radius: 8px;
+          padding: 0.75rem 1.2rem;
           font-size: 1rem;
           cursor: pointer;
           display: inline-flex;
@@ -113,7 +415,8 @@ function Withdraw() {
           justify-content: center;
           transition: background-color 0.2s;
           width: 100%;
-          margin-top: 0.5rem;
+          margin-top: 1rem;
+          font-weight: 500;
         }
 
         .button:hover {
@@ -125,31 +428,27 @@ function Withdraw() {
           cursor: not-allowed;
         }
 
-        .note-text {
-          display: block;
-          margin-top: 1rem;
-          font-size: 0.85rem;
-          color: #555;
-        }
-
-        /* Additional styles for withdraw page */
         .balance-info {
           display: block;
-          margin-bottom: 1rem;
-          font-size: 14px;
+          margin-bottom: 1.5rem;
+          font-size: 16px;
           color: #000;
-          font-weight: 500;
+          font-weight: 600;
+          padding: 1rem;
+          background-color: #f8f8f8;
+          border-radius: 8px;
+          border-left: 4px solid rgb(0, 157, 254);
         }
 
         .announcement-container {
           display: flex;
           align-items: center;
-          gap: 8px;
-          margin: 1rem 0;
-          padding: 0.5rem;
+          gap: 12px;
+          margin: 1.5rem 0;
+          padding: 1rem;
           background-color: #f8f8f8;
-          border-radius: 4px;
-          border-left: 3px solid rgb(0, 157, 254);
+          border-radius: 8px;
+          border-left: 4px solid rgb(0, 157, 254);
         }
 
         .speaker {
@@ -158,14 +457,117 @@ function Withdraw() {
         }
 
         .announcement-text {
-          font-size: 0.85rem;
+          font-size: 0.9rem;
           color: #333;
-          line-height: 1.4;
+          line-height: 1.5;
         }
 
-        /* Optional: style for the withdraw password section */
         .withdraw-password-section {
           margin-top: 1rem;
+        }
+
+        /* Method selection styles */
+        .method-selection {
+          display: flex;
+          gap: 15px;
+          margin: 10px 0 5px;
+          flex-wrap: wrap;
+        }
+
+        .method-card {
+          flex: 1;
+          min-width: 140px;
+          padding: 15px;
+          border: 2px solid #e0e0e0;
+          border-radius: 12px;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          background-color: #fff;
+        }
+
+        .method-card.selected {
+          border-color: rgb(0, 157, 254);
+          background-color: rgba(0, 157, 254, 0.05);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 157, 254, 0.15);
+        }
+
+        .method-card:hover {
+          border-color: rgb(0, 157, 254);
+          transform: translateY(-2px);
+        }
+
+        .method-icon {
+          font-size: 32px;
+          color: rgb(0, 157, 254);
+          margin-bottom: 10px;
+        }
+
+        .method-label {
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 5px;
+        }
+
+        .method-status {
+          font-size: 12px;
+          margin-top: 8px;
+          padding: 4px 8px;
+          border-radius: 20px;
+          display: inline-block;
+        }
+
+        .status-complete {
+          color: #4caf50;
+          background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .status-incomplete {
+          color: #ff9800;
+          background-color: rgba(255, 152, 0, 0.1);
+        }
+
+        .preview-box {
+          padding: 12px;
+          background: linear-gradient(135deg, #f5f5f5 0%, #f0f0f0 100%);
+          border-radius: 8px;
+          margin-bottom: 15px;
+          font-size: 13px;
+          border: 1px solid #e0e0e0;
+        }
+
+        .error-message {
+          color: #d32f2f;
+          font-size: 12px;
+          margin-top: 4px;
+        }
+
+        .tip-box {
+          margin-top: 20px;
+          padding: 12px;
+          background: #fff3cd;
+          border: 1px solid #ffeeba;
+          border-radius: 8px;
+          font-size: 13px;
+          color: #856404;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .tip-box i {
+          color: #ff9800;
+        }
+
+        .tip-box a {
+          color: rgb(0, 157, 254);
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        .tip-box a:hover {
+          text-decoration: underline;
         }
 
         @media (min-width: 768px) {
@@ -181,33 +583,103 @@ function Withdraw() {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             {/* Available Balance */}
             <span className="balance-info">
+              <i className="fa-solid fa-wallet" style={{ marginRight: '8px' }}></i>
               {i18n('pages.withdraw.availableBalance')} : €{currentUser?.balance?.toFixed(2) || 0} 
             </span>
 
             {/* Amount Field */}
             <div className="form-group">
               <div className="label__form">
-                <span style={{ color: "red" }}>{i18n('pages.changePassword.requiredField')}</span>
-                <span style={{ fontSize: "13px" }}>{i18n('pages.withdraw.withdrawAmount')}</span>
+                <span style={{ color: "red", marginRight: "4px" }}>*</span>
+                <span style={{ fontSize: "14px", fontWeight: "500" }}>Withdrawal Amount</span>
               </div>
               <InputFormItem
-                type="text"
+                type="number"
                 name="amount"
-                placeholder={i18n("entities.transaction.fields.amount")}
+                placeholder="Enter amount (min. €50)"
                 className="input"
               />
             </div>
 
+            {/* Withdrawal Method Selection */}
+            <div className="form-group">
+              <div className="label__form">
+                <span style={{ color: "red", marginRight: "4px" }}>*</span>
+                <span style={{ fontSize: "14px", fontWeight: "500" }}>Select Withdrawal Method</span>
+              </div>
+              
+              <div className="method-selection">
+                {/* Crypto Option */}
+                <div 
+                  className={`method-card ${form.watch('withdrawalMethod') === 'crypto' ? 'selected' : ''}`}
+                  onClick={() => form.setValue('withdrawalMethod', 'crypto', { shouldValidate: true })}
+                >
+                  <i className="fa-brands fa-bitcoin method-icon"></i>
+                  <div className="method-label">Cryptocurrency</div>
+                  <div className={`method-status ${hasCompleteCryptoDetails() ? 'status-complete' : 'status-incomplete'}`}>
+                    {hasCompleteCryptoDetails() ? '✓ Complete' : '⚠ Incomplete'}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#666', marginTop: '6px' }}>TRC20 | ERC20</div>
+                </div>
+
+                {/* Bank Option */}
+                <div 
+                  className={`method-card ${form.watch('withdrawalMethod') === 'bank' ? 'selected' : ''}`}
+                  onClick={() => form.setValue('withdrawalMethod', 'bank', { shouldValidate: true })}
+                >
+                  <i className="fa-solid fa-building-columns method-icon"></i>
+                  <div className="method-label">Bank Transfer</div>
+                  <div className={`method-status ${hasCompleteBankDetails() ? 'status-complete' : 'status-incomplete'}`}>
+                    {hasCompleteBankDetails() ? '✓ Complete' : '⚠ Incomplete'}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#666', marginTop: '6px' }}>IBAN | SWIFT</div>
+                </div>
+              </div>
+              
+              {/* Hidden input for form validation */}
+              <input 
+                type="hidden" 
+                {...form.register('withdrawalMethod')} 
+              />
+              {form.formState.errors.withdrawalMethod && (
+                <div className="error-message">
+                  <i className="fa-solid fa-exclamation-circle" style={{ marginRight: '4px' }}></i>
+                  {form.formState.errors.withdrawalMethod.message}
+                </div>
+              )}
+            </div>
+
+            {/* Display selected method details preview */}
+            {form.watch('withdrawalMethod') === 'crypto' && hasCompleteCryptoDetails() && (
+              <div className="preview-box">
+                <i className="fa-brands fa-bitcoin" style={{ color: 'rgb(0, 157, 254)', marginRight: '8px' }}></i>
+                <strong>Withdrawing to:</strong><br/>
+                <span style={{ fontSize: '12px', color: '#666' }}>
+                  {currentUser?.preferredcoin?.toUpperCase()}: {currentUser?.trc20?.substring(0, 12)}...
+                </span>
+              </div>
+            )}
+
+            {form.watch('withdrawalMethod') === 'bank' && hasCompleteBankDetails() && (
+              <div className="preview-box">
+                <i className="fa-solid fa-building-columns" style={{ color: 'rgb(0, 157, 254)', marginRight: '8px' }}></i>
+                <strong>Withdrawing to:</strong><br/>
+                <span style={{ fontSize: '12px', color: '#666' }}>
+                  {currentUser?.bankName} - {currentUser?.accountHolder}
+                </span>
+              </div>
+            )}
+
             {/* Withdraw Password Field */}
             <div className="form-group withdraw-password-section">
               <div className="label__form">
-                <span style={{ color: "red" }}>{i18n('pages.changePassword.requiredField')}</span>
-                <span style={{ fontSize: "13px" }}>{i18n('pages.withdraw.withdrawPassword')}</span>
+                <span style={{ color: "red", marginRight: "4px" }}>*</span>
+                <span style={{ fontSize: "14px", fontWeight: "500" }}>Withdrawal Password</span>
               </div>
               <InputFormItem
-                type="password"  // changed from text to password for security
+                type="password"
                 name="withdrawPassword"
-                placeholder={i18n("user.fields.withdrawPassword")}
+                placeholder="Enter your withdrawal password"
                 className="input"
               />
             </div>
@@ -216,7 +688,7 @@ function Withdraw() {
             <div className="announcement-container">
               <i className="fa-solid fa-volume-high speaker" aria-hidden="true"></i>
               <div className="announcement-text">
-                {i18n('pages.withdraw.announcement')}
+                <strong>Notice:</strong> Withdrawals are processed within 24 hours. Minimum withdrawal amount: €50. A small fee may apply.
               </div>
             </div>
 
@@ -224,10 +696,25 @@ function Withdraw() {
             <button
               className="button"
               type="submit"
-              disabled={!currentUser?.withdraw} // assuming withdraw flag enables the button
+              disabled={!currentUser?.withdraw}
             >
-              {i18n('pages.withdraw.confirm')}
+              <i className="fa-solid fa-check" style={{ marginRight: '8px' }}></i>
+              Confirm Withdrawal
             </button>
+
+            {/* Help text for incomplete profiles */}
+            {(!hasCompleteBankDetails() || !hasCompleteCryptoDetails()) && (
+              <div className="tip-box">
+                <i className="fa-solid fa-info-circle fa-lg"></i>
+                <span>
+                  Complete your withdrawal details in 
+                  <Link to="/bind-account" style={{ marginLeft: '4px', marginRight: '4px' }}>
+                    Bind Account
+                  </Link> 
+                  to enable all withdrawal options.
+                </span>
+              </div>
+            )}
           </form>
         </FormProvider>
       </div>

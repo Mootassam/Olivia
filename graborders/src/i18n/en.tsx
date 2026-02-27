@@ -284,6 +284,7 @@ const en = {
 
     changePassword: {
       title: "Change Password",
+      withdrawPassword: "Change Withdrawal Password",
       header: "Change Password",
       oldPassword: "Old Password",
       newPassword: "New Password",
@@ -851,6 +852,7 @@ const en = {
       gender: "Gender",
       username: "Username",
       walletName: "wallet Name",
+      walletAddress: "Wallet Address",
 
       id: "Id",
       confirmPassword: "confirm Password",
@@ -925,6 +927,9 @@ const en = {
         USDT: "USDT",
         ETH: "ETH",
         BTC: "BTC",
+
+        TRC20:"TRC20",
+        ERC20:"ERC20",
 
       },
       gender: {

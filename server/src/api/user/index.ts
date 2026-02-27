@@ -27,6 +27,11 @@ export default (app) => {
   );
 
 
+      app.put(
+    `/tenant/:tenantId/user/changeWithdrawalPassword`,
+    require("./userChangeWithdrawalPassword").default
+  );
+
   app.get(
     `/tenant/:tenantId/user`,
     require('./userList').default,

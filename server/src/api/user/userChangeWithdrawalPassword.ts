@@ -1,20 +1,17 @@
-
-import UserCreator from '../../services/user/userCreator';
 import PermissionChecker from '../../services/user/permissionChecker';
 import ApiResponseHandler from '../apiResponseHandler';
+import UserRepository from '../../database/repositories/userRepository';
 import Permissions from '../../security/permissions';
 
 export default async (req, res) => {
   try {
-    new PermissionChecker(req).validateHas(
-      Permissions.values.userCreate,
+
+
+    const payload = await UserRepository.userChangeWithdrawalPassword(
+      req.body,
+      req
     );
 
-    let creator = new UserCreator(req);
-
-    await creator.execute(req.body.data);
-
-    const payload = true;
 
     await ApiResponseHandler.success(req, res, payload);
   } catch (error) {

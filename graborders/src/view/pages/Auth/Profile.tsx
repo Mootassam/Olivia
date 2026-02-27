@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -146,8 +147,8 @@ function Profile() {
       },
       {
         icon: "fa-solid fa-lock",
-        name: "Set withdrawal password",
-        action: () => goto("/wallet"),
+        name: "Change withdrawal password",
+        action: () => goto("/change-withdrawal-password"),
       },
       {
         icon: "fa-solid fa-language",

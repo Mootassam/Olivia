@@ -21,7 +21,7 @@ const userFormActions = {
   UPDATE_SUCCESS: `${prefix}_UPDATE_SUCCESS`,
   UPDATE_ERROR: `${prefix}_UPDATE_ERROR`,
 
-    FETCH_STARTED: `${prefix}_FETCH_STARTED`,
+  FETCH_STARTED: `${prefix}_FETCH_STARTED`,
   FETCH_SUCCESS: `${prefix}_FETCH_SUCCESS`,
   FETCH_ERROR: `${prefix}_FETCH_ERROR`,
 
@@ -56,23 +56,23 @@ const userFormActions = {
 
   getAllUserReference: () => {
     return async (dispatch) => {
-    try {
-      dispatch({
-        type: userFormActions.FETCH_STARTED,
-      });
-      const response = await UserService.fetchAllcurrentUser();
-  
-      dispatch({
-        type: userFormActions.FETCH_SUCCESS,
-        payload: response
-      });
-    } catch (error) {
-      Errors.handle(error);
-      dispatch({
-        type: userFormActions.FETCH_ERROR,
-      });
-    }
-  };
+      try {
+        dispatch({
+          type: userFormActions.FETCH_STARTED,
+        });
+        const response = await UserService.fetchAllcurrentUser();
+
+        dispatch({
+          type: userFormActions.FETCH_SUCCESS,
+          payload: response
+        });
+      } catch (error) {
+        Errors.handle(error);
+        dispatch({
+          type: userFormActions.FETCH_ERROR,
+        });
+      }
+    };
   },
 
 
@@ -110,13 +110,45 @@ const userFormActions = {
   },
 
 
-    doUpdateBank: (values) => async (dispatch, getState) => {
+  doUpdateBank: (values) => async (dispatch, getState) => {
     try {
       dispatch({
         type: userFormActions.UPDATE_STARTED,
       });
 
       await UserService.editBankDetails(values);
+
+      dispatch({
+        type: userFormActions.UPDATE_SUCCESS,
+      });
+
+      const currentUser = authSelectors.selectCurrentUser(
+        getState(),
+      );
+
+      if (currentUser.id === values.id) {
+        await dispatch(authActions.doRefreshCurrentUser());
+      }
+
+      Message.success(i18n('user.doUpdateSuccess'));
+
+    } catch (error) {
+      Errors.handle(error);
+
+      dispatch({
+        type: userFormActions.UPDATE_ERROR,
+      });
+    }
+  },
+
+
+  doUpdateWithdrawPassword: (values) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: userFormActions.UPDATE_STARTED,
+      });
+
+      await UserService.changeWithdrawPassword(values);
 
       dispatch({
         type: userFormActions.UPDATE_SUCCESS,

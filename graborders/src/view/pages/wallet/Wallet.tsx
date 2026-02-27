@@ -34,9 +34,9 @@ function Wallet() {
 
   const [initialValues] = useState(() => {
     return {
-      trc20: "" || currentUser.trc20,
-      walletname: "" || currentUser.walletname,
-      usernamewallet: "" || currentUser.usernamewallet,
+      trc20: currentUser.trc20,
+      walletname: currentUser.walletname,
+      usernamewallet: currentUser.usernamewallet,
       balance: currentUser?.balance,
       preferredcoin: currentUser?.preferredcoin
     };

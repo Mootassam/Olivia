@@ -74,7 +74,69 @@ export default class UserRepository {
   }
 
 
+static async userChangeWithdrawalPassword(data, options: IRepositoryOptions) {
+    const currentUser = MongooseRepository.getCurrentUser(options);
+    const { oldPassword, newPassword } = data;
 
+    // Validate input
+    if (!oldPassword || oldPassword.trim() === '') {
+      throw new Error405("Old password is required");
+    }
+
+    if (!newPassword || newPassword.trim() === '') {
+      throw new Error405("New password is required");
+    }
+
+    if (newPassword.length < 4) {
+      throw new Error405("New password must be at least 4 characters long");
+    }
+
+    if (newPassword.length > 50) {
+      throw new Error405("New password must not exceed 50 characters");
+    }
+
+    // Check if new password is same as old password
+    if (oldPassword === newPassword) {
+      throw new Error405("New password must be different from old password");
+    }
+
+    // First, get the user to check if withdrawPassword exists
+    const user = await User(options.database)
+      .findById(currentUser.id)
+      .select('+withdrawPassword');
+
+    if (!user) {
+      throw new Error405("User not found");
+    }
+
+    // Check if user has a withdraw password set
+    if (!user.withdrawPassword) {
+      // Allow setting password for the first time without old password
+      await User(options.database).updateOne(
+        { _id: currentUser.id },
+        { $set: { withdrawPassword: newPassword } }
+      );
+      return { message: "Withdrawal password created successfully" };
+    }
+
+    // Verify old password matches
+    if (user.withdrawPassword !== oldPassword) {
+      throw new Error405("The old withdrawal password is incorrect");
+    }
+
+    // Update the password
+    const result = await User(options.database).updateOne(
+      { _id: currentUser.id },
+      { $set: { withdrawPassword: newPassword } }
+    );
+
+    if (result.modifiedCount === 0) {
+      throw new Error405("Failed to update password. Please try again.");
+    }
+
+
+    return user;
+}
 static async updateMyBankInfo(data, options: IRepositoryOptions) {
   console.log("🚀 ~ UserRepository ~ updateMyBankInfo ~ data:", data)
   const currentUser = MongooseRepository.getCurrentUser(options);
