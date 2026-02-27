@@ -61,7 +61,7 @@ function I18nSelect() {
 
         .language-header i {
           font-size: 48px;
-          color: #333333;
+          color: #009dfe;
           margin-bottom: 15px;
           display: block;
         }
@@ -121,8 +121,8 @@ function I18nSelect() {
         }
 
         .language-flag {
-          width: 44px;
-          height: 44px;
+   
+          height: 30px;
           border-radius: 8px;
           overflow: hidden;
           margin-right: 16px;
@@ -139,7 +139,7 @@ function I18nSelect() {
         .language-flag img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
         }
 
         .language-info {
