@@ -5,6 +5,8 @@ const ru = {
 
   validation: {
     inValidWithdrawPassword: 'Ваш пароль вывода неверен, пожалуйста, проверьте еще раз',
+    missingBankDetails: 'Пожалуйста, добавьте ваши банковские реквизиты перед выводом средств',
+    missingWithdrawalMethod: 'Пожалуйста, добавьте криптокошелёк или банковские реквизиты перед выводом средств',
     exceedsBalance: 'Похоже, ваша сумма вывода превышает ваш баланс',
     missingWalletAddress: 'Пожалуйста, перейдите в раздел "Кошелек", чтобы привязать ваш адрес USDT (TRC20) или ERC20 перед отправкой запроса на вывод.',
     requiredAmount: 'Пожалуйста, напишите сумму',
@@ -14,7 +16,24 @@ const ru = {
     InsufficientBalance: 'Недостаточно средств',
     requiredSubscription: 'Пожалуйста, выберите план подписки',
     moretasks: 'Это ваш лимит. Пожалуйста, свяжитесь со службой поддержки для получения дополнительных задач',
-    deposit: "Недостаточно средств, пожалуйста, пополните баланс."
+    deposit: "Недостаточно средств, пожалуйста, пополните баланс.",
+    submitPendingProducts: "Пожалуйста, отправьте ожидающие продукты",
+    noProductsAvailable: "Нет доступных продуктов",
+    oldPasswordRequired: "Требуется старый пароль",
+    newPasswordRequired: "Требуется новый пароль",
+    newPasswordTooShort: "Новый пароль должен содержать не менее 4 символов",
+    newPasswordTooLong: "Новый пароль не должен превышать 50 символов",
+    newPasswordDifferentFromOld: "Новый пароль должен отличаться от старого",
+    userNotFound: "Пользователь не найден",
+    invalidOldWithdrawalPassword: "Неверный старый пароль для вывода",
+    updatePasswordFailed: "Не удалось обновить пароль. Пожалуйста, попробуйте снова.",
+    productNotFound: "Продукт не найден",
+    invalidPriceOrCommission: "Недопустимые значения цены или комиссии",
+    invalidPriceRange: "Недопустимые минимальные или максимальные значения для генерации цены",
+    cleanDatabaseOnlyForTest: "Очистка базы данных разрешена только в режиме теста",
+    stripeLineItemPriceIdNull: "Отсутствует Stripe line_items.data[0].price.id",
+    noRecordsToComplete: "Не найдено записей для завершения",
+    noPendingRecord: "Не найдено ожидающих записей"
   },
 
   auth: {

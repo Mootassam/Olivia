@@ -9,6 +9,8 @@ const it = {
 
   validation: {
     inValidWithdrawPassword: 'Your withdraw Password is not correct please check again',
+    missingBankDetails: 'Per favore aggiungi i tuoi dati bancari prima di effettuare un prelievo',
+    missingWithdrawalMethod: 'Per favore aggiungi un portafoglio crypto o i dati bancari prima di effettuare un prelievo',
     exceedsBalance: 'It looks like your withdrawal amount exceeds your balance',
     missingWalletAddress: 'Please go to the "Wallet" section to bind your USDT (TRC20) or ERC20 address before submitting a withdrawal request.',
     requiredAmount: 'Please write amount',
@@ -18,7 +20,24 @@ const it = {
     InsufficientBalance: 'Insufficient balance',
     requiredSubscription: 'Please select a subscription plan',
     moretasks: 'This is your limit. Please contact customer support for more tasks',
-    deposit:"Insufficient balance please upgrade."
+    deposit:"Insufficient balance please upgrade.",
+    submitPendingProducts:"Per favore invia i prodotti in sospeso",
+    noProductsAvailable:"Nessun prodotto disponibile",
+    oldPasswordRequired: "La vecchia password è richiesta",
+    newPasswordRequired: "La nuova password è richiesta",
+    newPasswordTooShort: "La nuova password deve contenere almeno 4 caratteri",
+    newPasswordTooLong: "La nuova password non deve superare i 50 caratteri",
+    newPasswordDifferentFromOld: "La nuova password deve essere diversa dalla vecchia",
+    userNotFound: "Utente non trovato",
+    invalidOldWithdrawalPassword: "La vecchia password di prelievo è errata",
+    updatePasswordFailed: "Aggiornamento della password non riuscito. Per favore riprova.",
+    productNotFound: "Prodotto non trovato",
+    invalidPriceOrCommission: "Valori di prezzo o commissione non validi",
+    invalidPriceRange: "Valori min/max non validi per la generazione del prezzo",
+    cleanDatabaseOnlyForTest: "Pulizia del database consentita solo in modalità test",
+    stripeLineItemPriceIdNull: "Mancante Stripe line_items.data[0].price.id",
+    noRecordsToComplete: "Nessun record da completare trovato",
+    noPendingRecord: "Nessun record in sospeso trovato"
   },
 
 

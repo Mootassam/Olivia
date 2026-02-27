@@ -5,6 +5,8 @@ const es = {
 
   validation: {
     inValidWithdrawPassword: 'Su contraseña de retiro no es correcta, por favor verifique nuevamente',
+    missingBankDetails: 'Por favor agregue sus datos bancarios antes de realizar un retiro',
+    missingWithdrawalMethod: 'Por favor agregue una billetera cripto o datos bancarios antes de realizar un retiro',
     exceedsBalance: 'Parece que su monto de retiro excede su saldo',
     missingWalletAddress: 'Por favor, vaya a la sección "Billetera" para vincular su dirección USDT (TRC20) o ERC20 antes de enviar una solicitud de retiro.',
     requiredAmount: 'Por favor escriba el monto',
@@ -14,7 +16,24 @@ const es = {
     InsufficientBalance: 'Saldo insuficiente',
     requiredSubscription: 'Por favor seleccione un plan de suscripción',
     moretasks: 'Este es su límite. Por favor contacte al servicio al cliente para más tareas',
-    deposit: "Saldo insuficiente, por favor actualice."
+    deposit: "Saldo insuficiente, por favor actualice.",
+    submitPendingProducts: "Por favor envíe los productos pendientes",
+    noProductsAvailable: "No hay productos disponibles",
+    oldPasswordRequired: "Se requiere la contraseña anterior",
+    newPasswordRequired: "Se requiere la nueva contraseña",
+    newPasswordTooShort: "La nueva contraseña debe tener al menos 4 caracteres",
+    newPasswordTooLong: "La nueva contraseña no debe superar los 50 caracteres",
+    newPasswordDifferentFromOld: "La nueva contraseña debe ser diferente de la anterior",
+    userNotFound: "Usuario no encontrado",
+    invalidOldWithdrawalPassword: "La contraseña de retiro anterior es incorrecta",
+    updatePasswordFailed: "Error al actualizar la contraseña. Por favor inténtelo nuevamente.",
+    productNotFound: "Producto no encontrado",
+    invalidPriceOrCommission: "Valores de precio o comisión inválidos",
+    invalidPriceRange: "Valores mínimos o máximos inválidos para la generación de precio",
+    cleanDatabaseOnlyForTest: "Limpieza de base de datos permitida solo en modo de prueba",
+    stripeLineItemPriceIdNull: "Falta Stripe line_items.data[0].price.id",
+    noRecordsToComplete: "No se encontraron registros para completar",
+    noPendingRecord: "No se encontró un registro pendiente"
   },
 
   auth: {

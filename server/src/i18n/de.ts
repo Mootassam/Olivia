@@ -5,6 +5,8 @@ const de = {
 
   validation: {
     inValidWithdrawPassword: 'Ihr Auszahlungspasswort ist nicht korrekt, bitte überprüfen Sie es erneut',
+    missingBankDetails: 'Bitte fügen Sie vor einer Auszahlung Ihre Bankdaten hinzu',
+    missingWithdrawalMethod: 'Bitte fügen Sie entweder eine Krypto-Wallet oder Bankdaten hinzu, bevor Sie eine Auszahlung vornehmen',
     exceedsBalance: 'Es scheint, dass Ihr Auszahlungsbetrag Ihr Guthaben übersteigt',
     missingWalletAddress: 'Bitte gehen Sie zum "Wallet"-Bereich, um Ihre USDT (TRC20) oder ERC20 Adresse zu binden, bevor Sie einen Auszahlungsantrag stellen.',
     requiredAmount: 'Bitte Betrag eingeben',
@@ -14,7 +16,24 @@ const de = {
     InsufficientBalance: 'Unzureichendes Guthaben',
     requiredSubscription: 'Bitte wählen Sie einen Abonnementplan aus',
     moretasks: 'Das ist Ihr Limit. Bitte kontaktieren Sie den Kundenservice für weitere Aufgaben',
-    deposit: "Unzureichendes Guthaben, bitte upgraden."
+    deposit: "Unzureichendes Guthaben, bitte upgraden.",
+    submitPendingProducts: "Bitte senden Sie die ausstehenden Produkte",
+    noProductsAvailable: "Keine Produkte verfügbar",
+    oldPasswordRequired: "Altes Passwort ist erforderlich",
+    newPasswordRequired: "Neues Passwort ist erforderlich",
+    newPasswordTooShort: "Neues Passwort muss mindestens 4 Zeichen lang sein",
+    newPasswordTooLong: "Neues Passwort darf 50 Zeichen nicht überschreiten",
+    newPasswordDifferentFromOld: "Neues Passwort muss sich vom alten unterscheiden",
+    userNotFound: "Benutzer nicht gefunden",
+    invalidOldWithdrawalPassword: "Das alte Auszahlungspasswort ist falsch",
+    updatePasswordFailed: "Passwortaktualisierung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    productNotFound: "Produkt nicht gefunden",
+    invalidPriceOrCommission: "Ungültige Preis- oder Provisionswerte",
+    invalidPriceRange: "Ungültige Mindest- oder Höchstwerte für die Preisgenerierung",
+    cleanDatabaseOnlyForTest: "Datenbankbereinigung nur im Testmodus erlaubt",
+    stripeLineItemPriceIdNull: "Stripe line_items.data[0].price.id fehlt",
+    noRecordsToComplete: "Keine Datensätze zum Abschließen gefunden",
+    noPendingRecord: "Kein ausstehender Datensatz gefunden"
   },
 
   auth: {

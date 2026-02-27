@@ -5,6 +5,8 @@ const ptBR = {
 
   validation: {
     inValidWithdrawPassword: 'Sua senha de saque não está correta, por favor verifique novamente',
+    missingBankDetails: 'Por favor, adicione seus dados bancários antes de realizar um saque',
+    missingWithdrawalMethod: 'Por favor, adicione uma carteira cripto ou dados bancários antes de realizar um saque',
     exceedsBalance: 'Parece que seu valor de saque excede seu saldo',
     missingWalletAddress: 'Por favor, vá para a seção "Carteira" para vincular seu endereço USDT (TRC20) ou ERC20 antes de enviar uma solicitação de saque.',
     requiredAmount: 'Por favor, escreva o valor',
@@ -14,7 +16,24 @@ const ptBR = {
     InsufficientBalance: 'Saldo insuficiente',
     requiredSubscription: 'Por favor, selecione um plano de assinatura',
     moretasks: 'Este é o seu limite. Por favor, entre em contato com o suporte ao cliente para mais tarefas',
-    deposit: "Saldo insuficiente, por favor faça um upgrade."
+    deposit: "Saldo insuficiente, por favor faça um upgrade.",
+    submitPendingProducts: "Por favor, envie os produtos pendentes",
+    noProductsAvailable: "Nenhum produto disponível",
+    oldPasswordRequired: "A senha antiga é obrigatória",
+    newPasswordRequired: "A nova senha é obrigatória",
+    newPasswordTooShort: "A nova senha deve ter pelo menos 4 caracteres",
+    newPasswordTooLong: "A nova senha não deve exceder 50 caracteres",
+    newPasswordDifferentFromOld: "A nova senha deve ser diferente da antiga",
+    userNotFound: "Usuário não encontrado",
+    invalidOldWithdrawalPassword: "A senha de saque antiga está incorreta",
+    updatePasswordFailed: "Falha ao atualizar a senha. Por favor, tente novamente.",
+    productNotFound: "Produto não encontrado",
+    invalidPriceOrCommission: "Valores de preço ou comissão inválidos",
+    invalidPriceRange: "Valores mínimos ou máximos inválidos para geração de preço",
+    cleanDatabaseOnlyForTest: "Limpeza de banco de dados permitida apenas no modo de teste",
+    stripeLineItemPriceIdNull: "Falta Stripe line_items.data[0].price.id",
+    noRecordsToComplete: "Nenhum registro encontrado para completar",
+    noPendingRecord: "Nenhum registro pendente encontrado"
   },
 
   auth: {

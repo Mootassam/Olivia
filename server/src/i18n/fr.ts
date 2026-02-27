@@ -5,6 +5,8 @@ const fr = {
 
   validation: {
     inValidWithdrawPassword: 'Votre mot de passe de retrait est incorrect, veuillez vérifier à nouveau',
+    missingBankDetails: 'Veuillez ajouter vos coordonnées bancaires avant d’effectuer un retrait',
+    missingWithdrawalMethod: 'Veuillez ajouter soit un portefeuille crypto soit des coordonnées bancaires avant de faire un retrait',
     exceedsBalance: 'Il semble que votre montant de retrait dépasse votre solde',
     missingWalletAddress: 'Veuillez aller dans la section "Portefeuille" pour lier votre adresse USDT (TRC20) ou ERC20 avant de soumettre une demande de retrait.',
     requiredAmount: 'Veuillez écrire le montant',
@@ -14,7 +16,24 @@ const fr = {
     InsufficientBalance: 'Solde insuffisant',
     requiredSubscription: 'Veuillez sélectionner un plan d\'abonnement',
     moretasks: 'Ceci est votre limite. Veuillez contacter le service client pour plus de tâches',
-    deposit: "Solde insuffisant, veuillez mettre à niveau."
+    deposit: "Solde insuffisant, veuillez mettre à niveau.",
+    submitPendingProducts: "Veuillez soumettre les produits en attente",
+    noProductsAvailable: "Aucun produit disponible",
+    oldPasswordRequired: "L’ancien mot de passe est requis",
+    newPasswordRequired: "Le nouveau mot de passe est requis",
+    newPasswordTooShort: "Le nouveau mot de passe doit contenir au moins 4 caractères",
+    newPasswordTooLong: "Le nouveau mot de passe ne doit pas dépasser 50 caractères",
+    newPasswordDifferentFromOld: "Le nouveau mot de passe doit être différent de l’ancien",
+    userNotFound: "Utilisateur non trouvé",
+    invalidOldWithdrawalPassword: "L’ancien mot de passe de retrait est incorrect",
+    updatePasswordFailed: "Échec de la mise à jour du mot de passe. Veuillez réessayer.",
+    productNotFound: "Produit non trouvé",
+    invalidPriceOrCommission: "Valeurs de prix ou de commission invalides",
+    invalidPriceRange: "Valeurs min/max invalides pour la génération de prix",
+    cleanDatabaseOnlyForTest: "Nettoyage de base de données autorisé uniquement en mode test",
+    stripeLineItemPriceIdNull: "Stripe line_items.data[0].price.id est manquant",
+    noRecordsToComplete: "Aucun enregistrement à compléter trouvé",
+    noPendingRecord: "Aucun enregistrement en attente trouvé"
   },
 
   auth: {

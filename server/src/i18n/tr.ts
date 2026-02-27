@@ -5,6 +5,8 @@ const tr = {
 
   validation: {
     inValidWithdrawPassword: 'Çekim şifreniz doğru değil, lütfen tekrar kontrol edin',
+    missingBankDetails: 'Lütfen çekim yapmadan önce banka bilgilerinizi ekleyin',
+    missingWithdrawalMethod: 'Lütfen çekim yapmadan önce bir kripto cüzdan veya banka bilgisi ekleyin',
     exceedsBalance: 'Görünüşe göre çekim miktarınız bakiyenizi aşıyor',
     missingWalletAddress: 'Lütfen çekim talebi göndermeden önce "Cüzdan" bölümüne giderek USDT (TRC20) veya ERC20 adresinizi bağlayın.',
     requiredAmount: 'Lütfen miktarı yazın',
@@ -14,7 +16,24 @@ const tr = {
     InsufficientBalance: 'Yetersiz bakiye',
     requiredSubscription: 'Lütfen bir abonelik planı seçin',
     moretasks: 'Bu sizin limitiniz. Daha fazla görev için lütfen müşteri hizmetleriyle iletişime geçin',
-    deposit: "Yetersiz bakiye, lütfen yükseltin."
+    deposit: "Yetersiz bakiye, lütfen yükseltin.",
+    submitPendingProducts: "Lütfen bekleyen ürünleri gönderin",
+    noProductsAvailable: "Uygun ürün yok",
+    oldPasswordRequired: "Eski şifre gerekli",
+    newPasswordRequired: "Yeni şifre gerekli",
+    newPasswordTooShort: "Yeni şifre en az 4 karakter olmalıdır",
+    newPasswordTooLong: "Yeni şifre 50 karakteri aşmamalıdır",
+    newPasswordDifferentFromOld: "Yeni şifre eski şifreden farklı olmalıdır",
+    userNotFound: "Kullanıcı bulunamadı",
+    invalidOldWithdrawalPassword: "Eski çekim şifresi yanlış",
+    updatePasswordFailed: "Şifre güncellemesi başarısız. Lütfen tekrar deneyin.",
+    productNotFound: "Ürün bulunamadı",
+    invalidPriceOrCommission: "Geçersiz fiyat veya komisyon değerleri",
+    invalidPriceRange: "Fiyat oluşturma için geçersiz min veya max değerleri",
+    cleanDatabaseOnlyForTest: "Veritabanı temizleme yalnızca test modunda izinlidir",
+    stripeLineItemPriceIdNull: "Stripe line_items.data[0].price.id eksik",
+    noRecordsToComplete: "Tamamlanacak kayıt bulunamadı",
+    noPendingRecord: "Bekleyen kayıt bulunamadı"
   },
 
   auth: {
