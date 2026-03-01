@@ -32,7 +32,7 @@ function LogoForm(props) {
       trc20: record?.trc20,
       eth: record?.eth,
       defaultBalance: record?.defaultBalance,
-      defaulCommission: record?.defaulCommission
+      defaultCommission: record?.defaultCommission
     };
   });
 
@@ -115,7 +115,7 @@ function LogoForm(props) {
 
                         <div className="col-lg-7 col-md-8 col-12">
               <InputFormItem
-                name="defaulCommission"
+                name="defaultCommission"
                 label={i18n(
                   'entities.category.fields.defaulCommission',
                 )}

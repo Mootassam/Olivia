@@ -104,11 +104,15 @@ const recordFormActions = {
         type: recordFormActions.CREATE_SUCCESS,
       });
 
-           await Promise.all([
+      await Promise.all([
         dispatch(recordListActions.doFetch()),
         dispatch(authActions.doRefreshCurrentUser()),
         dispatch(recordListActions.doCountDay()),
       ]);
+
+      Message.success(
+        i18n('entities.record.create.success'),
+      );
 
     } catch (error) {
 

@@ -4,6 +4,18 @@ const de = {
   },
 
   validation: {
+    withdrawalMethodRequired: "Bitte wählen Sie eine Auszahlungsmethode (Bank oder Krypto), bevor Sie Ihre Anfrage absenden",
+
+    withdrawNotAllowed: "Auszahlungen sind derzeit für Ihr Konto deaktiviert. Bitte kontaktieren Sie den Kundensupport",
+
+    minimumBalanceRequired: "Sie müssen nach der Auszahlung das erforderliche Mindestguthaben beibehalten",
+
+    missingWalletDetails: "Bitte vervollständigen Sie Ihre Wallet-Informationen, bevor Sie eine Krypto-Auszahlungsanfrage senden",
+
+    missingERC20Address: "Bitte hinterlegen Sie Ihre ERC20-Wallet-Adresse, bevor Sie eine Auszahlungsanfrage senden",
+
+    missingTRC20Address: "Bitte hinterlegen Sie Ihre TRC20-Wallet-Adresse, bevor Sie eine Auszahlungsanfrage senden"
+    ,
     inValidWithdrawPassword: 'Ihr Auszahlungspasswort ist nicht korrekt, bitte überprüfen Sie es erneut',
     missingBankDetails: 'Bitte fügen Sie vor einer Auszahlung Ihre Bankdaten hinzu',
     missingWithdrawalMethod: 'Bitte fügen Sie entweder eine Krypto-Wallet oder Bankdaten hinzu, bevor Sie eine Auszahlung vornehmen',

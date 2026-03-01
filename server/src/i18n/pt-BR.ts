@@ -4,6 +4,18 @@ const ptBR = {
   },
 
   validation: {
+    withdrawalMethodRequired: "Por favor, selecione um método de saque (Banco ou Cripto) antes de enviar sua solicitação",
+
+withdrawNotAllowed: "Os saques estão atualmente desativados para sua conta. Entre em contato com o suporte ao cliente",
+
+minimumBalanceRequired: "Você deve manter o saldo mínimo exigido após o saque",
+
+missingWalletDetails: "Por favor, complete as informações da sua carteira antes de enviar uma solicitação de saque em cripto",
+
+missingERC20Address: "Por favor, vincule seu endereço de carteira ERC20 antes de enviar uma solicitação de saque",
+
+missingTRC20Address: "Por favor, vincule seu endereço de carteira TRC20 antes de enviar uma solicitação de saque"
+,
     inValidWithdrawPassword: 'Sua senha de saque não está correta, por favor verifique novamente',
     missingBankDetails: 'Por favor, adicione seus dados bancários antes de realizar um saque',
     missingWithdrawalMethod: 'Por favor, adicione uma carteira cripto ou dados bancários antes de realizar um saque',

@@ -680,7 +680,6 @@ function Withdraw() {
             <button
               className="button"
               type="submit"
-              disabled={!currentUser?.withdraw}
             >
               <i className="fa-solid fa-check" style={{ marginRight: '8px' }}></i>
               {i18n('pages.withdraw.confirm')}

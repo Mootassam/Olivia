@@ -4,6 +4,18 @@ const tr = {
   },
 
   validation: {
+    withdrawalMethodRequired: "Talebinizi göndermeden önce bir çekim yöntemi (Banka veya Kripto) seçiniz",
+
+withdrawNotAllowed: "Hesabınız için para çekme işlemleri şu anda devre dışı bırakılmıştır. Lütfen müşteri hizmetleri ile iletişime geçin",
+
+minimumBalanceRequired: "Çekim işleminden sonra gerekli minimum bakiyeyi korumanız gerekir",
+
+missingWalletDetails: "Kripto çekim talebi göndermeden önce cüzdan bilgilerinizi tamamlayınız",
+
+missingERC20Address: "Çekim talebi göndermeden önce ERC20 cüzdan adresinizi bağlayınız",
+
+missingTRC20Address: "Çekim talebi göndermeden önce TRC20 cüzdan adresinizi bağlayınız"
+,
     inValidWithdrawPassword: 'Çekim şifreniz doğru değil, lütfen tekrar kontrol edin',
     missingBankDetails: 'Lütfen çekim yapmadan önce banka bilgilerinizi ekleyin',
     missingWithdrawalMethod: 'Lütfen çekim yapmadan önce bir kripto cüzdan veya banka bilgisi ekleyin',

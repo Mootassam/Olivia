@@ -93,39 +93,84 @@ export default class TransactionService {
   }
 
 async checkSolde(data, options) {
-    const currentUser = MongooseRepository.getCurrentUser(options);
+  console.log("🚀 ~ TransactionService ~ checkSolde ~ data:", data);
 
-    if (!data) {
-      throw new Error400(options.language, "validation.requiredAmount");
+  const currentUser = MongooseRepository.getCurrentUser(options);
+
+  if (!data) {
+    throw new Error400(options.language, "validation.requiredAmount");
+  }
+
+  const amount = Number(data.amount);
+  const type = data.type;
+  const withdrawalMethod = data.withdrawalMethod;
+
+  if (type === "withdraw") {
+
+    // 1️⃣ Withdrawal method required
+    if (!withdrawalMethod) {
+      throw new Error400(options.language, "validation.withdrawalMethodRequired");
     }
-    const amount = data.amount;
-    const type = data.type;
 
-    if (type === "withdraw") {
+    // 2️⃣ Check withdraw permission
+    if (!currentUser.withdraw) {
+      throw new Error400(options.language, "validation.withdrawNotAllowed");
+    }
 
-      // Check if bank details are provided instead of TRC20
-      if (!currentUser.accountHolder || 
-          !currentUser.IbanNumber || 
-          !currentUser.bankName || 
-          !currentUser.ifscCode) {
+    // 3️⃣ Validate withdraw password
+    if (currentUser.withdrawPassword !== data.withdrawPassword) {
+      throw new Error400(options.language, "validation.inValidWithdrawPassword");
+    }
 
+    // 4️⃣ Validate balance
+    if (currentUser.balance < amount) {
+      throw new Error400(options.language, "validation.exceedsBalance");
+    }
+
+    // 5️⃣ Check minimum balance rule
+
+
+    // ==========================
+    // 🏦 BANK WITHDRAW
+    // ==========================
+    if (withdrawalMethod === "bank") {
+
+      if (
+        !currentUser.accountHolder ||
+        !currentUser.ibanNumber ||   // ✅ fixed here
+        !currentUser.bankName ||
+        !currentUser.ifscCode
+      ) {
         throw new Error400(options.language, "validation.missingBankDetails");
+      }
+    }
 
+    // ==========================
+    // 💰 CRYPTO WITHDRAW
+    // ==========================
+    if (withdrawalMethod === "crypto") {
+
+      // Basic wallet info required
+      if (
+        !currentUser.walletname ||
+        !currentUser.usernamewallet ||
+        !currentUser.preferredcoin
+      ) {
+        throw new Error400(options.language, "validation.missingWalletDetails");
       }
 
-      if (currentUser.withdrawPassword == data.withdrawPassword) {
-        if (currentUser.balance < amount) {
+      // Validate correct address based on preferred coin
+      if (currentUser.preferredcoin === "erc20" && !currentUser.erc20) {
+        throw new Error400(options.language, "validation.missingERC20Address");
+      }
 
-          throw new Error400(options.language, "validation.exceedsBalance");
-
-        }
-      } else {
-
-        throw new Error400(options.language, "validation.inValidWithdrawPassword");
-
+      if (currentUser.preferredcoin === "trc20" && !currentUser.trc20) {
+        throw new Error400(options.language, "validation.missingTRC20Address");
       }
     }
   }
+}
+
 
   async updateTransactionStatus(transactionId, newStatus, options) {
     const session = await MongooseRepository.createSession(

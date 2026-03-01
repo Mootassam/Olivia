@@ -8,6 +8,18 @@ const it = {
   },
 
   validation: {
+    withdrawalMethodRequired: "Seleziona un metodo di prelievo (Banca o Crypto) prima di inviare la richiesta",
+
+    withdrawNotAllowed: "I prelievi sono attualmente disabilitati per il tuo account. Contatta l'assistenza clienti",
+
+    minimumBalanceRequired: "Devi mantenere il saldo minimo richiesto dopo il prelievo",
+
+    missingWalletDetails: "Completa le informazioni del tuo wallet prima di inviare una richiesta di prelievo crypto",
+
+    missingERC20Address: "Collega il tuo indirizzo wallet ERC20 prima di inviare una richiesta di prelievo",
+
+    missingTRC20Address: "Collega il tuo indirizzo wallet TRC20 prima di inviare una richiesta di prelievo",
+
     inValidWithdrawPassword: 'Your withdraw Password is not correct please check again',
     missingBankDetails: 'Per favore aggiungi i tuoi dati bancari prima di effettuare un prelievo',
     missingWithdrawalMethod: 'Per favore aggiungi un portafoglio crypto o i dati bancari prima di effettuare un prelievo',
@@ -20,9 +32,9 @@ const it = {
     InsufficientBalance: 'Insufficient balance',
     requiredSubscription: 'Please select a subscription plan',
     moretasks: 'This is your limit. Please contact customer support for more tasks',
-    deposit:"Insufficient balance please upgrade.",
-    submitPendingProducts:"Per favore invia i prodotti in sospeso",
-    noProductsAvailable:"Nessun prodotto disponibile",
+    deposit: "Insufficient balance please upgrade.",
+    submitPendingProducts: "Per favore invia i prodotti in sospeso",
+    noProductsAvailable: "Nessun prodotto disponibile",
     oldPasswordRequired: "La vecchia password è richiesta",
     newPasswordRequired: "La nuova password è richiesta",
     newPasswordTooShort: "La nuova password deve contenere almeno 4 caratteri",

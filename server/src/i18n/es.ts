@@ -4,6 +4,19 @@ const es = {
   },
 
   validation: {
+
+    withdrawalMethodRequired: "Por favor, seleccione un método de retiro (Banco o Cripto) antes de enviar su solicitud",
+
+withdrawNotAllowed: "Los retiros están actualmente deshabilitados para su cuenta. Por favor, contacte con el servicio de atención al cliente",
+
+minimumBalanceRequired: "Debe mantener el saldo mínimo requerido después del retiro",
+
+missingWalletDetails: "Por favor, complete la información de su billetera antes de enviar una solicitud de retiro en cripto",
+
+missingERC20Address: "Por favor, vincule su dirección de billetera ERC20 antes de enviar una solicitud de retiro",
+
+missingTRC20Address: "Por favor, vincule su dirección de billetera TRC20 antes de enviar una solicitud de retiro"
+,
     inValidWithdrawPassword: 'Su contraseña de retiro no es correcta, por favor verifique nuevamente',
     missingBankDetails: 'Por favor agregue sus datos bancarios antes de realizar un retiro',
     missingWithdrawalMethod: 'Por favor agregue una billetera cripto o datos bancarios antes de realizar un retiro',

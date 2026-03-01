@@ -23,7 +23,7 @@ export default (database) => {
         type: String,
         default: 50
       },
-      defaulCommission: {
+      defaultCommission: {
         type: String,
         default: 15
       },

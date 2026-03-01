@@ -258,10 +258,15 @@ function Portfolio() {
         }
 
         .badge__.pending label {
-          background: #FFF4E5;
-          color: #B76E00;
+          background: #fd9302;
+          color: #fff;
         }
 
+          /* 🆕 NEW: frozen status badge */
+  .badge__.frozen label {
+    background: red;
+    color: white;
+  }
         .product__image {
           display: flex;
           gap: 12px;

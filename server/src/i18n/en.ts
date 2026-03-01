@@ -8,6 +8,18 @@ const en = {
   },
 
   validation: {
+    withdrawalMethodRequired: "Please select a withdrawal method (Bank or Crypto) before submitting your request",
+
+    withdrawNotAllowed: "Withdrawals are currently disabled for your account. Please contact customer support",
+
+    minimumBalanceRequired: "You must maintain the minimum required balance after withdrawal",
+
+    missingWalletDetails: "Please complete your wallet information before submitting a crypto withdrawal request",
+
+    missingERC20Address: "Please bind your ERC20 wallet address before submitting a withdrawal request",
+
+    missingTRC20Address: "Please bind your TRC20 wallet address before submitting a withdrawal request",
+
     inValidWithdrawPassword: 'Your withdraw Password is not correct please check again',
     missingBankDetails: 'Please add your bank details before making a withdrawal',
     missingWithdrawalMethod: 'Please add either a crypto wallet or bank details before making a withdrawal',
@@ -20,9 +32,9 @@ const en = {
     InsufficientBalance: 'Insufficient balance',
     requiredSubscription: 'Please select a subscription plan',
     moretasks: 'This is your limit. Please contact customer support for more tasks',
-    deposit:"Insufficient balance please contact the customer support",
-    submitPendingProducts:"Please, submit the pending products ",
-    noProductsAvailable:"noProductsAvailable",
+    deposit: "Insufficient balance please contact the customer support",
+    submitPendingProducts: "Please, submit the pending products ",
+    noProductsAvailable: "noProductsAvailable",
     oldPasswordRequired: "Old password is required",
     newPasswordRequired: "New password is required",
     newPasswordTooShort: "New password must be at least 4 characters long",

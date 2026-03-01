@@ -208,96 +208,123 @@ class RecordRepository {
 
 
 static async calculeGrap(data, options) {
-    const { database } = options;
+  const { database } = options;
+
+  try {
     const currentUser = MongooseRepository.getCurrentUser(options);
 
-    // Parallel database calls
-    const [currentProduct, orderCount] = await Promise.all([
-      Product(database).findById(data.product).lean(),
-      this.CountOrder(options)
-    ]);
+    const currentProduct = await Product(database)
+      .findById(data.product)
+      .lean();
 
     if (!currentProduct) {
-      throw new Error400(options.language, 'validation.productNotFound');
+      throw new Error400(options.language, "validation.productNotFound");
     }
 
-    const currentUserBalance = currentUser?.balance || 0;
-    const productBalance = currentProduct.amount;
-    const currentCommission = currentProduct.commission;
+    const currentUserBalance = Number(currentUser?.balance || 0);
+    const productBalance = Number(currentProduct.amount || 0);
+    const currentCommission = Number(currentProduct.commission || 0);
+
     const mergeDataPosition = currentUser.itemNumber;
     const prizesPosition = currentUser.prizesNumber;
 
-    let total, frozen, status;
+    let total = currentUserBalance;
+    let frozen = currentUser.freezeblance || 0;
 
-    // Cache user product check
-    const hasProduct = currentUser?.product[0]?.id;
-    const isPositionMatch = currentUser.tasksDone === (mergeDataPosition - 1);
-    const hasPrizes = currentUser?.prizes?.id;
+    const isPositionMatch =
+      currentUser.tasksDone === mergeDataPosition - 1;
 
-    const isPrizesMatch = currentUser.tasksDone === (prizesPosition - 1);
+    const hasPrizes = currentUser?.prizes;
+    const isPrizesMatch =
+      currentUser.tasksDone === prizesPosition - 1;
 
-    if (hasProduct && isPositionMatch) {
+    // =====================================================
+    // CASE 1 — Combo Mode
+    // =====================================================
+    if (
+      currentUser?.product?.length > 0 &&
+      isPositionMatch
+    ) {
       let comboprice = 0;
 
-      if (currentUser.product && Array.isArray(currentUser.product)) {
-        currentUser.product.forEach((item) => {
-          comboprice += parseFloat(item.amount) || 0;
-        });
-      }
-      total = Number(currentUserBalance) - Number(comboprice);
-      frozen = Number(currentUserBalance);
-      status = "pending"
+      currentUser.product.forEach((item) => {
+        comboprice += Number(item.amount) || 0;
+      });
 
-    } else if (hasPrizes && isPrizesMatch) {
-      total = Number(currentUserBalance) + Number(productBalance);
-      status = "completed"
-    } else {
-      // Check if referral system is enabled for this user
-      if (currentUser.refsystem === true) {
-        // Get company settings to fetch defaultCommission
-        const Company = database.model('company');
-        const companySettings = await Company.findOne().lean();
-        
-        // Use defaultCommission from company settings, fallback to 0.20 if not found
-        const defaultCommission = companySettings?.defaultCommission || 0.15;
 
-        // Find invited user (the person who referred current user)
-        const invitedUser = await User(database).findOne({
-          refcode: currentUser.invitationcode
-        }).lean();
+      total = currentUserBalance - comboprice;
+      frozen = comboprice;
+    }
 
-        if (invitedUser) {
-          // Calculate commission for referrer based on company defaultCommission
-          const commissionAmount = Number(currentCommission) * defaultCommission;
+    // =====================================================
+    // CASE 2 — Prize Mode
+    // =====================================================
+    else if (hasPrizes && isPrizesMatch) {
+
+      total = currentUserBalance + productBalance;
+
+    }
+
+    // =====================================================
+    // CASE 3 — Normal Task Mode
+    // =====================================================
+    else {
+
+      // 1️⃣ Child earning
+      const userEarning =
+        (currentCommission / 100) * Number(data.price);
+
+      total = currentUserBalance + userEarning;
+
+      // =====================================================
+      // 2️⃣ Referral Logic
+      // =====================================================
+      if (currentUser.invitationcode) {
+
+        const parentUser = await User(database)
+          .findOne({ refcode: currentUser.invitationcode });
+
+        if (parentUser && parentUser.refsystem === true) {
+
+          const Company = database.model("company");
+          const companySettings = await Company.findOne().lean();
+
+          // 🔥 FIX HERE
+          const defaultCommission =
+            Number(companySettings?.defaultCommission || 15);
+
+          const parentEarning =
+            userEarning * (defaultCommission / 100);
 
           await User(database).updateOne(
-            { _id: invitedUser._id },
+            { _id: parentUser._id },
             {
-              $inc: { balance: commissionAmount },
-              $set: { updatedAt: new Date() }
+              $inc: { balance: parentEarning },
+              $set: { updatedAt: new Date() },
             }
           );
         }
       }
-
-      // Calculate commission for current user (always apply this part)
-      const commission = (parseFloat(currentCommission) / 100) * parseFloat(data.price);
-      total = Number(currentUserBalance) + commission;
-      frozen = 0;
     }
 
-    const updatedValues = {
-      balance: total,
-      freezeblance: frozen,
-      updatedAt: new Date()
-    };
-
-    await UserRepository.updateProfileGrap(
-      currentUser.id,
-      updatedValues,
-      options
+    // =====================================================
+    // Update Current User
+    // =====================================================
+    await User(database).updateOne(
+      { _id: currentUser._id },
+      {
+        $set: {
+          balance: total,
+          freezeblance: frozen,
+          updatedAt: new Date(),
+        },
+      }
     );
+
+  } catch (error) {
+    throw error;
   }
+}
 
 
   static async checkOrderCombo(options) {
@@ -475,170 +502,175 @@ static async calculeGrap(data, options) {
   }
 
 
-  static async updateStatus(options: IRepositoryOptions) {
-    const currentTenant = MongooseRepository.getCurrentTenant(options);
-    const currentUser = MongooseRepository.getCurrentUser(options);
-    const session = options?.session;
+static async updateStatus(options: IRepositoryOptions) {
+  const currentTenant = MongooseRepository.getCurrentTenant(options);
+  const currentUser = MongooseRepository.getCurrentUser(options);
+  const session = options?.session;
 
-    // Start transaction if session is provided
-    if (session) {
-      session.startTransaction();
+  try {
+    // Fetch the current user with product details
+    const user = await User(options.database)
+      .findById(currentUser.id)
+      .populate('product') // Populate product details to get commission
+      .session(session || null);
+
+    if (!user) {
+      throw new Error404();
     }
 
-    try {
-      // Fetch the current user with product details
-      const user = await User(options.database)
-        .findById(currentUser.id)
-        .populate('product') // Populate product details to get commission
-        .session(session || null);
-
-      if (!user) {
-        throw new Error404();
-      }
-
-      // Check if user has sufficient balance (not 0 or negative)
-      const currentBalance = parseFloat(user.balance) || 0;
-      if (currentBalance <= 0) {
+    // Check if user has sufficient balance (not 0 or negative)
+    const currentBalance = parseFloat(user.balance) || 0;
+    if (currentBalance <= 0) {
       throw new Error400(options.language, 'validation.deposit');
-      }
+    }
 
-      // Find ALL records that need to be completed (both pending AND frozen)
-      const recordsToComplete = await Records(options.database)
-        .find({
-          tenant: currentTenant.id,
-          user: currentUser.id,
-          status: { $in: ['pending', 'frozen'] }  // Include both statuses
-        })
-        .populate('product') // Populate to get product details
-        .session(session || null);
+    // Find ALL records that need to be completed (both pending AND frozen)
+    const recordsToComplete = await Records(options.database)
+      .find({
+        tenant: currentTenant.id,
+        user: currentUser.id,
+        status: { $in: ['pending', 'frozen'] } // Include both statuses
+      })
+      .populate('product') // Populate to get product details
+      .session(session || null);
 
-      if (!recordsToComplete || recordsToComplete.length === 0) {
+    if (!recordsToComplete || recordsToComplete.length === 0) {
       throw new Error400(options.language, 'validation.noRecordsToComplete');
+    }
+
+    // Update ALL pending and frozen records to completed
+    await Records(options.database).updateMany(
+      {
+        tenant: currentTenant.id,
+        user: currentUser.id,
+        status: { $in: ['pending', 'frozen'] }
+      },
+      {
+        status: 'completed',
+        updatedBy: currentUser.id,
+        updatedAt: new Date()
+      },
+      { session, ...options }
+    );
+
+    // COMMON LOGIC: Add frozen balance to balance and reset frozen balance
+    const frozenBalance = parseFloat(user.freezeblance) || 0;
+    let newBalance = currentBalance + frozenBalance;
+
+    // Handle the specific logic based on whether user has products
+    if (user.product && Array.isArray(user.product) && user.product.length > 0) {
+      // USER HAS PRODUCTS: Calculate commission from products
+      const productIds = user.product.map(product => product._id || product);
+
+      // Filter records that belong to user's products (both pending and frozen)
+      const productRecords = recordsToComplete.filter(record =>
+        productIds.includes(record.product?._id?.toString() || record.product?.toString())
+      );
+
+      let totalCommission = 0;
+
+      // Calculate commission from ALL product records
+      for (const record of productRecords) {
+        if (record.product && record.product.amount && record.product.commission) {
+          const recordCommission = this.calculeTotal(
+            record.product.amount,
+            record.product.commission
+          );
+          totalCommission += recordCommission;
+        } else if (record.product && record.product.type === "prizes" && record.product.amount) {
+          totalCommission += parseFloat(record.product.amount) || 0;
+        }
       }
 
-      // Update ALL pending and frozen records to completed
-      await Records(options.database).updateMany(
+      // Add commission to the new balance
+      newBalance += totalCommission;
+
+      // =====================================================
+      // REFERRAL EARNING FOR PARENT
+      // =====================================================
+      if (currentUser.invitationcode) {
+        const parentUser = await User(options.database)
+          .findOne({ refcode: currentUser.invitationcode })
+          .session(session || null);
+
+        if (parentUser && parentUser.refsystem === true) {
+          const Company = options.database.model("company");
+          const companySettings = await Company.findOne().lean();
+          const defaultCommission = Number(companySettings?.defaultCommission || 15);
+
+          // Parent earns defaultCommission % of child's totalCommission
+          const parentEarning = totalCommission * (defaultCommission / 100);
+
+          await User(options.database).updateOne(
+            { _id: parentUser._id },
+            {
+              $inc: { balance: parentEarning },
+              $set: { updatedAt: new Date() },
+            },
+            { session, ...options }
+          );
+        }
+      }
+
+      // Update user: clear products, reset itemNumber, update balance with commission
+      await User(options.database).updateOne(
+        { _id: currentUser.id },
         {
-          tenant: currentTenant.id,
-          user: currentUser.id,
-          status: { $in: ['pending', 'frozen'] }
-        },
-        {
-          status: 'completed',
+          $set: {
+            product: [],       // Clear the product array
+            itemNumber: 0,     // Reset itemNumber
+            balance: newBalance, // Update with balance + frozen + commission
+            freezeblance: 0    // Reset frozen balance to 0
+          },
+          $inc: {
+            tasksDone: productRecords.length
+          },
           updatedBy: currentUser.id,
           updatedAt: new Date()
         },
         { session, ...options }
       );
 
-      // COMMON LOGIC: Add frozen balance to balance and reset frozen balance
-      const frozenBalance = parseFloat(user.freezeblance) || 0;
-      const newBalance = currentBalance + frozenBalance;
+    } else {
+      // USER HAS NO PRODUCTS: Just update balance without commission
+      const normalRecords = recordsToComplete.filter(record =>
+        record.status === 'pending' || !record.product?.type || record.product.type === 'normal'
+      );
 
-      // Now handle the specific logic based on whether user has products
-      if (user.product && Array.isArray(user.product) && user.product.length > 0) {
-        // USER HAS PRODUCTS: Calculate commission from products
-
-        const productIds = user.product.map(product => product._id || product);
-
-        // Filter records that belong to user's products (both pending and frozen)
-        const productRecords = recordsToComplete.filter(record =>
-          productIds.includes(record.product?._id?.toString() || record.product?.toString())
-        );
-
-        let totalCommission = 0;
-
-        // Calculate commission from ALL product records (both pending and frozen)
-        for (const record of productRecords) {
-          if (record.product && record.product.amount && record.product.commission) {
-            const recordCommission = this.calculeTotal(
-              record.product.amount,
-              record.product.commission
-            );
-            totalCommission += recordCommission;
-          } else if (record.product && record.product.type === "prizes" && record.product.amount) {
-            totalCommission += parseFloat(record.product.amount) || 0;
-          }
-        }
-
-        // Add commission to the new balance
-        const finalBalance = newBalance + totalCommission;
-
-        // Update user: clear products, reset itemNumber, update balance with commission
-        await User(options.database).updateOne(
-          { _id: currentUser.id },
-          {
-            $set: {
-              product: [], // Clear the product array
-              itemNumber: 0, // Set itemNumber to 0
-              balance: finalBalance, // Update with balance + frozen + commission
-              freezeblance: 0 // Reset frozen balance to 0
-            },
-            $inc: {
-              tasksDone: productRecords.length // Increment tasksDone by number of product records
-            },
-            updatedBy: currentUser.id,
-            updatedAt: new Date()
+      await User(options.database).updateOne(
+        { _id: currentUser.id },
+        {
+          $set: {
+            balance: newBalance,
+            freezeblance: 0
           },
-          { session, ...options }
-        );
-
-
-      } else {
-        // USER HAS NO PRODUCTS: Just update balance without commission
-
-        // Filter only normal/pending records (not frozen ones from combo mode)
-        const normalRecords = recordsToComplete.filter(record =>
-          record.status === 'pending' || !record.product?.type || record.product.type === 'normal'
-        );
-
-        await User(options.database).updateOne(
-          { _id: currentUser.id },
-          {
-            $set: {
-              balance: newBalance, // Add frozen balance to balance
-              freezeblance: 0 // Reset frozen balance to 0
-            },
-            $inc: {
-              tasksDone: normalRecords.length // Increment tasksDone by normal records count
-            },
-            updatedBy: currentUser.id,
-            updatedAt: new Date()
+          $inc: {
+            tasksDone: normalRecords.length
           },
-          { session, ...options }
-        );
-
-      }
-
-      // Commit transaction if started
-      if (session) {
-        await session.commitTransaction();
-      }
-
-      // Fire-and-forget audit logs for all completed records
-      recordsToComplete.forEach(record => {
-        this._createAuditLog(
-          AuditLogRepository.UPDATE,
-          record._id,
-          {
-            status: 'completed',
-            previousStatus: record.status  // Log what it was before
-          },
-          options
-        ).catch(console.error);
-      });
-
-      // Return first record
-      return this.findById(recordsToComplete[0]._id, options);
-
-    } catch (error) {
-      // Abort transaction on error
-      if (session) {
-        await session.abortTransaction();
-      }
-      throw error;
+          updatedBy: currentUser.id,
+          updatedAt: new Date()
+        },
+        { session, ...options }
+      );
     }
+
+    // Fire-and-forget audit logs for all completed records
+    recordsToComplete.forEach(record => {
+      this._createAuditLog(
+        AuditLogRepository.UPDATE,
+        record._id,
+        { status: 'completed', previousStatus: record.status },
+        options
+      ).catch(console.error);
+    });
+
+    // Return first record
+    return this.findById(recordsToComplete[0]._id, options);
+
+  } catch (error) {
+    throw error;
   }
+}
 
 
 
