@@ -292,7 +292,7 @@ const tr = {
 
     withdraw: {
       title: "Çekim",
-      announcement: "Minimum çekim tutarı €50'dir. Tüm çekimler 24 saat içinde işlenir.",
+      announcement: "Minimum çekim tutarı €20'dir. Tüm çekimler 30 dakika içinde işlenir.",
       withdrawAmount: "Çekim Miktarı",
       withdrawPassword: "Çekim Şifresi",
       availableBalance: "Kullanılabilir bakiye",

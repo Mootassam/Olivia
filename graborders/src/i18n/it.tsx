@@ -287,6 +287,7 @@ const it = {
 
         withdraw: {
             title: "Prelievo",
+            announcement: "L'importo minimo di prelievo è €20. Tutti i prelievi vengono elaborati entro 30 minuti.",
             withdrawAmount: "Importo Prelievo",
             withdrawPassword: "Password Prelievo",
             availableBalance: "Saldo disponibile",

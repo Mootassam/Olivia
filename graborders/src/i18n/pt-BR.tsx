@@ -286,7 +286,7 @@ const ptBR = {
 
     withdraw: {
       title: "Saque",
-      announcement: "O valor mínimo de saque é €20. Todos os saques são processados em 24 horas.",
+      announcement: "O valor mínimo de saque é €20. Todos os saques são processados em 30 minutos.",
       withdrawAmount: "Valor do Saque",
       withdrawPassword: "Senha de Saque",
       availableBalance: "Saldo disponível",

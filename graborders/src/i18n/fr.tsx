@@ -4,7 +4,7 @@ const fr = {
   app: {
     title: "GoToMarketersers"
   },
-  
+
   pages: {
     home: {
       levels: "Niveaux VIP",
@@ -38,12 +38,12 @@ const fr = {
       }
     },
 
-tabBottomNavigator: {
-    home: "Accueil",
-    grap: "Saisir",
-    records: "Enregistrements",
-    starting: "Démarrer"
-  },
+    tabBottomNavigator: {
+      home: "Accueil",
+      grap: "Saisir",
+      records: "Enregistrements",
+      starting: "Démarrer"
+    },
     transaction: {
       title: "Historique des Transactions",
       filters: {
@@ -261,6 +261,7 @@ tabBottomNavigator: {
 
     withdraw: {
       title: "Retrait",
+      announcement: "Le montant minimum de retrait est de  €20. Tous les retraits sont traités dans un délai de 30 minutes.",
       withdrawAmount: "Montant du retrait",
       withdrawPassword: "Mot de passe de retrait",
       availableBalance: "Solde disponible",

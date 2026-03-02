@@ -286,6 +286,8 @@ const de = {
 
     withdraw: {
       title: "Auszahlung",
+
+      announcement: "Der Mindestauszahlungsbetrag beträgt €20. Alle Auszahlungen werden innerhalb von 30 Minuten bearbeitet.",
       withdrawAmount: "Auszahlungsbetrag",
       withdrawPassword: "Auszahlungspasswort",
       availableBalance: "Verfügbares Guthaben",
