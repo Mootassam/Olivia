@@ -286,18 +286,18 @@ const ptBR = {
 
     withdraw: {
       title: "Saque",
-      announcement: "O valor mínimo de saque é €50. Todos os saques são processados em 24 horas.",
+      announcement: "O valor mínimo de saque é €20. Todos os saques são processados em 24 horas.",
       withdrawAmount: "Valor do Saque",
       withdrawPassword: "Senha de Saque",
       availableBalance: "Saldo disponível",
       confirm: "Confirmar",
       rulesDescription: "Descrição das Regras",
       rules: {
-        minimum: "(1) O saque mínimo é de 100 USD",
+        minimum: "(1) O saque mínimo é de €20",
         paymentTime: "(2) O pagamento será feito dentro da próxima hora, após a aprovação do pedido de saque.",
         orderCompletion: "(3) O envio incompleto de pedidos diários está sujeito a nenhum saque, todos os produtos devem ser enviados para saque"
       },
-      amountPlaceholder: "Digite o valor (mín. €50)",
+      amountPlaceholder: "Digite o valor (mín. €20)",
       selectMethod: "Selecionar método de saque",
       methods: {
         crypto: "Criptomoeda",

@@ -292,11 +292,11 @@ const de = {
       confirm: "Bestätigen",
       rulesDescription: "Regelbeschreibung",
       rules: {
-        minimum: "(1) Mindestauszahlung beträgt 100 USD",
+        minimum: "(1) Mindestauszahlung beträgt €20 ",
         paymentTime: "(2) Die Zahlung wird innerhalb der nächsten Stunde nach Genehmigung des Auszahlungsantrags getätigt.",
         orderCompletion: "(3) Unvollständige tägliche Auftragserfüllung führt zu keiner Auszahlung, alle Produkte müssen für die Auszahlung eingereicht werden"
       },
-      amountPlaceholder: "Betrag eingeben (min. €50)",
+      amountPlaceholder: "Betrag eingeben (min. €20)",
       selectMethod: "Auszahlungsmethode wählen",
       methods: {
         crypto: "Kryptowährung",

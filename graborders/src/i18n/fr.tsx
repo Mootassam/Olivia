@@ -267,11 +267,11 @@ tabBottomNavigator: {
       confirm: "Confirmer",
       rulesDescription: "Description des règles",
       rules: {
-        minimum: "(1) Le retrait minimum est de 100 USD",
+        minimum: "(1) Le retrait minimum est de €20",
         paymentTime: "(2) Le paiement sera effectué dans l'heure suivante, après l'approbation de la demande de retrait.",
         orderCompletion: "(3) La soumission incomplète des commandes quotidiennes est soumise à aucun retrait, tous les produits doivent être soumis pour le retrait"
       },
-      amountPlaceholder: "Entrez le montant (min. €50)",
+      amountPlaceholder: "Entrez le montant (min. €20)",
       selectMethod: "Sélectionner la méthode de retrait",
       methods: {
         crypto: "Cryptomonnaie",

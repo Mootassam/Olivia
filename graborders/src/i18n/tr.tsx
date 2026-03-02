@@ -299,11 +299,11 @@ const tr = {
       confirm: "Onayla",
       rulesDescription: "Kural Açıklaması",
       rules: {
-        minimum: "(1) Minimum çekim 100 USD'dir",
+        minimum: "(1) Minimum çekim €20'dir",
         paymentTime: "(2) Ödeme, çekim başvurusu onaylandıktan sonraki 1 saat içinde yapılacaktır.",
         orderCompletion: "(3) Eksik günlük sipariş gönderimi çekime tabi değildir, çekim için tüm ürünler gönderilmelidir"
       },
-      amountPlaceholder: "Tutar girin (min. €50)",
+      amountPlaceholder: "Tutar girin (min. €20)",
       selectMethod: "Çekim yöntemini seçin",
       methods: {
         crypto: "Kripto para",

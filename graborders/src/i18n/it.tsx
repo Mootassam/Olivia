@@ -293,11 +293,11 @@ const it = {
             confirm: "Conferma",
             rulesDescription: "Descrizione Regole",
             rules: {
-                minimum: "(1) Il prelievo minimo è di 100 USD",
+                minimum: "(1) Il prelievo minimo è di €20 ",
                 paymentTime: "(2) Il pagamento verrà effettuato entro l'ora successiva, dopo l'approvazione della richiesta di prelievo.",
                 orderCompletion: "(3) L'invio incompleto degli ordini giornalieri è soggetto a nessun prelievo, tutti i prodotti devono essere inviati per il prelievo"
             },
-            amountPlaceholder: "Inserisci importo (min. €50)",
+            amountPlaceholder: "Inserisci importo (min. €20)",
             selectMethod: "Seleziona metodo di prelievo",
             methods: {
                 crypto: "Criptovaluta",

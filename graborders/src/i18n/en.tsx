@@ -317,18 +317,18 @@ const en = {
 
     withdraw: {
       title: "Withdraw",
-      announcement: "The minimum withdrawal amount is €50. All withdrawals are processed within 24 hours.",
+      announcement: "The minimum withdrawal amount is €20. All withdrawals are processed within 30 minutes.",
       withdrawAmount: "Withdrawal Amount",
       withdrawPassword: "Withdraw Password",
       availableBalance: "Available balance",
       confirm: "Confirm",
       rulesDescription: "Rules Description",
       rules: {
-        minimum: "(1) Minimum withdraw is €100",
+        minimum: "(1) Minimum withdraw is €20",
         paymentTime: "(2) The payment will be made within the next 1 hour, after withdrawal application has been approved.",
         orderCompletion: "(3) Incomplete daily order submission is subjected to no withdrawal, all products must be submitted for withdrawal"
       },
-      amountPlaceholder: "Enter amount (min. €50)",
+      amountPlaceholder: "Enter amount (min. €20)",
       selectMethod: "Select Withdrawal Method",
       methods: {
         crypto: "Cryptocurrency",
