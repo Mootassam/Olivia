@@ -140,6 +140,13 @@ const screenRoutes = [
   },
 
     {
+    path: "/language",
+    loader: () => import("src/view/pages/language/Language"),
+    permissionRequired: permissions.categoryRead,
+    exact: true,
+  },
+
+    {
     path: "/change-withdrawal-password",
     loader: () => import("src/view/pages/Auth/ChangeWithdrawalPassword"),
     permissionRequired: permissions.categoryRead,

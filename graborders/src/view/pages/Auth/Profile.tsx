@@ -153,7 +153,7 @@ function Profile() {
       {
         icon: "fa-solid fa-language",
         name: i18n('pages.profile.languages'),
-        action: () => goto("/languages"),
+        action: () => goto("/language"),
       },
       {
         icon: "fa-solid fa-question-circle",
