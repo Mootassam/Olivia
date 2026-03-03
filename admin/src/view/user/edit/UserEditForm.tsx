@@ -101,6 +101,7 @@ function UserEditForm(props) {
       refsystem: record.refsystem,
       freezeblance: record.freezeblance,
       tasksDone: record.tasksDone,
+      welcomeBonus:record.welcomeBonus
     };
   });
 
@@ -251,6 +252,14 @@ function UserEditForm(props) {
                 <InputNumberFormItem
                   name="tasksDone"
                   label={i18n('user.fields.tasksDone')}
+                />
+              </Col>
+
+
+                <Col xs={12} md={6} lg={4}>
+                <InputNumberFormItem
+                  name="welcomeBonus"
+                  label={i18n('user.fields.welcomeBonus')}
                 />
               </Col>
             </Row>

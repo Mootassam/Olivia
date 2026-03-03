@@ -28,6 +28,10 @@ const Grappage = () => {
   const [number] = useState(Dates.Number());
   const totalperday = useSelector(recordSelector.selectTotalPerday);
 
+  // Mock welcome bonus amount - replace with actual data from your store
+  const welcomeBonusAmount = 578; // This could come from user data or settings
+  const hasWelcomeBonus = welcomeBonusAmount > 0;
+
   useEffect(() => {
     dispatch(recordListAction.doCount());
     dispatch(recordListAction.doCountDay());
@@ -85,6 +89,8 @@ const Grappage = () => {
     history.push("/order");
   };
 
+
+
   return (
     <div className="dashboard">
       <div className="phone-frame">
@@ -120,6 +126,21 @@ const Grappage = () => {
           <div className="search-btn" onClick={handleSearch}>
             {loading ? <i className="fas fa-spinner fa-spin"></i> : <> <i className="fas fa-search"></i> {i18n('pages.grab.searchNow')} </>}
           </div>
+
+          {/* Welcome Bonus Banner - Only shown if > 0 */}
+          {hasWelcomeBonus && (
+            <div className="welcome-banner">
+              <div className="banner-content">
+                <div className="banner-icon">
+                  <i className="fas fa-gift"></i>
+                </div>
+                <div className="banner-text">
+                  <span className="banner-title">Welcome Bonus!</span>
+                  <span className="banner-amount">€{currentUser?.welcomeBonus}</span>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Stats grid */}
           <div className="stats-grid">
@@ -174,9 +195,8 @@ const Grappage = () => {
       )}
 
       <style>{`
-    
         .dashboard {
-       margin-bottom:62px;
+          margin-bottom: 62px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -285,6 +305,86 @@ const Grappage = () => {
           cursor: pointer;
         }
 
+        /* Welcome Banner Styles - Sleek and Minimal */
+        .welcome-banner {
+          background: linear-gradient(135deg, #f6f9fc 0%, #edf2f7 100%);
+          border-radius: 16px;
+          padding: 12px 16px;
+          margin: -8px 0 20px 0;
+          border: 1px solid rgba(10, 132, 255, 0.2);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .banner-content {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .banner-icon {
+          width: 36px;
+          height: 36px;
+          background: linear-gradient(135deg, #0A84FF, #5E5CE6);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 1rem;
+          box-shadow: 0 4px 8px rgba(10, 132, 255, 0.2);
+        }
+
+        .banner-text {
+          flex: 1;
+          display: flex;
+          align-items: baseline;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .banner-title {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #0A84FF;
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+        }
+
+        .banner-amount {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #1c1c1e;
+        }
+
+        .banner-description {
+          font-size: 0.85rem;
+          color: #666;
+        }
+
+        .banner-claim-btn {
+          background: white;
+          border: 1px solid #0A84FF;
+          border-radius: 30px;
+          padding: 6px 16px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #0A84FF;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          white-space: nowrap;
+        }
+
+        .banner-claim-btn:hover {
+          background: #0A84FF;
+          color: white;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 8px rgba(10, 132, 255, 0.2);
+        }
+
+        .banner-claim-btn:active {
+          transform: translateY(0);
+        }
+
         .stats-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -342,7 +442,26 @@ const Grappage = () => {
           font-size: 1.2rem;
         }
 
-      
+        /* Responsive adjustments */
+        @media (max-width: 380px) {
+          .banner-text {
+            flex-direction: column;
+            gap: 2px;
+          }
+          
+          .banner-amount {
+            font-size: 1rem;
+          }
+          
+          .banner-description {
+            font-size: 0.75rem;
+          }
+          
+          .banner-claim-btn {
+            padding: 4px 12px;
+            font-size: 0.75rem;
+          }
+        }
       `}</style>
     </div>
   );

@@ -37,7 +37,7 @@ function SubHeader(props) {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          max-width: 1000px;
+          max-width: 430px;
           margin: 0 auto;
         }
 

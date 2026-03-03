@@ -127,7 +127,7 @@ function Team() {
 
       <style>{`
         .profile-page-wrapper {
-          max-width: 1000px;
+          max-width: 430px;
           margin: 0 auto;
           background: #EDF1F7;
           min-height: 100vh;

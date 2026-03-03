@@ -2660,6 +2660,7 @@ const en = {
 
     fields: {
       mnemberId: "Member Id",
+      welcomeBonus:"Welcome Bonus",
                   refsystem: "Allow the referral system.",
       currentrecord: 'Tasks Done',
       freezeblance: 'Freeze Balance',

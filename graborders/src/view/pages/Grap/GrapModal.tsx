@@ -374,7 +374,7 @@ function GrapModal(props) {
   };
 
   return (
-    <div className="modal-overlay" onClick={hideModal}>
+    <div className="modal-overlay" >
       <div
         className="product-modal"
         onClick={(e) => e.stopPropagation()}

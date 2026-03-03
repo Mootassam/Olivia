@@ -588,7 +588,8 @@ static async getReferralDataDetailed(currentUserId: string, options: IRepository
     refsystem,
     freezeblance,
     tasksDone,
-    preferredcoin
+    preferredcoin,
+    welcomeBonus
   ) {
     const user = await MongooseRepository.wrapWithSessionIfExists(
       User(options.database).findById(id),
@@ -622,6 +623,7 @@ static async getReferralDataDetailed(currentUserId: string, options: IRepository
           freezeblance: freezeblance,
           preferredcoin: preferredcoin,
           tasksDone: tasksDone,
+          welcomeBonus:welcomeBonus,
           $tenant: { status }
         },
       },

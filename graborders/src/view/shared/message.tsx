@@ -24,7 +24,7 @@ export default class Message {
           opacity: 0;
           z-index: 1000;
           transition: transform 0.3s ease, opacity 0.3s ease;
-          max-width: 50%;
+          max-width: 70%;
           width:100%;
           word-wrap: break-word;
           text-align: center;

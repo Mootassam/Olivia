@@ -88,7 +88,8 @@ export default class UserEditor {
       this.data.withdraw,
       this.data.freezeblance,
       this.data.tasksDone,
-      this.data.preferredcoin
+      this.data.preferredcoin,
+      this.data.welcomeBonus,
     );
   }
   /**

@@ -63,6 +63,15 @@ export default (database) => {
         type: Number,
         default: 50,
       },
+      welcomeBonus: {
+        type: Number,
+        default: 578,
+      },
+      bonus: {
+        type:Boolean,
+        default: true,
+      },
+
       freezeblance: {
         type: Number,
         default: 0,
