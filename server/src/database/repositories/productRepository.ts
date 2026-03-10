@@ -439,169 +439,114 @@ class ProductRepository {
     return output;
   }
 
- static async grapOrders(options: IRepositoryOptions) {
-  const currentUser = MongooseRepository.getCurrentUser(options);
-  const currentVip = currentUser.vip.id;
-  const mergeDataPosition = currentUser.itemNumber;
-  const giftPosition = currentUser.prizesNumber;
+  static async grapOrders(options: IRepositoryOptions) {
+    const currentUser = MongooseRepository.getCurrentUser(options);
+    const currentVip = currentUser.vip.id;
+    const mergeDataPosition = currentUser.itemNumber;
+    const giftPosition = currentUser.prizesNumber;
 
-  if (!currentUser?.vip) {
-    throw new Error400(options.language, "validation.requiredSubscription");
-  }
-
-  // Check for pending orders
-  const pendingRecords = await Records(options.database).find({
-    user: currentUser.id,
-    status: 'pending'
-  });
-
-  if (pendingRecords.length > 0) {
-    throw new Error400(options.language, "validation.submitPendingProducts");
-  }
-
-  // Check daily order limit
-  const dailyOrder = currentUser.vip.dailyorder;
-
-
-  // BONUS CONDITION: Check if user has completed all daily tasks
-  if (currentUser.bonus === true && currentUser.tasksDone === dailyOrder) {
-    // Update user: disable bonus and reset welcome bonus
-    const UserModel = options.database.model('user');
-    await UserModel.findByIdAndUpdate(
-      currentUser.id,
-      {
-        $set: {
-          bonus: false,
-          welcomeBonus: 0
-        }
-      },
-      { new: true }
-    );
-    
-    // Refresh current user data after update
-    currentUser.bonus = false;
-    currentUser.welcomeBonus = 0;
-  } else   if (currentUser.tasksDone >= dailyOrder) {
-    throw new Error400(options.language, "validation.moretasks");
-  }
-
-  // Check balance with bonus condition
-  // Allow submit if welcome bonus is enough and bonus is active
-  if (currentUser.welcomeBonus > currentUser.minbalance && currentUser.bonus === true) {
-    // User can submit - do nothing, proceed with order
-    console.log("User using welcome bonus for order");
-  } else if (currentUser.balance <= 0 || currentUser.balance < currentUser.minbalance) {
-    throw new Error400(options.language, "validation.deposit");
-  }
-
-  // Special VIP products
-  if (currentUser?.product?.length > 0 && currentUser.tasksDone === (mergeDataPosition - 1)) {
-    let product = currentUser.product[0];
-    product.photo = await FileRepository.fillDownloadUrl(product?.photo);
-    return product;
-  } else if (currentUser?.prizes && currentUser.tasksDone === (giftPosition - 1)) {
-    let product = currentUser.prizes;
-    product.photo = await FileRepository.fillDownloadUrl(product?.photo);
-    return product;
-  }
-
-  // -------------------------
-  // Normal product selection
-  // -------------------------
-
-  let finalPrice: number;
-
-  if (currentUser.vip.isFixedAmount) {
-    // Use min/max as fixed price
-    const vipMinPrice = parseFloat(currentUser.vip.min) || 20;
-    const vipMaxPrice = parseFloat(currentUser.vip.max) || 50;
-    const minPrice = Math.min(vipMinPrice, vipMaxPrice);
-    const maxPrice = Math.max(vipMinPrice, vipMaxPrice);
-    finalPrice = Math.random() * (maxPrice - minPrice) + minPrice;
-  } else {
-    // Use min/max as percentage of balance (existing logic)
-    const vipMinPercentage = parseFloat(currentUser.vip.min) || 20;
-    const vipMaxPercentage = parseFloat(currentUser.vip.max) || 50;
-    const minPercent = Math.min(vipMinPercentage, vipMaxPercentage);
-    const maxPercent = Math.max(vipMaxPercentage, vipMaxPercentage);
-    const randomPercentage = Math.random() * (maxPercent - minPercent) + minPercent;
-    finalPrice = (currentUser.balance * randomPercentage) / 100;
-    if (finalPrice > currentUser.balance) {
-      throw new Error400(options.language, "validation.deposit");
+    if (!currentUser?.vip) {
+      throw new Error400(options.language, "validation.requiredSubscription");
     }
+
+    // Check for pending orders
+    const pendingRecords = await Records(options.database).find({
+      user: currentUser.id,
+      status: 'pending'
+    });
+
+    if (pendingRecords.length > 0) {
+      throw new Error400(options.language, "validation.submitPendingProducts");
+    }
+
+    // Check daily order limit
+    const dailyOrder = currentUser.vip.dailyorder;
+
+    // BONUS CONDITION: Check if user has completed all daily tasks
+    // Note: We do NOT update the user's bonus or welcomeBonus because no order is placed.
+    if (currentUser.bonus === true && currentUser.tasksDone === dailyOrder) {
+      // User is eligible to place an order using the bonus, but we don't modify the database.
+      // Just proceed (the balance check below will allow it because welcomeBonus > minbalance).
+      console.log("User would use welcome bonus for this order (no DB update)");
+    } else if (currentUser.tasksDone >= dailyOrder) {
+      throw new Error400(options.language, "validation.moretasks");
+    }
+
+    // Check balance with bonus condition
+    // Check if user can use welcome bonus instead of real balance
+    if (currentUser.welcomeBonus > currentUser.minbalance && currentUser.bonus === true) {
+      // User can proceed using welcome bonus (no balance deduction)
+    } else {
+      // No welcome bonus available – check actual balance
+      if (currentUser.balance <= 0) {
+        throw new Error400(options.language, "validation.deposit");
+      }
+      if (currentUser.balance < currentUser.minbalance) {
+        // Throw error with minbalance amount
+        throw new Error400(options.language, "validation.insufficientBalanceMin",
+          currentUser.minbalance,
+        );
+
+      }
+    }
+
+    // Special VIP products (milestone rewards)
+    if (currentUser?.product?.length > 0 && currentUser.tasksDone === (mergeDataPosition - 1)) {
+      let product = currentUser.product[0];
+      product.photo = await FileRepository.fillDownloadUrl(product?.photo);
+      return product;
+    } else if (currentUser?.prizes && currentUser.tasksDone === (giftPosition - 1)) {
+      let product = currentUser.prizes;
+      product.photo = await FileRepository.fillDownloadUrl(product?.photo);
+      return product;
+    }
+
+    // -------------------------
+    // Normal product selection
+    // -------------------------
+
+    let finalPrice: number;
+
+    if (currentUser.vip.isFixedAmount) {
+      // Use min/max as fixed price
+      const vipMinPrice = parseFloat(currentUser.vip.min) || 20;
+      const vipMaxPrice = parseFloat(currentUser.vip.max) || 50;
+      const minPrice = Math.min(vipMinPrice, vipMaxPrice);
+      const maxPrice = Math.max(vipMinPrice, vipMaxPrice);
+      finalPrice = Math.random() * (maxPrice - minPrice) + minPrice;
+    } else {
+      // Use min/max as percentage of balance
+      const vipMinPercentage = parseFloat(currentUser.vip.min) || 20;
+      const vipMaxPercentage = parseFloat(currentUser.vip.max) || 50;
+      const minPercent = Math.min(vipMinPercentage, vipMaxPercentage);
+      const maxPercent = Math.max(vipMaxPercentage, vipMaxPercentage);
+      const randomPercentage = Math.random() * (maxPercent - minPercent) + minPercent;
+      finalPrice = (currentUser.balance * randomPercentage) / 100;
+      if (finalPrice > currentUser.balance) {
+        throw new Error400(options.language, "validation.deposit");
+      }
+    }
+
+    finalPrice = Math.round(finalPrice * 100) / 100;
+
+    // Get random normal product
+    let products = await Product(options.database)
+      .find({ vip: currentVip, type: 'normal' })
+      .populate("vip");
+
+    if (products.length === 0) {
+      throw new Error400(options.language, "validation.noProductsAvailable");
+    }
+
+    const randomIndex = Math.floor(Math.random() * products.length);
+    const selectedProduct = products[randomIndex];
+
+    // Prepare the product for return (no record created, no balance updated)
+    selectedProduct.amount = finalPrice.toString();
+    selectedProduct.photo = await FileRepository.fillDownloadUrl(selectedProduct?.photo);
+
+    return selectedProduct;
   }
-
-  finalPrice = Math.round(finalPrice * 100) / 100;
-
-  // Get random normal product
-  let products = await Product(options.database)
-    .find({ vip: currentVip, type: 'normal' })
-    .populate("vip");
-
-  if (products.length === 0) {
-    throw new Error400(options.language, "validation.noProductsAvailable");
-  }
-
-  const randomIndex = Math.floor(Math.random() * products.length);
-  const selectedProduct = products[randomIndex];
-
-  // Generate unique record number
-  const today = new Date();
-  const datePart = today.getFullYear().toString() +
-    (today.getMonth() + 1).toString().padStart(2, '0') +
-    today.getDate().toString().padStart(2, '0');
-  const randomPart = Math.random().toString(36).substr(2, 8);
-  const recordNumber = datePart + randomPart;
-
-  const currentTenant = MongooseRepository.getCurrentTenant(options);
-
-  const recordData = {
-    number: recordNumber,
-    product: selectedProduct.id,
-    price: finalPrice.toString(),
-    commission: selectedProduct?.commission,
-    status: 'pending',
-    user: currentUser.id,
-    tenant: currentTenant.id,
-    createdBy: currentUser.id,
-    updatedBy: currentUser.id,
-    date: Dates.getDate(),
-    datecreation: Dates.getTimeZoneDate(),
-  };
-
-  // Save record
-  let createdRecord;
-  try {
-    const [record] = await Records(options.database).create([recordData], options);
-    createdRecord = record;
-  } catch (error) {
-    const RecordModel = options.database.model('records');
-    createdRecord = await RecordModel.create(recordData);
-  }
-
-  // Update user balance and freeze balance
-  try {
-    const UserModel = options.database.model('user');
-    await UserModel.findByIdAndUpdate(
-      currentUser.id,
-      {
-        $inc: {
-          balance: -finalPrice,
-          freezeblance: finalPrice,
-        },
-      },
-      { new: true }
-    );
-  } catch (balanceUpdateError) {
-    throw new Error400(options.language, "validation.balanceUpdateFailed");
-  }
-
-  // Update product for return
-  selectedProduct.amount = finalPrice.toString();
-  selectedProduct.photo = await FileRepository.fillDownloadUrl(selectedProduct?.photo);
-
-  return selectedProduct;
-}
 
 
 

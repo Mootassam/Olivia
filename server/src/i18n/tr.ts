@@ -6,16 +6,16 @@ const tr = {
   validation: {
     withdrawalMethodRequired: "Talebinizi göndermeden önce bir çekim yöntemi (Banka veya Kripto) seçiniz",
 
-withdrawNotAllowed: "Hesabınız için para çekme işlemleri şu anda devre dışı bırakılmıştır. Lütfen müşteri hizmetleri ile iletişime geçin",
+    withdrawNotAllowed: "Hesabınız için para çekme işlemleri şu anda devre dışı bırakılmıştır. Lütfen müşteri hizmetleri ile iletişime geçin",
 
-minimumBalanceRequired: "Çekim işleminden sonra gerekli minimum bakiyeyi korumanız gerekir",
+    minimumBalanceRequired: "Çekim işleminden sonra gerekli minimum bakiyeyi korumanız gerekir",
 
-missingWalletDetails: "Kripto çekim talebi göndermeden önce cüzdan bilgilerinizi tamamlayınız",
+    missingWalletDetails: "Kripto çekim talebi göndermeden önce cüzdan bilgilerinizi tamamlayınız",
 
-missingERC20Address: "Çekim talebi göndermeden önce ERC20 cüzdan adresinizi bağlayınız",
+    missingERC20Address: "Çekim talebi göndermeden önce ERC20 cüzdan adresinizi bağlayınız",
 
-missingTRC20Address: "Çekim talebi göndermeden önce TRC20 cüzdan adresinizi bağlayınız"
-,
+    missingTRC20Address: "Çekim talebi göndermeden önce TRC20 cüzdan adresinizi bağlayınız"
+    ,
     inValidWithdrawPassword: 'Çekim şifreniz doğru değil, lütfen tekrar kontrol edin',
     missingBankDetails: 'Lütfen çekim yapmadan önce banka bilgilerinizi ekleyin',
     missingWithdrawalMethod: 'Lütfen çekim yapmadan önce bir kripto cüzdan veya banka bilgisi ekleyin',
@@ -29,6 +29,7 @@ missingTRC20Address: "Çekim talebi göndermeden önce TRC20 cüzdan adresinizi 
     requiredSubscription: 'Lütfen bir abonelik planı seçin',
     moretasks: 'Bu sizin limitiniz. Daha fazla görev için lütfen müşteri hizmetleriyle iletişime geçin',
     deposit: "Yetersiz bakiye, lütfen yükseltin.",
+    insufficientBalanceMin: "Devam etmek için bakiyeniz en az €{0} olmalıdır.",
     submitPendingProducts: "Lütfen bekleyen ürünleri gönderin",
     noProductsAvailable: "Uygun ürün yok",
     oldPasswordRequired: "Eski şifre gerekli",

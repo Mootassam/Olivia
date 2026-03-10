@@ -7,16 +7,16 @@ const fr = {
 
     withdrawalMethodRequired: "Veuillez sélectionner une méthode de retrait (Banque ou Crypto) avant de soumettre votre demande",
 
-withdrawNotAllowed: "Les retraits sont actuellement désactivés pour votre compte. Veuillez contacter le service client",
+    withdrawNotAllowed: "Les retraits sont actuellement désactivés pour votre compte. Veuillez contacter le service client",
 
-minimumBalanceRequired: "Vous devez maintenir le solde minimum requis après le retrait",
+    minimumBalanceRequired: "Vous devez maintenir le solde minimum requis après le retrait",
 
-missingWalletDetails: "Veuillez compléter les informations de votre portefeuille avant de soumettre une demande de retrait crypto",
+    missingWalletDetails: "Veuillez compléter les informations de votre portefeuille avant de soumettre une demande de retrait crypto",
 
-missingERC20Address: "Veuillez lier votre adresse de portefeuille ERC20 avant de soumettre une demande de retrait",
+    missingERC20Address: "Veuillez lier votre adresse de portefeuille ERC20 avant de soumettre une demande de retrait",
 
-missingTRC20Address: "Veuillez lier votre adresse de portefeuille TRC20 avant de soumettre une demande de retrait"
-,
+    missingTRC20Address: "Veuillez lier votre adresse de portefeuille TRC20 avant de soumettre une demande de retrait"
+    ,
     inValidWithdrawPassword: 'Votre mot de passe de retrait est incorrect, veuillez vérifier à nouveau',
     missingBankDetails: 'Veuillez ajouter vos coordonnées bancaires avant d’effectuer un retrait',
     missingWithdrawalMethod: 'Veuillez ajouter soit un portefeuille crypto soit des coordonnées bancaires avant de faire un retrait',
@@ -30,6 +30,7 @@ missingTRC20Address: "Veuillez lier votre adresse de portefeuille TRC20 avant de
     requiredSubscription: 'Veuillez sélectionner un plan d\'abonnement',
     moretasks: 'Ceci est votre limite. Veuillez contacter le service client pour plus de tâches',
     deposit: "Solde insuffisant, veuillez mettre à niveau.",
+    insufficientBalanceMin: "Votre solde doit être d’au moins €{0} pour continuer.",
     submitPendingProducts: "Veuillez soumettre les produits en attente",
     noProductsAvailable: "Aucun produit disponible",
     oldPasswordRequired: "L’ancien mot de passe est requis",

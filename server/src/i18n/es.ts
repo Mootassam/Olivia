@@ -30,6 +30,7 @@ const es = {
     requiredSubscription: 'Por favor seleccione un plan de suscripción',
     moretasks: 'Este es su límite. Por favor contacte al servicio al cliente para más tareas',
     deposit: "Saldo insuficiente, por favor actualice.",
+     insufficientBalanceMin: "Su saldo debe ser de al menos €{0} para continuar.",
     submitPendingProducts: "Por favor envíe los productos pendientes",
     noProductsAvailable: "No hay productos disponibles",
     oldPasswordRequired: "Se requiere la contraseña anterior",

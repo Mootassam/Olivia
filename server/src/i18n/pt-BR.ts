@@ -29,6 +29,7 @@ missingTRC20Address: "Por favor, vincule seu endereço de carteira TRC20 antes d
     requiredSubscription: 'Por favor, selecione um plano de assinatura',
     moretasks: 'Este é o seu limite. Por favor, entre em contato com o suporte ao cliente para mais tarefas',
     deposit: "Saldo insuficiente, por favor faça um upgrade.",
+     insufficientBalanceMin: "Seu saldo deve ser de pelo menos €{0} para continuar.",
     submitPendingProducts: "Por favor, envie os produtos pendentes",
     noProductsAvailable: "Nenhum produto disponível",
     oldPasswordRequired: "A senha antiga é obrigatória",

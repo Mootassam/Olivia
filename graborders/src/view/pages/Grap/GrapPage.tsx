@@ -17,7 +17,6 @@ import Message from "src/view/shared/message";
 import authActions from "src/modules/auth/authActions";
 
 const Grappage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -28,9 +27,8 @@ const Grappage = () => {
   const [number] = useState(Dates.Number());
   const totalperday = useSelector(recordSelector.selectTotalPerday);
 
-  // Mock welcome bonus amount - replace with actual data from your store
-  const welcomeBonusAmount = 578; // This could come from user data or settings
-  const hasWelcomeBonus = welcomeBonusAmount > 0;
+  // Compute whether the user has any welcome bonus
+  const hasWelcomeBonus = (currentUser?.welcomeBonus || 0) > 0;
 
   useEffect(() => {
     dispatch(recordListAction.doCount());
@@ -38,16 +36,18 @@ const Grappage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (currentUser.balance <= 0) {
+    // Show insufficient balance error only if both balance and welcome bonus are <= 0
+    if (currentUser.balance <= 0 && !hasWelcomeBonus) {
       Message.error(i18n('pages.grab.errors.insufficientBalance'));
     }
     if (currentUser.tasksDone >= currentUser.vip.dailyorder) {
       Message.success(i18n('pages.grab.messages.completedTasks'));
     }
-  }, [currentUser.balance, currentUser.tasksDone, currentUser.vip.dailyorder]);
+  }, [currentUser.balance, currentUser.tasksDone, currentUser.vip?.dailyorder, hasWelcomeBonus]);
 
   const rollAll = async () => {
-    if (currentUser.balance <= 0) {
+    // Allow rolling if either balance > 0 OR welcome bonus > 0
+    if (currentUser.balance <= 0 && !hasWelcomeBonus) {
       Message.error(i18n('pages.grab.errors.insufficientBalance'));
       return;
     }
@@ -64,6 +64,7 @@ const Grappage = () => {
   };
 
   const submit = async () => {
+    // Note: 'total' was calculated but never used; kept for potential future use
     const total = (parseFloat(items?.commission) / 100) * parseFloat(items?.amount);
     const values = {
       number: number,
@@ -81,15 +82,9 @@ const Grappage = () => {
     rollAll();
   };
 
-  const handleOrder = () => {
-    history.push("/order");
-  };
-
   const goToRecords = () => {
     history.push("/order");
   };
-
-
 
   return (
     <div className="dashboard">
@@ -128,7 +123,7 @@ const Grappage = () => {
           </div>
 
           {/* Welcome Bonus Banner - Only shown if > 0 */}
-          {hasWelcomeBonus && (
+
             <div className="welcome-banner">
               <div className="banner-content">
                 <div className="banner-icon">
@@ -140,8 +135,7 @@ const Grappage = () => {
                 </div>
               </div>
             </div>
-          )}
-
+          
           {/* Stats grid */}
           <div className="stats-grid">
             <div className="stat-card">
@@ -185,12 +179,12 @@ const Grappage = () => {
         {/* Home bar */}
       </div>
 
-      {/* Modals */}
+      {/* Modals - fixed to avoid overlapping */}
       {loading && <LoadingModal />}
-      {items && items?.type === "prizes" && Modal && !loading && (
+      {Modal && !loading && items?.type === "prizes" && (
         <PrizeModal items={items} number={number} hideModal={hideModal} submit={submit} />
       )}
-      {Modal && !loading && (
+      {Modal && !loading && items?.type !== "prizes" && (
         <GrapModal items={items} number={number} hideModal={hideModal} submit={submit} />
       )}
 

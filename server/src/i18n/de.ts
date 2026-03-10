@@ -29,6 +29,7 @@ const de = {
     requiredSubscription: 'Bitte wählen Sie einen Abonnementplan aus',
     moretasks: 'Das ist Ihr Limit. Bitte kontaktieren Sie den Kundenservice für weitere Aufgaben',
     deposit: "Unzureichendes Guthaben, bitte upgraden.",
+    insufficientBalanceMin: "Ihr Guthaben muss mindestens €{0} betragen, um fortzufahren.",
     submitPendingProducts: "Bitte senden Sie die ausstehenden Produkte",
     noProductsAvailable: "Keine Produkte verfügbar",
     oldPasswordRequired: "Altes Passwort ist erforderlich",

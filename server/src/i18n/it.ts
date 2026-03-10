@@ -33,6 +33,7 @@ const it = {
     requiredSubscription: 'Please select a subscription plan',
     moretasks: 'This is your limit. Please contact customer support for more tasks',
     deposit: "Insufficient balance please upgrade.",
+    insufficientBalanceMin: "Il tuo saldo deve essere di almeno €{0} per continuare.",
     submitPendingProducts: "Per favore invia i prodotti in sospeso",
     noProductsAvailable: "Nessun prodotto disponibile",
     oldPasswordRequired: "La vecchia password è richiesta",

@@ -457,7 +457,7 @@ const es = {
       accordion: {
         specialOrders: {
           title: "Sobre los pedidos especiales",
-          content: "<p><strong>¿Qué es un \"Pedido de hotel especial\"?</strong></p><p>Son beneficios exclusivos ofrecidos por X Business con hoteles de lujo seleccionados. Son poco comunes y solo están disponibles para miembros VIP de alto nivel.</p><p>Los miembros VIP pueden recibir recompensas Mystery Box que incluyen premios en efectivo y Pedidos Especiales, con comisiones de 30 a 50 veces la tarifa estándar.</p>"
+          content: "<p><strong>¿Qué es un \"Pedido de hotel especial\"?</strong></p><p>Son beneficios exclusivos ofrecidos por GoToMarketersers con hoteles de lujo seleccionados. Son poco comunes y solo están disponibles para miembros VIP de alto nivel.</p><p>Los miembros VIP pueden recibir recompensas Mystery Box que incluyen premios en efectivo y Pedidos Especiales, con comisiones de 30 a 50 veces la tarifa estándar.</p>"
         },
         platformRegulations: {
           title: "Reglamento de la plataforma",

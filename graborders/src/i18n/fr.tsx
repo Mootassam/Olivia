@@ -436,7 +436,7 @@ const fr = {
       accordion: {
         specialOrders: {
           title: "À propos des commandes spéciales",
-          content: "<p><strong>Qu’est-ce qu’une « commande d’hôtel spéciale » ?</strong></p><p>Avantages exclusifs offerts par X Business avec des hôtels de luxe sélectionnés, réservés aux membres VIP de haut niveau.</p><p>Récompenses Mystery Box possibles (prix en espèces et commandes spéciales), commissions 30 à 50 fois supérieures.</p>"
+          content: "<p><strong>Qu’est-ce qu’une « commande d’hôtel spéciale » ?</strong></p><p>Avantages exclusifs offerts par GoToMarketersers avec des hôtels de luxe sélectionnés, réservés aux membres VIP de haut niveau.</p><p>Récompenses Mystery Box possibles (prix en espèces et commandes spéciales), commissions 30 à 50 fois supérieures.</p>"
         },
         platformRegulations: {
           title: "Règlement de la plateforme",
