@@ -477,7 +477,6 @@ function GrapModal(props) {
           align-items: center;
           justify-content: center;
           z-index: 1000;
-          padding: 16px;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 

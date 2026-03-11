@@ -96,20 +96,19 @@ static async create(data, options: IRepositoryOptions) {
     // Calculate new tasksDone after prize claim
     const newTasksDone = currentUser.tasksDone + 1;
     
-    // Prepare update object
-    const updateObj: any = {
-      $set: {
-        prizes: null,
-        prizesNumber: 0,
-        updatedAt: new Date(),
-        updatedBy: currentUser.id,
-      }
+    // Build the $set part of the update
+    const setObj: any = {
+      prizes: null,
+      prizesNumber: 0,
+      tasksDone: newTasksDone,
+      updatedAt: new Date(),
+      updatedBy: currentUser.id,
     };
     
     // BONUS CONDITION: Check if this completion will reach or exceed daily limit
     if (currentUser.bonus === true && dailyOrder && newTasksDone >= dailyOrder) {
-      updateObj.$set.bonus = false;
-      updateObj.$set.welcomeBonus = 0;
+      setObj.bonus = false;
+      setObj.welcomeBonus = 0;
     }
     
     const recordData = {
@@ -125,16 +124,10 @@ static async create(data, options: IRepositoryOptions) {
 
     const [record] = await Records(database).create([recordData], options);
 
-    // Update user with bonus condition if needed
+    // Update user with all fields in $set
     await User(database).updateOne(
       { _id: currentUser.id },
-      {
-        ...updateObj,
-        $set: {
-          ...updateObj.$set,
-          tasksDone: newTasksDone
-        }
-      }
+      { $set: setObj }
     );
 
     // Audit log for prize creation
@@ -164,12 +157,11 @@ static async create(data, options: IRepositoryOptions) {
     const commissionPercent = parseFloat(record.commission) || 0;
     const profit = Number(((commissionPercent / 100) * recordPrice).toFixed(2));
 
-    // 3. Update user: add profit, increment tasksDone
+    // 3. Update user: add profit (already added by calculeGrap), increment tasksDone
     const newTasksDone = currentUser.tasksDone + 1;
     const userUpdateObj: any = {
       $inc: {
-        balance: profit,
-        tasksDone: 1
+        tasksDone: 1                     // ✅ profit not incremented again
       },
       $set: {
         updatedBy: currentUser.id,
@@ -192,8 +184,43 @@ static async create(data, options: IRepositoryOptions) {
   }
 }
 
+static async checkOrder(options) {
+  const currentUser = MongooseRepository.getCurrentUser(options);
+  const currentDate = Dates.getTimeZoneDate();
 
+  const [recordCount, userVip] = await Promise.all([
+    Records(options.database).countDocuments({
+      user: currentUser.id,
+      datecreation: currentDate,
+    }),
+    User(options.database)
+      .findById(currentUser.id)
+      .select("vip balance tasksDone welcomeBonus minbalance bonus")
+      .lean(),
+  ]);
 
+  if (!userVip?.vip) {
+    throw new Error400(options.language, "validation.requiredSubscription");
+  }
+
+  const dailyOrder = userVip.vip.dailyorder;
+
+  if (userVip.tasksDone >= dailyOrder) {
+    throw new Error400(options.language, "validation.moretasks");
+  }
+
+  if (userVip.welcomeBonus > userVip.minbalance && userVip.bonus === true) {
+    // User can proceed using welcome bonus (no balance deduction)
+  } else {
+    // No welcome bonus available – check actual balance
+    if (userVip.balance <= 0) {
+      throw new Error400(options.language, "validation.deposit");
+    }
+    if (userVip.balance < userVip.minbalance) {
+      throw new Error400(options.language, "validation.insufficientBalanceMin", userVip.minbalance);
+    }
+  }
+}
 
 static async calculeGrap(data, options) {
   const { database } = options;
@@ -239,7 +266,6 @@ static async calculeGrap(data, options) {
         comboprice += Number(item.amount) || 0;
       });
 
-
       total = currentUserBalance - comboprice;
       frozen = currentUserBalance;
     }
@@ -248,16 +274,13 @@ static async calculeGrap(data, options) {
     // CASE 2 — Prize Mode
     // =====================================================
     else if (hasPrizes && isPrizesMatch) {
-
       total = currentUserBalance + productBalance;
-
     }
 
     // =====================================================
     // CASE 3 — Normal Task Mode
     // =====================================================
     else {
-
       // 1️⃣ Child earning
       const userEarning =
         (currentCommission / 100) * Number(data.price);
@@ -268,16 +291,13 @@ static async calculeGrap(data, options) {
       // 2️⃣ Referral Logic
       // =====================================================
       if (currentUser.invitationcode) {
-
         const parentUser = await User(database)
           .findOne({ refcode: currentUser.invitationcode });
 
         if (parentUser && parentUser.refsystem === true) {
-
           const Company = database.model("company");
           const companySettings = await Company.findOne().lean();
 
-          // 🔥 FIX HERE
           const defaultCommission =
             Number(companySettings?.defaultCommission || 15);
 
@@ -401,48 +421,7 @@ static async calculeGrap(data, options) {
     return { record: user.tasksDone || 0 };
   }
 
-  static async checkOrder(options) {
-    const currentUser = MongooseRepository.getCurrentUser(options);
-    const currentDate = Dates.getTimeZoneDate();
 
-    // Use Promise.all for parallel execution
-    const [recordCount, userVip] = await Promise.all([
-      Records(options.database).countDocuments({
-        user: currentUser.id,
-        datecreation: currentDate
-      }),
-      // Get fresh VIP data to ensure accuracy
-      User(options.database)
-        .findById(currentUser.id)
-        .select('vip balance tasksDone')
-        .lean()
-    ]);
-
-    if (!userVip?.vip) {
-      throw new Error400(
-        options.language,
-        "validation.requiredSubscription"
-      );
-    }
-
-    const dailyOrder = userVip.vip.dailyorder;
-
-    if (userVip.tasksDone >= dailyOrder) {
-      throw new Error400(
-        options.language,
-        "validation.moretasks"
-      );
-    }
-
-    if (userVip.balance <= 0) {
-
-
-      throw new Error400(
-        options.language,
-        "validation.InsufficientBalance"
-      );
-    }
-  }
 
 
 
