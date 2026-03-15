@@ -137,7 +137,6 @@ static async userChangeWithdrawalPassword(data, options: IRepositoryOptions) {
     return user;
 }
 static async updateMyBankInfo(data, options: IRepositoryOptions) {
-  console.log("🚀 ~ UserRepository ~ updateMyBankInfo ~ data:", data)
   const currentUser = MongooseRepository.getCurrentUser(options);
   
   // Access the nested data
